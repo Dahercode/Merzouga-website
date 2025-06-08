@@ -1,48 +1,71 @@
-# Astro Starter Kit: Basics
+<p align="center">
+  <img src="assets/gh-banner.png" alt="Odyssey Theme Banner">
+</p>
 
-```sh
-npm create astro@latest -- --template basics
+<br/>
+<div align="center">
+  <a href="https://twitter.com/jaydanurwin">
+  <img src="assets/twitter-badge.svg" alt="Follow Jaydan Urwin on Twitter"/>
+</a>
+  <a href="https://sapling.lemonsqueezy.com/checkout/buy/9b78751f-6382-442d-ac99-32c2318b70a0">
+    <img src="assets/sponsor-badge.svg" alt="Sponsor This Repo" />
+  </a>
+</div>
+<br/>
+
+# Odyssey Theme
+
+Odyssey Theme is a modern theme/starter for a business or startup's marketing website. It provides landing page examples, a full-featured blog, contact forms, and more. It is fully themeable to match your business' branding and style. It even includes a theme switcher component to show how easily the entire style of the site can be changed with only a few lines of CSS.
+
+## Features
+
+<p align="center">
+  <img src="assets/lh-screenshot.png" alt="Screenshot of perfect score in Lighthouse benchmark">
+</p>
+
+
+- ✅ **A perfect score in Lighthouse**
+- ✅ **Blazing fast performance thanks to Astro 🚀**
+- ✅ **A Full Featured Blog with Tagging**
+- ✅ **Fully theme-able styles with for buttons, shapes, backgrounds, surfaces, etc.**
+- ✅ **Responsive, mobile-friendly landing pages**
+- ✅ **SEO Best Practices (Open Graph, Canonical URLs, sitemap)**
+- ✅ **Performant Local Fonts Setup**
+- ✅ **Contact Forms Setup for Netlify, Formspree, Formspark, etc.**
+- ✅ **A package of ready-to-use UI components**
+
+
+## Demo
+
+View a [live demo](https://odyssey-theme.sapling.supply/) of the Odyssey Theme.
+
+## Documentation
+
+1. View the [Theme Setup Guide](https://odyssey-theme.sapling.supply/theme/theme-setup)
+2. View the [Customizing the Theme Guide](https://odyssey-theme.sapling.supply/theme/customizing-odyssey)
+
+## Usage
+
+```bash
+cd theme
+
+npm install
+
+npm start
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Deploy
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Feel free to deploy and host your site on your favorite static hosting service such as Netlify, Firebase Hosting, Vercel, GitHub Pages, etc.
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+Astro has [an in-depth guide](https://docs.astro.build/en/guides/deploy/) on how to deploy an Astro project to each service.
 
-## 🚀 Project Structure
+## Sponsor
 
-Inside of your Astro project, you'll see the following folders and files:
+If you find this theme useful, please consider donating to support the continued development of it with the link below
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+[Donate to Odyssey Theme](https://sapling.lemonsqueezy.com/checkout/buy/9b78751f-6382-442d-ac99-32c2318b70a0)
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Support
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Please feel free to post issues or submit PRs to this repo and we will do our best to respond in a timely manner, keeping in mind this template is offered for free as is on GitHub.
