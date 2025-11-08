@@ -1,10 +1,16 @@
 ---
 import { Icon } from 'astro-icon/components';
-import Container  from '../core/Container.astro';
+import Container from '../core/Container.astro';
 import Plug from './Plug.astro';
 
-const { footerSocials, footerLists, copyrightName, background, color, showPlug: showPlug = true } =
-  Astro.props;
+const {
+  footerSocials,
+  footerLists,
+  copyrightName,
+  background,
+  color,
+  showPlug: showPlug = true,
+} = Astro.props;
 ---
 
 <footer
@@ -37,7 +43,9 @@ const { footerSocials, footerLists, copyrightName, background, color, showPlug: 
       {
         footerLists.map((list) => (
           <div>
-            <p><strong>{list.title}</strong></p>
+            <p>
+              <strong>{list.title}</strong>
+            </p>
             <ul class="footer-link__list">
               {list.items.map((item) => (
                 <li>
@@ -50,10 +58,9 @@ const { footerSocials, footerLists, copyrightName, background, color, showPlug: 
       }
     </div>
     <div class="footer-copyright__container">
-      {showPlug && <Plug/>}
+      {showPlug && <Plug />}
       <p>Copyright &copy; {new Date().getFullYear()} {copyrightName}</p>
     </div>
-
   </Container>
 </footer>
 

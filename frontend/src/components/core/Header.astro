@@ -1,24 +1,24 @@
 ---
-import { Icon } from 'astro-icon/components'
+import { Icon } from 'astro-icon/components';
 const { navData, rightMenu } = Astro.props;
 ---
 
 <script type="module">
   const bodyElement = document.querySelector('body');
-  const menuButton = document.querySelector('#menuButton')
+  const menuButton = document.querySelector('#menuButton');
   const navHeader = document.querySelector('#odysseyNavHeader');
   const menuButtonIconHam = document.querySelector('#menuButtonIconHam');
   const menuButtonIconClose = document.querySelector('#menuButtonIconClose');
   let scrollPosition = 0;
 
-  menuButton.addEventListener('click', toggleMenu)
+  menuButton.addEventListener('click', toggleMenu);
 
   function toggleMenu() {
     menuButtonIconHam.toggleAttribute('hidden');
     menuButtonIconClose.toggleAttribute('hidden');
-    
+
     if (navHeader.hasAttribute('mobile-menu-open', true)) {
-      menuButton.title = "Open Main Menu"
+      menuButton.title = 'Open Main Menu';
       // unlock scroll position
       bodyElement.style.removeProperty('overflow');
       bodyElement.style.removeProperty('position');
@@ -26,7 +26,7 @@ const { navData, rightMenu } = Astro.props;
       bodyElement.style.removeProperty('width');
       window.scrollTo(0, scrollPosition);
     } else {
-      menuButton.title = "Close Main Menu"
+      menuButton.title = 'Close Main Menu';
       // lock scroll position
       scrollPosition = window.pageYOffset;
       bodyElement.style.overflow = 'hidden';
@@ -34,40 +34,47 @@ const { navData, rightMenu } = Astro.props;
       bodyElement.style.top = `-${scrollPosition}px`;
       bodyElement.style.width = '100%';
     }
-    
+
     navHeader.toggleAttribute('mobile-menu-open');
   }
-</script>  
+</script>
 
-<header id="odysseyNavHeader" class={`${rightMenu ? "header--right" : ``.trim()}`}>
+<header
+  id="odysseyNavHeader"
+  class={`${rightMenu ? 'header--right' : ``.trim()}`}
+>
   <div class="header-logo-menu__container">
-  <button id="menuButton" title="Open Main Menu">
-    <span id="menuButtonIconHam">
-      <Icon name="ic:baseline-menu" width="24px" height="24px" />
-    </span>
-    <span id="menuButtonIconClose" hidden>
-      <Icon name="ic:baseline-close" width="24px" height="24px" />
-    </span>
-  </button>
-  <a class="header-logo__link" href="/">
-    <slot name="logo">
-    </slot>
-  </a>
+    <button id="menuButton" title="Open Main Menu">
+      <span id="menuButtonIconHam">
+        <Icon name="ic:baseline-menu" width="24px" height="24px" />
+      </span>
+      <span id="menuButtonIconClose" hidden>
+        <Icon name="ic:baseline-close" width="24px" height="24px" />
+      </span>
+    </button>
+    <a class="header-logo__link" href="/">
+      <slot name="logo" />
+    </a>
   </div>
   <div class="header-nav__container">
     <slot name="nav">
-      {navData && <nav>
-        <ul>
-          {navData.map(navItem => (
-            (<li><a href={navItem.slug} >{navItem.title}</a></li>)
-          ))}
-        </ul>
-      </nav>}
+      {
+        navData && (
+          <nav>
+            <ul>
+              {navData.map((navItem) => (
+                <li>
+                  <a href={navItem.slug}>{navItem.title}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )
+      }
     </slot>
   </div>
   <div class="header-action-item__container">
-    <slot name="action-item">
-    </slot>
+    <slot name="action-item" />
   </div>
 </header>
 
@@ -110,7 +117,7 @@ const { navData, rightMenu } = Astro.props;
     vertical-align: middle;
   }
   nav {
-  display: flex;
+    display: flex;
   }
   nav ul {
     margin: 0;
@@ -128,9 +135,9 @@ const { navData, rightMenu } = Astro.props;
   nav ul li a:hover {
     opacity: 1;
   }
-  @media(max-width: 600px) {
+  @media (max-width: 600px) {
     #menuButton {
-      display: block;  
+      display: block;
       z-index: 100;
     }
     .header-nav__container {
@@ -152,9 +159,9 @@ const { navData, rightMenu } = Astro.props;
       align-items: center;
       flex-direction: column;
     }
-     header[mobile-menu-open] nav ul li {
-       font-size: var(--font-size-lg);
-       margin-bottom: 1rem;
-     }
+    header[mobile-menu-open] nav ul li {
+      font-size: var(--font-size-lg);
+      margin-bottom: 1rem;
+    }
   }
 </style>

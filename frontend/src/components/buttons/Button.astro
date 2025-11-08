@@ -10,11 +10,17 @@ const Tag = href ? 'a' : 'button';
     outlined && `btn--outlined`
   } ${onPrimary && `btn--on-primary`}`}
   href={href}
-  target={`${newTab ? '_blank': ``}`}
+  target={`${newTab ? '_blank' : ``}`}
   rel={`${newTab ? 'noopener noreferrer' : ``}`}
 >
   <slot />
-  {customIcon && <span class="custom-icon__span"><slot name="icon">custom_icon</slot></span>}
+  {
+    customIcon && (
+      <span class="custom-icon__span">
+        <slot name="icon">custom_icon</slot>
+      </span>
+    )
+  }
 </Tag>
 
 <style>

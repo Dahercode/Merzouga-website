@@ -10,6 +10,22 @@ function getYouTubeId(url) {
 }
 ---
 
+<div
+  class={`youtube-embed__container ${
+    rounded && `youtube-embed__container--rounded`
+  }`}
+>
+  <iframe
+    src={`https://www.youtube.com/embed/${getYouTubeId(url)}`}
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+    {loading}
+  >
+  </iframe>
+</div>
+
 <style>
   .youtube-embed__container {
     margin-bottom: 1rem;
@@ -44,19 +60,3 @@ function getYouTubeId(url) {
     }
   }
 </style>
-
-<div
-  class={`youtube-embed__container ${
-    rounded && `youtube-embed__container--rounded`
-  }`}
->
-  <iframe
-    src={`https://www.youtube.com/embed/${getYouTubeId(url)}`}
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-    loading={loading}
-  >
-  </iframe>
-</div>

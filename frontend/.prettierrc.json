@@ -1,13 +1,14 @@
 {
-	"useTabs": true,
-	"semi": true,
-	"singleQuote": true,
-	"arrowParens": "avoid",
-	"plugins": ["prettier-plugin-astro"],
-	"overrides": [
-		{
-			"files": "**/*.astro",
-			"options": { "parser": "astro" }
-		}
-	]
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "plugins": ["prettier-plugin-astro"],
+  "overrides": [
+    {
+      "files": "*.astro",
+      "options": {
+        "parser": "astro"
+      }
+    }
+  ]
 }
