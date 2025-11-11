@@ -1,19 +1,19 @@
 ---
-import BlogPostPreview from './BlogPostPreview.astro';
+import ToursPreview from './ToursPreview.astro';
 
-const { posts } = Astro.props;
+const { tours } = Astro.props;
 ---
 
-<ul class="blog-posts-list__list">
+<ul class="tours-list__list">
   {
-    posts?.map((post) => {
-      return <BlogPostPreview post={post} />;
+    tours?.map((tour) => {
+      return <ToursPreview tour={tour} />;
     })
   }
 </ul>
 
 <style>
-  .blog-posts-list__list {
+  .tours-list__list {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -22,7 +22,7 @@ const { posts } = Astro.props;
     gap: 2rem;
   }
   @media (max-width: 768px) {
-    .blog-posts-list__list {
+    .tours-list__list {
       grid-template-columns: 1fr;
     }
   }
