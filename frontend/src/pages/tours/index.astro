@@ -6,7 +6,6 @@ import {
   ToursList,
 } from '@components/odyssey-theme';
 import Layout from '../../layouts/Page.astro';
-import NewsletterForm from '../../components/forms/NewsletterForm.astro';
 
 const tours = await Astro.glob('./posts/*.mdx').then((tours) =>
   tours
@@ -27,8 +26,8 @@ const tours = await Astro.glob('./posts/*.mdx').then((tours) =>
 );
 
 const seo = {
-  title: 'Tours | Astro Odyssey Theme',
-  description: 'Astro Odyssey Theme Blog Page',
+  title: 'Tours',
+  description: 'Page de circuits touristiques au Maroc',
 };
 ---
 
@@ -36,14 +35,12 @@ const seo = {
   <Container>
     <TextCardSection>
       <h1>Nos circuits</h1>
-      <p>
-        View our blog to stay up to date on the latest news about our business.
-        Want to be the first to hear about a new blog post? Join our newsletter!
+      <p class="tours-list_description">
+        Explorez le désert de Merzouga, les montagnes de l'Atlas, les villes impériales... Nos circuits authentiques partent de Marrakech, Casablanca ou Tanger pour 3 à 10 jours.
       </p>
-      <NewsletterForm />
     </TextCardSection>
     <section class="tours-list__section">
-      <h2>Recent Posts</h2>
+      <h2>Nos itinéraires phares</h2>
       <ToursList {tours} />
     </section>
   </Container>
@@ -52,5 +49,9 @@ const seo = {
 <style>
   .tours-list__section {
     margin: var(--section-margin) auto;
+  }
+   .tours-list_description {
+    font-size: 25px;
+    font-weight: 400;
   }
 </style>
