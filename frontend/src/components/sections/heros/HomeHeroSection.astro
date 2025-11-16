@@ -2,31 +2,34 @@
 import { Icon } from 'astro-icon/components';
 import { Container, Button } from '@components/odyssey-theme';
 import settings from '../../../config/settings.js';
+import { t } from 'i18next';
+import { localizePath } from 'astro-i18next';
 ---
 
 <Container>
 	<section class="hero-section__section">
 		<div class="hero-section__text">
-				<h1>Partez à la découverte du Maroc authentique</h1>
-				<p>  Explorez le désert, les montagnes et les médinas impériales à travers des itinéraires conçus pour une immersion totale.
-				</p> 
-				<div class="hero-btns__container">
-					<Button href="/tours" customIcon
-						>Découvrez nos circuits
+                                <h1>{t('home:hero.title')}</h1>
+                                <p>{t('home:hero.description')}</p>
+                                <div class="hero-btns__container">
+                                        <Button href={localizePath('/tours')} customIcon
+                                                >{t('home:hero.primaryCta')}
             <Fragment slot="icon">
               <Icon name="ic:baseline-chevron-right"/>
             </Fragment>
             </Button
-					>
-					<Button href="/theme/style-guide" unelevated>Style Guide</Button>
-				</div>
+                                        >
+                                        <Button href={localizePath('/theme/style-guide')} unelevated>
+                                                {t('home:hero.secondaryCta')}
+                                        </Button>
+                                </div>
         {settings.enableThemeSwitcher && <theme-switcher />}
 		</div>
 		<div class="hero-section__image">
 				<picture>
 					<img
 						src="/assets/images/home/classic-hero.jpg"
-						alt="Astro Odyssey"
+                                                alt={t('home:hero.imageAlt')}
 						id="home-hero-image"
 					/>
 				</picture>

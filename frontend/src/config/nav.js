@@ -1,18 +1,18 @@
 export const nav = [
   {
-    title: 'Home',
+    titleKey: 'common:navigation.home',
     slug: '/',
   },
   {
-    title: 'Tours',
+    titleKey: 'common:navigation.tours',
     slug: '/tours',
   },
   {
-    title: 'About',
+    titleKey: 'common:navigation.about',
     slug: '/company/about',
   },
   {
-    title: 'Contact',
+    titleKey: 'common:navigation.contact',
     slug: '/company/contact',
   },
 ];
