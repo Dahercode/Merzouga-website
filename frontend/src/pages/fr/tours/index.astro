@@ -6,7 +6,7 @@ import Layout from "../../../layouts/Page.astro";
 
 changeLanguage("fr");
 
-const tours = await Astro.glob("../posts/*.mdx").then((tours) => tours
+const tours = await Astro.glob("./posts/*.mdx").then((tours) => tours
     .map(({ frontmatter, url }) => ({
     title: frontmatter.title,
     description: frontmatter.description,
