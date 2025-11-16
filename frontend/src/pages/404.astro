@@ -1,10 +1,13 @@
 ---
-import { Button, Container, TextCardSection } from '@components/odyssey-theme';
-import Layout from '../layouts/Page.astro';
+import { changeLanguage } from "i18next";
+import { Button, Container, TextCardSection } from "@components/odyssey-theme";
+import Layout from "../layouts/Page.astro";
+
+changeLanguage("en");
 
 const seo = {
-  title: 'Get Started using the Astro Odyssey Theme',
-  description: 'Get started on how to setup and use this Astro theme.',
+    title: "Get Started using the Astro Odyssey Theme",
+    description: "Get started on how to setup and use this Astro theme.",
 };
 ---
 
