@@ -1,0 +1,38 @@
+{
+  "hero": {
+    "title": "Partez à la découverte du Maroc authentique",
+    "description": "Explorez le désert, les montagnes et les médinas impériales à travers des itinéraires conçus pour une immersion totale.",
+    "primaryCta": "Découvrez nos circuits",
+    "secondaryCta": "Style Guide",
+    "imageAlt": "Voyageurs à dos de chameau au coucher du soleil dans le désert du Sahara"
+  },
+  "sections": {
+    "landing": {
+      "title": "Pages d'atterrissage",
+      "description": "Utilisez l'une de nos pages d'atterrissage pour lancer votre site web ou votre campagne marketing.",
+      "cards": {
+        "landing1": "Page d'atterrissage 1",
+        "landing2": "Page d'atterrissage 2"
+      }
+    },
+    "company": {
+      "title": "Pages institutionnelles",
+      "description": "Profitez de nos pages préconstruites pour vos pages À propos, Contact, mentions légales, articles de blog, etc.",
+      "cards": {
+        "about": "Page À propos",
+        "contact": "Page Contact",
+        "tours": "Page Circuits",
+        "tourPost": "Article de circuit",
+        "legal": "Page légale"
+      }
+    },
+    "theme": {
+      "title": "Pages du thème",
+      "description": "Apprenez à configurer et utiliser le thème Odyssey.",
+      "cards": {
+        "getStarted": "Bien démarrer",
+        "styleGuide": "Style Guide"
+      }
+    }
+  }
+}

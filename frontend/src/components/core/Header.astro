@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { localizePath } from 'astro-i18next';
 const { navData, rightMenu } = Astro.props;
 ---
 
@@ -52,7 +53,7 @@ const { navData, rightMenu } = Astro.props;
         <Icon name="ic:baseline-close" width="24px" height="24px" />
       </span>
     </button>
-    <a class="header-logo__link" href="/">
+    <a class="header-logo__link" href={localizePath('/')}>
       <slot name="logo" />
     </a>
   </div>
@@ -64,7 +65,7 @@ const { navData, rightMenu } = Astro.props;
             <ul>
               {navData.map((navItem) => (
                 <li>
-                  <a href={navItem.slug}>{navItem.title}</a>
+                  <a href={localizePath(navItem.slug)}>{navItem.title}</a>
                 </li>
               ))}
             </ul>

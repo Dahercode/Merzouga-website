@@ -5,6 +5,9 @@ import type { Props as BaseHeadProps } from '../components/head/BaseHead.astro';
 import Logo from '../components/Logo.astro';
 import settings from '../config/settings';
 import { footerLists, footerSocials } from '../config/footer';
+import { LanguageSelector } from 'astro-i18next/components';
+import { t } from 'i18next';
+import { localizePath } from 'astro-i18next';
 
 export interface Props {
   seo?: BaseHeadProps;
@@ -13,14 +16,35 @@ export interface Props {
 import { nav } from '../config/nav.js';
 
 const { seo } = Astro.props as Props;
+const navItems = nav.map(({ titleKey, ...rest }) => ({
+  ...rest,
+  title: t(titleKey),
+}));
+const languageMapping = {
+  en: t('common:language.names.en'),
+  fr: t('common:language.names.fr'),
+  es: t('common:language.names.es'),
+};
 ---
 
 <Layout {seo}>
-  <Header rightMenu navData={nav} slot="header">
+  <Header rightMenu navData={navItems} slot="header">
     <span slot="logo">
       <Logo />
     </span>
-    <Button slot="action-item" href="/theme/get-started">Get Started</Button>
+    <div slot="action-item" class="header-actions">
+      <label class="language-picker">
+        <span class="sr-only">{t('common:language.label')}</span>
+        <LanguageSelector
+          class="language-selector"
+          showFlag={true}
+          languageMapping={languageMapping}
+        />
+      </label>
+      <Button href={localizePath('/theme/get-started')}>
+        {t('common:actions.getStarted')}
+      </Button>
+    </div>
   </Header>
   <div id="page">
     <slot />
@@ -37,3 +61,33 @@ const { seo } = Astro.props as Props;
     <Logo slot="logo" />
   </Footer>
 </Layout>
+
+<style>
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .language-picker {
+    display: flex;
+    flex-direction: column;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+  :global(.language-selector) {
+    border-radius: var(--theme-shape-radius);
+    border: 1px solid var(--theme-outline-variant);
+    padding: 0.35rem 0.75rem;
+    background-color: var(--theme-surface-1);
+    color: var(--theme-on-surface-1);
+    font-size: 0.9rem;
+  }
+</style>

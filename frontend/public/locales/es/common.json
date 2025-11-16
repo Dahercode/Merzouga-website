@@ -1,0 +1,19 @@
+{
+  "navigation": {
+    "home": "Inicio",
+    "tours": "Circuitos",
+    "about": "Sobre nosotros",
+    "contact": "Contacto"
+  },
+  "actions": {
+    "getStarted": "Empezar"
+  },
+  "language": {
+    "label": "Idioma",
+    "names": {
+      "en": "Inglés",
+      "fr": "Francés",
+      "es": "Español"
+    }
+  }
+}

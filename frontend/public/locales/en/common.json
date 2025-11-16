@@ -1,0 +1,19 @@
+{
+  "navigation": {
+    "home": "Home",
+    "tours": "Tours",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "actions": {
+    "getStarted": "Get Started"
+  },
+  "language": {
+    "label": "Language",
+    "names": {
+      "en": "English",
+      "fr": "French",
+      "es": "Spanish"
+    }
+  }
+}

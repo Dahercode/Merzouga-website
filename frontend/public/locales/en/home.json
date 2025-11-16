@@ -1,0 +1,38 @@
+{
+  "hero": {
+    "title": "Embark on a true Moroccan journey",
+    "description": "Explore the desert, the mountains, and the imperial medinas with itineraries crafted for a full immersion.",
+    "primaryCta": "Discover our tours",
+    "secondaryCta": "Style Guide",
+    "imageAlt": "Travelers riding camels at sunset in the Sahara Desert"
+  },
+  "sections": {
+    "landing": {
+      "title": "Landing Pages",
+      "description": "Use one of our landing pages to jumpstart your website or ad campaign.",
+      "cards": {
+        "landing1": "Landing Page 1",
+        "landing2": "Landing Page 2"
+      }
+    },
+    "company": {
+      "title": "Company Pages",
+      "description": "Use one of our prebuilt company pages for your about page, contact page, legal pages, blog posts, etc.",
+      "cards": {
+        "about": "About Page",
+        "contact": "Contact Page",
+        "tours": "Tours Page",
+        "tourPost": "Tour Post",
+        "legal": "Legal Page"
+      }
+    },
+    "theme": {
+      "title": "Theme Pages",
+      "description": "Learn more about how to set up and use the Odyssey Theme.",
+      "cards": {
+        "getStarted": "Get Started",
+        "styleGuide": "Style Guide"
+      }
+    }
+  }
+}
