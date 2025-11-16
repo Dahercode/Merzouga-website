@@ -1,9 +1,10 @@
 ---
 import { Container, TextCardSection, ToursList } from '@components/odyssey-theme';
 import Layout from '../../layouts/Page.astro';
-import { getTours, inferLocaleFromPathname } from '../../utils/tours';
+import { detectLocaleFromPath } from 'astro-i18next';
+import { getTours } from '../../utils/tours';
 
-const locale = inferLocaleFromPathname(Astro.url.pathname);
+const locale = detectLocaleFromPath(Astro.url.pathname);
 const tours = getTours(locale);
 
 const seo = {
