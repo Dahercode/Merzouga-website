@@ -1,10 +1,14 @@
 ---
 import { Container, TextCardSection, ToursList } from '@components/odyssey-theme';
 import Layout from '../../layouts/Page.astro';
-import { detectLocaleFromPath } from 'astro-i18next';
+import i18next from 'i18next';
+import { AstroI18next } from 'astro-i18next';
 import { getTours } from '../../utils/tours';
 
-const locale = detectLocaleFromPath(Astro.url.pathname);
+const locale =
+  i18next.resolvedLanguage ||
+  i18next.language ||
+  AstroI18next.config.defaultLocale;
 const tours = getTours(locale);
 
 const seo = {
