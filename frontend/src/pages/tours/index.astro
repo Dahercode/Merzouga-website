@@ -1,29 +1,9 @@
 ---
-import { parse, isBefore } from 'date-fns';
-import {
-  Container,
-  TextCardSection,
-  ToursList,
-} from '@components/odyssey-theme';
+import { Container, TextCardSection, ToursList } from '@components/odyssey-theme';
 import Layout from '../../layouts/Page.astro';
+import { getTours } from '../../utils/tours';
 
-const tours = await Astro.glob('./posts/*.mdx').then((tours) =>
-  tours
-    .map(({ frontmatter, url }) => ({
-      title: frontmatter.title,
-      description: frontmatter.description,
-      authors: frontmatter.authors,
-      publishDate: parse(frontmatter.publishDate, 'MMMM d, yyyy', new Date()),
-      featuredImage: frontmatter.featuredImage,
-      excerpt: frontmatter.excerpt,
-      href: url,
-    }))
-    .sort((a, b) => {
-      if (isBefore(a.publishDate, b.publishDate)) return 1;
-      if (isBefore(b.publishDate, a.publishDate)) return -1;
-      return 0;
-    })
-);
+const tours = getTours('en');
 
 const seo = {
   title: 'Tours',
