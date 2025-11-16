@@ -23,6 +23,11 @@ function getLocaleFromPath(path: string): string {
   return segment === 'tours' || !segment ? 'en' : segment;
 }
 
+export function inferLocaleFromPathname(pathname: string): string {
+  const [firstSegment] = pathname.split('/').filter(Boolean);
+  return firstSegment && firstSegment !== 'tours' ? firstSegment : 'en';
+}
+
 export function getTours(locale: string) {
   return Object.entries(tourModules)
     .map(([path, mod]) => ({
