@@ -32,13 +32,11 @@ const seo = {
 <Layout {seo}>
   <Container>
     <TextCardSection>
-      <h1>Nos circuits</h1>
-      <p class="tours-list_description">
-        Explorez le désert de Merzouga, les montagnes de l'Atlas, les villes impériales... Nos circuits authentiques partent de Marrakech, Casablanca ou Tanger pour 3 à 10 jours.
-      </p>
+      <h1>{t('tours:heading')}</h1>
+      <p class="tours-list_description">{t('tours:intro')}</p>
     </TextCardSection>
     <section class="tours-list__section">
-      <h2>Nos itinéraires phares</h2>
+      <h2>{t('tours:featured')}</h2>
       <ToursList {tours} />
     </section>
   </Container>
