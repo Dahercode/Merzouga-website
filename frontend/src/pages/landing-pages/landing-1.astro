@@ -1,20 +1,15 @@
 ---
-import { Icon } from 'astro-icon/components';
-import {
-  AnnouncementBar,
-  Button,
-  CustomerQuoteSection,
-  ThreeColumnTextSection,
-  YouTubeEmbedSection,
-  StickyTextImageSection,
-  CtaCardSection,
-} from '@components/odyssey-theme';
-import Layout from '../../layouts/Page.astro';
-import TextAndImageHero from '../../components/sections/heros/TextAndImageHero.astro';
+import { changeLanguage } from "i18next";
+import { Icon } from "astro-icon/components";
+import { AnnouncementBar, Button, CustomerQuoteSection, ThreeColumnTextSection, YouTubeEmbedSection, StickyTextImageSection, CtaCardSection, } from "@components/odyssey-theme";
+import Layout from "../../layouts/Page.astro";
+import TextAndImageHero from "../../components/sections/heros/TextAndImageHero.astro";
+
+changeLanguage("en");
 
 const seo = {
-  title: 'Landing Page #1 | Astro Odyssey Theme',
-  description: 'Landing Page #1 | Astro Odyssey Theme',
+    title: "Landing Page #1 | Astro Odyssey Theme",
+    description: "Landing Page #1 | Astro Odyssey Theme",
 };
 ---
 

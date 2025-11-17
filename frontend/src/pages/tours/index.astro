@@ -1,46 +1,33 @@
 ---
-import { parse, isBefore } from 'date-fns';
-import {
-  Container,
-  TextCardSection,
-  ToursList,
-} from '@components/odyssey-theme';
-import Layout from '../../layouts/Page.astro';
+import { Container, TextCardSection, ToursList } from "@components/odyssey-theme";
+import Layout from "../../layouts/Page.astro";
+import i18next, { t, changeLanguage } from "i18next";
+import { AstroI18next } from "astro-i18next";
+import { getTours } from "../../utils/tours";
 
-const tours = await Astro.glob('./posts/*.mdx').then((tours) =>
-  tours
-    .map(({ frontmatter, url }) => ({
-      title: frontmatter.title,
-      description: frontmatter.description,
-      authors: frontmatter.authors,
-      publishDate: parse(frontmatter.publishDate, 'MMMM d, yyyy', new Date()),
-      featuredImage: frontmatter.featuredImage,
-      excerpt: frontmatter.excerpt,
-      href: url,
-    }))
-    .sort((a, b) => {
-      if (isBefore(a.publishDate, b.publishDate)) return 1;
-      if (isBefore(b.publishDate, a.publishDate)) return -1;
-      return 0;
-    })
-);
+changeLanguage("en");
 
+const locale = i18next.resolvedLanguage ||
+    i18next.language ||
+    AstroI18next.config.defaultLocale;
+const tours = getTours(locale);
+i18next.resolvedLanguage ||
+    i18next.language ||
+    AstroI18next.config.defaultLocale;
 const seo = {
-  title: 'Tours',
-  description: 'Page de circuits touristiques au Maroc',
+    title: t("tours:seo.title"),
+    description: t("tours:seo.description"),
 };
 ---
 
 <Layout {seo}>
   <Container>
     <TextCardSection>
-      <h1>Nos circuits</h1>
-      <p class="tours-list_description">
-        Explorez le désert de Merzouga, les montagnes de l'Atlas, les villes impériales... Nos circuits authentiques partent de Marrakech, Casablanca ou Tanger pour 3 à 10 jours.
-      </p>
+      <h1>{t('tours:heading')}</h1>
+      <p class="tours-list_description">{t('tours:intro')}</p>
     </TextCardSection>
     <section class="tours-list__section">
-      <h2>Nos itinéraires phares</h2>
+      <h2>{t('tours:featured')}</h2>
       <ToursList {tours} />
     </section>
   </Container>

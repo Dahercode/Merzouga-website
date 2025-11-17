@@ -11,6 +11,4 @@ export default defineConfig({
   sitemap: true, // Generate sitemap (set to "false" to disable)
   integrations: [sitemap(), mdx(), lit(), icon(), astroI18next()], // Add renderers to the config
   output: 'static', // Output directory for the built site
-  defaultLocale: "en",
-  locales: ["en", "fr", "es"],
 });

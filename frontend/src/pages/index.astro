@@ -1,8 +1,11 @@
 ---
-import { Container, FeatureCard } from '@components/odyssey-theme';
+import { Container, FeatureCard } from "@components/odyssey-theme";
+import Layout from "../layouts/Page.astro";
+import HomeHeroSection from "../components/sections/heros/HomeHeroSection.astro";
+import { t, changeLanguage } from "i18next";
+import { localizePath } from "astro-i18next";
 
-import Layout from '../layouts/Page.astro';
-import HomeHeroSection from '../components/sections/heros/HomeHeroSection.astro';
+changeLanguage("en");
 ---
 
 <Layout>
@@ -12,19 +15,17 @@ import HomeHeroSection from '../components/sections/heros/HomeHeroSection.astro'
   <HomeHeroSection />
   <Container>
     <section class="feature-card__section">
-      <h2>Landing Pages</h2>
-      <p>
-        Use one of our landing pages to jumpstart your website or ad campaign.
-      </p>
+      <h2>{t('home:sections.landing.title')}</h2>
+      <p>{t('home:sections.landing.description')}</p>
       <div class="feature-card__grid">
         <FeatureCard
-          href="/landing-pages/landing-1"
-          title="Landing Page 1"
+          href={localizePath('/landing-pages/landing-1')}
+          title={t('home:sections.landing.cards.landing1')}
           imgSrc="/assets/images/home/screenshots/landing-1"
         />
         <FeatureCard
-          href="/landing-pages/landing-2"
-          title="Landing Page 2"
+          href={localizePath('/landing-pages/landing-2')}
+          title={t('home:sections.landing.cards.landing2')}
           imgSrc="/assets/images/home/screenshots/landing-2"
         />
       </div>
@@ -33,36 +34,33 @@ import HomeHeroSection from '../components/sections/heros/HomeHeroSection.astro'
 
   <Container>
     <section class="feature-card__section">
-      <h2>Company Pages</h2>
-      <p>
-        Use one of our prebuilt company pages for your about page, contact page,
-        legal pages, blog posts, etc.
-      </p>
+      <h2>{t('home:sections.company.title')}</h2>
+      <p>{t('home:sections.company.description')}</p>
       <div class="feature-card__grid">
         <FeatureCard
-          href="/company/about"
-          title="About Page"
+          href={localizePath('/company/about')}
+          title={t('home:sections.company.cards.about')}
           imgSrc="/assets/images/home/screenshots/about"
         />
         <FeatureCard
-          href="/company/contact"
-          title="Contact Page"
+          href={localizePath('/company/contact')}
+          title={t('home:sections.company.cards.contact')}
           imgSrc="/assets/images/home/screenshots/contact"
         />
         <FeatureCard
-          href="/tours/"
-          title="Tours Page"
+          href={localizePath('/tours')}
+          title={t('home:sections.company.cards.tours')}
           imgSrc="/assets/images/home/screenshots/blog"
         />
         <FeatureCard
-          href="/tours/posts/remote-work-mental-health"
-          title="Tour Post"
+          href={localizePath('/tours/posts/remote-work-mental-health')}
+          title={t('home:sections.company.cards.tourPost')}
           imgSrc="/assets/images/home/screenshots/tour-post"
         />
         <FeatureCard
-          href="/company/legal"
+          href={localizePath('/company/legal')}
           imgSrc="/assets/images/home/screenshots/legal"
-          title="Legal Page"
+          title={t('home:sections.company.cards.legal')}
         />
       </div>
     </section>
@@ -70,18 +68,18 @@ import HomeHeroSection from '../components/sections/heros/HomeHeroSection.astro'
 
   <Container>
     <section class="feature-card__section">
-      <h2>Theme Pages</h2>
-      <p>Learn more about how to set up and use the Odyssey Theme.</p>
+      <h2>{t('home:sections.theme.title')}</h2>
+      <p>{t('home:sections.theme.description')}</p>
       <div class="feature-card__grid">
         <FeatureCard
-          href="/theme/get-started"
+          href={localizePath('/theme/get-started')}
           imgSrc="/assets/images/home/screenshots/get-started"
-          title="Get Started"
+          title={t('home:sections.theme.cards.getStarted')}
         />
         <FeatureCard
-          href="/theme/style-guide"
+          href={localizePath('/theme/style-guide')}
           imgSrc="/assets/images/home/screenshots/style-guide"
-          title="Style Guide"
+          title={t('home:sections.theme.cards.styleGuide')}
         />
       </div>
     </section>

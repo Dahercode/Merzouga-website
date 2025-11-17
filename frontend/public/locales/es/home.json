@@ -1,0 +1,38 @@
+{
+  "hero": {
+    "title": "Emprende un viaje auténtico por Marruecos",
+    "description": "Explora el desierto, las montañas y las medinas imperiales con itinerarios diseñados para una inmersión total.",
+    "primaryCta": "Descubre nuestros circuitos",
+    "secondaryCta": "Guía de estilo",
+    "imageAlt": "Viajeros montando camellos al atardecer en el desierto del Sáhara"
+  },
+  "sections": {
+    "landing": {
+      "title": "Páginas de destino",
+      "description": "Utiliza una de nuestras páginas de destino para impulsar tu sitio web o campaña publicitaria.",
+      "cards": {
+        "landing1": "Página de destino 1",
+        "landing2": "Página de destino 2"
+      }
+    },
+    "company": {
+      "title": "Páginas corporativas",
+      "description": "Utiliza nuestras páginas prediseñadas para tu sección sobre nosotros, contacto, páginas legales, artículos del blog, etc.",
+      "cards": {
+        "about": "Página Sobre nosotros",
+        "contact": "Página de contacto",
+        "tours": "Página de circuitos",
+        "tourPost": "Artículo de circuito",
+        "legal": "Página legal"
+      }
+    },
+    "theme": {
+      "title": "Páginas del tema",
+      "description": "Aprende a configurar y utilizar el tema Odyssey.",
+      "cards": {
+        "getStarted": "Empezar",
+        "styleGuide": "Guía de estilo"
+      }
+    }
+  }
+}

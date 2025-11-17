@@ -1,21 +1,16 @@
 ---
-import { Icon } from 'astro-icon/components';
-import {
-  TextCardSection,
-  Container,
-  Button,
-  FormInput,
-  FormSelect,
-  FormTextarea,
-} from '@components/odyssey-theme';
-import Layout from '../../layouts/Page.astro';
+import { changeLanguage } from "i18next";
+import { Icon } from "astro-icon/components";
+import { TextCardSection, Container, Button, FormInput, FormSelect, FormTextarea, } from "@components/odyssey-theme";
+import Layout from "../../layouts/Page.astro";
+
+changeLanguage("en");
 
 const seo = {
-  title: 'Astro Odyssey Theme Style Guide',
-  description: 'Get started on how to setup and use this Astro theme.',
+    title: "Astro Odyssey Theme Style Guide",
+    description: "Get started on how to setup and use this Astro theme.",
 };
-
-const selectOptions = ['Option 1', 'Option 2', 'Option 3'];
+const selectOptions = ["Option 1", "Option 2", "Option 3"];
 ---
 
 <Layout {seo}>
