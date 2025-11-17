@@ -2,7 +2,7 @@
 import { Container } from '@components/odyssey-theme';
 import Layout from './Page.astro';
 import { generateTagData } from '../utils/helpers';
-import { localizePath } from 'astro-i18next';
+import { localizePath, AstroI18next } from 'astro-i18next';
 
 const {
   content: {
@@ -14,6 +14,20 @@ const {
     tags,
   },
 } = Astro.props;
+
+const supportedLocales = AstroI18next?.config?.locales ?? [];
+const defaultLocale = AstroI18next?.config?.defaultLocale ?? 'en';
+const firstPathSegment = Astro.url.pathname.split('/')[1];
+const locale = supportedLocales.includes(firstPathSegment)
+  ? firstPathSegment
+  : defaultLocale;
+const formattedPublishDate = publishDate
+  ? new Intl.DateTimeFormat(locale, {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    }).format(new Date(publishDate))
+  : '';
 
 let allTagsData = [];
 
@@ -42,9 +56,13 @@ const seo = {
       }
     </ul>
     <h1>{title}</h1>
-    <p class="post-layout__date">
-      <time><em>{publishDate}</em></time>
-    </p>
+    {
+      publishDate && (
+        <p class="post-layout__date">
+          <time><em>{formattedPublishDate}</em></time>
+        </p>
+      )
+    }
     {
       featuredImage && (
         <img class="post-layout__img" src={featuredImage} alt={title} />

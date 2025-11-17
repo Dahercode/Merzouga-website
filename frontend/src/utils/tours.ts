@@ -1,4 +1,4 @@
-import { parse, isBefore } from 'date-fns';
+import { parseISO, isBefore } from 'date-fns';
 
 type Frontmatter = {
   title: string;
@@ -35,7 +35,7 @@ export function getTours(locale: string) {
       title: frontmatter.title,
       description: frontmatter.description,
       authors: frontmatter.authors,
-      publishDate: parse(frontmatter.publishDate, 'MMMM d, yyyy', new Date()),
+      publishDate: parseISO(frontmatter.publishDate),
       featuredImage: frontmatter.featuredImage,
       excerpt: frontmatter.excerpt,
       href: url,
