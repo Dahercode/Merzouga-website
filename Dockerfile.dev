@@ -5,7 +5,6 @@ WORKDIR /app/frontend
 # Copie les fichiers nécessaires
 COPY frontend/package.json frontend/package-lock.json ./
 
-# Installe avec npm (pas yarn)
 RUN yarn install
 
 # Copie le reste du code
