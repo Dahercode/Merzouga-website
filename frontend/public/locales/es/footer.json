@@ -1,0 +1,23 @@
+{
+  "landing": {
+    "title": "Páginas de aterrizaje",
+    "page1": "Página de aterrizaje 1",
+    "page2": "Página de aterrizaje 2"
+  },
+  "company": {
+    "title": "Empresa",
+    "about": "Sobre nosotros",
+    "tours": "Tours",
+    "contact": "Contacto"
+  },
+  "theme": {
+    "title": "Tema",
+    "getStarted": "Empezar",
+    "styleGuide": "Guía de estilo",
+    "themeSetup": "Configuración del tema",
+    "customizing": "Personalizar Odyssey"
+  },
+  "tours": {
+    "title": "Nuestros itinerarios destacados"
+  }
+}

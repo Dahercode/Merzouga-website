@@ -1,0 +1,23 @@
+{
+  "landing": {
+    "title": "Landing Pages",
+    "page1": "Landing Page 1",
+    "page2": "Landing Page 2"
+  },
+  "company": {
+    "title": "Company",
+    "about": "About",
+    "tours": "Tours",
+    "contact": "Contact"
+  },
+  "theme": {
+    "title": "Theme",
+    "getStarted": "Get Started",
+    "styleGuide": "Style Guide",
+    "themeSetup": "Theme Setup",
+    "customizing": "Customizing Odyssey"
+  },
+  "tours": {
+    "title": "Our signature tours"
+  }
+}

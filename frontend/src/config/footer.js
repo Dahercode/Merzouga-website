@@ -23,56 +23,39 @@ export const footerSocials = [
 
 export const footerLists = [
   {
-    title: 'Landing Pages',
+    titleKey: 'footer:company.title',
     items: [
       {
-        title: 'Landing Page 1',
-        slug: '/landing-pages/landing-1',
-      },
-      {
-        title: 'Landing Page 2',
-        slug: '/landing-pages/landing-2',
-      },
-      // {
-      // 	title: 'Landing Page 3',
-      // 	slug: '/landing-pages/landing-3',
-      // },
-    ],
-  },
-  {
-    title: 'Company',
-    items: [
-      {
-        title: 'About',
+        titleKey: 'footer:company.about',
         slug: '/company/about',
       },
       {
-        title: 'Tours',
+        titleKey: 'footer:company.tours',
         slug: '/tours',
       },
       {
-        title: 'Contact',
+        titleKey: 'footer:company.contact',
         slug: '/company/contact',
       },
     ],
   },
   {
-    title: 'Theme',
+    titleKey: 'footer:theme.title',
     items: [
       {
-        title: 'Get Started',
+        titleKey: 'footer:theme.getStarted',
         slug: '/theme/get-started',
       },
       {
-        title: 'Style Guide',
+        titleKey: 'footer:theme.styleGuide',
         slug: '/theme/style-guide',
       },
       {
-        title: 'Theme Setup',
+        titleKey: 'footer:theme.themeSetup',
         slug: '/theme/theme-setup',
       },
       {
-        title: 'Customizing Odyssey',
+        titleKey: 'footer:theme.customizing',
         slug: '/theme/customizing-odyssey',
       },
     ],
