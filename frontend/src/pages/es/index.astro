@@ -2,6 +2,7 @@
 import { Container, FeatureCard } from "@components/odyssey-theme";
 import Layout from "../../layouts/Page.astro";
 import HomeHeroSection from "../../components/sections/heros/HomeHeroSection.astro";
+import ReassuranceSection from "../../components/sections/home/ReassuranceSection.astro";
 import { t, changeLanguage } from "i18next";
 import { localizePath } from "astro-i18next";
 
@@ -13,6 +14,7 @@ changeLanguage("es");
   ></script>
 
   <HomeHeroSection />
+  <ReassuranceSection locale="es" />
   <Container>
     <section class="feature-card__section">
       <h2>{t('home:sections.landing.title')}</h2>
