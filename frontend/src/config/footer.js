@@ -1,23 +1,23 @@
 export const footerSocials = [
+  // {
+  //   name: 'Twitter',
+  //   url: 'https://twitter.com/jaydanurwin',
+  //   icon: 'mdi:twitter',
+  // },
+  // {
+  //   name: 'Youtube',
+  //   url: 'https://youtube.com/@jaydanurwin',
+  //   icon: 'mdi:youtube',
+  // },
   {
-    name: 'Twitter',
-    url: 'https://twitter.com/jaydanurwin',
-    icon: 'mdi:twitter',
+    name: 'Instagram',
+    url: 'https://www.instagram.com/true_morocco_tours/',
+    icon: 'mdi:instagram',
   },
   {
-    name: 'Youtube',
-    url: 'https://youtube.com/@jaydanurwin',
-    icon: 'mdi:youtube',
-  },
-  {
-    name: 'Github',
-    url: 'https://github.com/jaydanurwin',
-    icon: 'mdi:github',
-  },
-  {
-    name: 'Discord',
-    url: 'https://astro.build/chat',
-    icon: 'ic:baseline-discord',
+    name: 'Facebook',
+    url: 'https://www.facebook.com/mohamed.karaoui.1806/',
+    icon: 'mdi:facebook',
   },
 ];
 
