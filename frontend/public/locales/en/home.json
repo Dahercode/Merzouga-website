@@ -7,9 +7,9 @@
     "imageAlt": "Travelers riding camels at sunset in the Sahara Desert"
   },
   "sections": {
-    "landing": {
-      "title": "Landing Pages",
-      "description": "Use one of our landing pages to jumpstart your website or ad campaign.",
+    "tours": {
+      "title": "Our main tours",
+      "description": "Book one of our most succesful tours right now",
       "cards": {
         "landing1": "Landing Page 1",
         "landing2": "Landing Page 2"
