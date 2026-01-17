@@ -17,7 +17,7 @@ pnpm-debug.log*
 .env
 .env.production
 
-# macOS-specific files
+# macOS files
 .DS_Store
 
 icon.d.ts
