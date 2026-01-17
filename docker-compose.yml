@@ -11,3 +11,9 @@ services:
       - "3000:3000"
     container_name: astro_dev
     command: npx astro dev --host --port 3000
+  maildev:
+    image: maildev/maildev:2
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    container_name: maildev

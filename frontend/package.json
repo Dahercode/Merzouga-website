@@ -27,7 +27,9 @@
     "prettier-plugin-astro": "^0.14.1"
   },
   "dependencies": {
-    "astro-i18next": "^1.0.0-beta.21"
+    "@astrojs/vercel": "^9.0.4",
+    "astro-i18next": "^1.0.0-beta.21",
+    "nodemailer": "^6.9.15"
   },
   "overrides": {
     "entities": "4.5.0"

@@ -5,5 +5,23 @@
   },
   "heading": "Nuestros circuitos",
   "intro": "Explore el desierto de Merzouga, las montañas del Atlas y las ciudades imperiales. Nuestros circuitos auténticos salen de Marrakech, Casablanca o Tánger de 3 a 10 días.",
-  "featured": "Nuestros itinerarios destacados"
+  "featured": "Nuestros itinerarios destacados",
+  "booking": {
+    "cta": "Reservar",
+    "lead": "Planifica este itinerario con nuestro equipo.",
+    "title": "Reserva este tour",
+    "subtitle": "Comparte tus datos y confirmamos disponibilidad rápido.",
+    "fields": {
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "email": "Email",
+      "tour": "Tour seleccionado",
+      "people": "Número de personas",
+      "message": "Comentario"
+    },
+    "submit": "Confirmar",
+    "success": "¡Gracias! Hemos recibido tu solicitud y responderemos pronto.",
+    "error": "Algo salió mal. Inténtalo de nuevo o contáctanos directamente.",
+    "close": "Cerrar la ventana de reserva"
+  }
 }

@@ -5,5 +5,23 @@
   },
   "heading": "Nos circuits",
   "intro": "Explorez le désert de Merzouga, les montagnes de l'Atlas, les villes impériales. Nos circuits authentiques partent de Marrakech, Casablanca ou Tanger pour 3 à 10 jours.",
-  "featured": "Nos itinéraires phares"
+  "featured": "Nos itinéraires phares",
+  "booking": {
+    "cta": "Réserver",
+    "lead": "Planifiez cet itinéraire avec notre équipe.",
+    "title": "Réserver ce circuit",
+    "subtitle": "Partagez vos informations, nous revenons rapidement avec les disponibilités.",
+    "fields": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email",
+      "tour": "Circuit sélectionné",
+      "people": "Nombre de personnes",
+      "message": "Commentaire"
+    },
+    "submit": "Valider",
+    "success": "Merci ! Nous avons bien reçu votre demande et nous vous répondons rapidement.",
+    "error": "Une erreur est survenue. Réessayez ou contactez-nous directement.",
+    "close": "Fermer la fenêtre de réservation"
+  }
 }

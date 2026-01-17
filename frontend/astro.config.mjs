@@ -5,10 +5,21 @@ import icon from 'astro-icon';
 import lit from '@astrojs/lit';
 import astroI18next from "astro-i18next";
 
+import vercel from '@astrojs/vercel';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://truemoroccotours.com', // Your public domain, e.g.: https://my-site.dev/. Used to generate sitemaps and canonical URLs.
-  sitemap: true, // Generate sitemap (set to "false" to disable)
-  integrations: [sitemap(), mdx(), lit(), icon(), astroI18next()], // Add renderers to the config
-  output: 'static', // Output directory for the built site
+  // Your public domain, e.g.: https://my-site.dev/. Used to generate sitemaps and canonical URLs.
+  site: 'https://truemoroccotours.com',
+
+  // Generate sitemap (set to "false" to disable)
+  sitemap: true,
+
+  // Add renderers to the config
+  integrations: [sitemap(), mdx(), lit(), icon(), astroI18next()],
+
+  // Output directory for the built site
+  output: 'static',
+
+  adapter: vercel()
 });

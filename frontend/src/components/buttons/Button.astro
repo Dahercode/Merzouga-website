@@ -1,6 +1,13 @@
 ---
-const { href, unelevated, outlined, customIcon, onPrimary, newTab } =
-  Astro.props;
+const {
+  href,
+  unelevated,
+  outlined,
+  customIcon,
+  onPrimary,
+  newTab,
+  ...restProps
+} = Astro.props;
 
 const Tag = href ? 'a' : 'button';
 ---
@@ -12,6 +19,7 @@ const Tag = href ? 'a' : 'button';
   href={href}
   target={`${newTab ? '_blank' : ``}`}
   rel={`${newTab ? 'noopener noreferrer' : ``}`}
+  {...restProps}
 >
   <slot />
   {

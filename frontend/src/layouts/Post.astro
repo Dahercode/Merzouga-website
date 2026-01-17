@@ -1,8 +1,10 @@
 ---
-import { Container } from '@components/odyssey-theme';
+import { Container, Button, FormInput, FormTextarea } from '@components/odyssey-theme';
 import Layout from './Page.astro';
 import { generateTagData } from '../utils/helpers';
 import { localizePath, AstroI18next } from 'astro-i18next';
+import { Icon } from 'astro-icon/components';
+import { t, changeLanguage } from 'i18next';
 
 const {
   content: {
@@ -21,6 +23,7 @@ const firstPathSegment = Astro.url.pathname.split('/')[1];
 const locale = supportedLocales.includes(firstPathSegment)
   ? firstPathSegment
   : defaultLocale;
+changeLanguage(locale);
 const formattedPublishDate = publishDate
   ? new Intl.DateTimeFormat(locale, {
       month: 'long',
@@ -70,10 +73,116 @@ const seo = {
     }
   </div>
   <Container narrow>
+    <section class="booking-cta">
+      <div class="booking-cta__copy">
+        <p class="booking-cta__eyebrow">{t('tours:booking.lead')}</p>
+        <h2>{t('tours:booking.title')}</h2>
+        <p class="booking-cta__subtitle">{t('tours:booking.subtitle')}</p>
+      </div>
+      <div class="booking-cta__action">
+        <Button id="booking-open" customIcon data-booking-open>
+          {t('tours:booking.cta')}
+          <Fragment slot="icon">
+            <Icon name="ic:baseline-chevron-right" />
+          </Fragment>
+        </Button>
+      </div>
+    </section>
     <article id="article">
       <slot />
     </article>
   </Container>
+  <div
+    id="booking-modal"
+    class="booking-modal"
+    aria-hidden="true"
+  >
+    <div class="booking-modal__backdrop" data-booking-close></div>
+    <div
+      class="booking-modal__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="booking-modal__title"
+    >
+      <button
+        class="booking-modal__close"
+        type="button"
+        data-booking-close
+        aria-label={t('tours:booking.close')}
+      >
+        x
+      </button>
+      <div class="booking-modal__head">
+        <p class="booking-modal__eyebrow">{t('tours:booking.lead')}</p>
+        <h3 id="booking-modal__title">{title}</h3>
+        <p class="booking-modal__subtitle">{t('tours:booking.subtitle')}</p>
+      </div>
+      <form
+        id="booking-form"
+        class="booking-form"
+        data-success={t('tours:booking.success')}
+        data-error={t('tours:booking.error')}
+        data-tour={title}
+        data-locale={locale}
+      >
+        <div class="booking-form__grid">
+          <FormInput
+            type="text"
+            label={t('tours:booking.fields.firstName')}
+            name="firstName"
+            placeholder="Amal"
+            required
+            autocomplete="given-name"
+          />
+          <FormInput
+            type="text"
+            label={t('tours:booking.fields.lastName')}
+            name="lastName"
+            placeholder="Ben Youssef"
+            required
+            autocomplete="family-name"
+          />
+          <FormInput
+            type="email"
+            label={t('tours:booking.fields.email')}
+            name="email"
+            placeholder="voyageur@email.com"
+            required
+            autocomplete="email"
+          />
+          <FormInput
+            type="text"
+            label={t('tours:booking.fields.tour')}
+            name="tour"
+            value={title}
+            readonly
+          />
+          <FormInput
+            type="number"
+            label={t('tours:booking.fields.people')}
+            name="people"
+            min="1"
+            step="1"
+            placeholder="2"
+            inputmode="numeric"
+            required
+          />
+          <div class="booking-form__full">
+            <FormTextarea
+              label={t('tours:booking.fields.message')}
+              name="message"
+              placeholder="Dates, préférences, questions..."
+              rows={4}
+            />
+          </div>
+        </div>
+        <div class="booking-form__actions">
+          <Button type="submit">{t('tours:booking.submit')}</Button>
+        </div>
+        <p id="booking-status" class="booking-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
 </Layout>
 
 <style>
@@ -105,4 +214,200 @@ const seo = {
     margin-bottom: 1rem;
     opacity: 0.84;
   }
+  .booking-cta {
+    margin: 2rem auto;
+    padding: 1.5rem;
+    border-radius: var(--theme-shape-radius);
+    background-color: var(--theme-surface-1);
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--theme-surface-2) 50%, var(--theme-bg)),
+        var(--theme-surface-1)
+      ),
+      var(--theme-surface-1);
+    border: 1px solid var(--theme-outline-variant, rgba(0, 0, 0, 0.08));
+    display: grid;
+    grid-template-columns: 2fr auto;
+    align-items: center;
+    gap: 1rem;
+  }
+  .booking-cta__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.85rem;
+    margin: 0 0 0.35rem 0;
+    opacity: 0.8;
+  }
+  .booking-cta__subtitle {
+    margin: 0.35rem 0 0 0;
+    opacity: 0.92;
+  }
+  .booking-cta__action {
+    justify-self: end;
+  }
+  .booking-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--theme-transition);
+  }
+  .booking-modal.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .booking-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(3px);
+  }
+  .booking-modal__dialog {
+    position: relative;
+    max-width: 720px;
+    margin: 6vh auto;
+    background: var(--theme-bg);
+    color: var(--theme-on-bg);
+    padding: 2rem;
+    border-radius: var(--theme-shape-radius);
+    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.18);
+  }
+  .booking-modal__close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    border: none;
+    background: transparent;
+    font-size: 1.5rem;
+    color: inherit;
+    cursor: pointer;
+  }
+  .booking-modal__head {
+    margin-bottom: 1rem;
+  }
+  .booking-modal__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+  .booking-modal__subtitle {
+    margin: 0.25rem 0 0 0;
+    opacity: 0.92;
+  }
+  .booking-form {
+    display: grid;
+    gap: 1rem;
+  }
+  .booking-form__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .booking-form__full {
+    grid-column: 1 / -1;
+  }
+  .booking-form__grid :global(.form-field__container textarea) {
+    min-height: 100%;
+  }
+  .booking-form__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .booking-status {
+    margin: 0;
+    font-weight: 500;
+    min-height: 1.25rem;
+  }
+  .booking-status.success {
+    color: var(--theme-primary);
+  }
+  .booking-status.error {
+    color: #b3261e;
+  }
+  @media (max-width: 900px) {
+    .booking-modal__dialog {
+      margin: 4vh 1rem;
+    }
+    .booking-form__grid {
+      grid-template-columns: 1fr;
+    }
+    .booking-cta {
+      grid-template-columns: 1fr;
+    }
+    .booking-cta__action {
+      justify-self: start;
+    }
+  }
+  @media (max-width: 600px) {
+    .booking-modal__dialog {
+      padding: 1.25rem;
+    }
+  }
 </style>
+
+<script type="module">
+  const modal = document.getElementById('booking-modal');
+  const openButton = document.querySelector('[data-booking-open]');
+  const statusEl = document.getElementById('booking-status');
+  const form = document.getElementById('booking-form');
+  const tourInput = form?.querySelector("input[name='tour']");
+  const defaultTour = form?.dataset.tour || '';
+  const successCopy = form?.dataset.success || '';
+  const errorCopy = form?.dataset.error || '';
+  const locale = form?.dataset.locale || 'en';
+
+  const toggleModal = (open) => {
+    if (!modal) return;
+    modal.classList.toggle('is-open', open);
+    modal.setAttribute('aria-hidden', open ? 'false' : 'true');
+    document.body.style.overflow = open ? 'hidden' : '';
+    if (open && tourInput && defaultTour) {
+      tourInput.value = defaultTour;
+    }
+  };
+
+  openButton?.addEventListener('click', () => toggleModal(true));
+  modal?.querySelectorAll('[data-booking-close]')?.forEach((element) => {
+    element.addEventListener('click', () => toggleModal(false));
+  });
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      toggleModal(false);
+    }
+  });
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form) return;
+    statusEl?.classList.remove('success', 'error');
+    statusEl && (statusEl.textContent = '');
+    const submitButton = form.querySelector('button[type=\"submit\"]');
+    submitButton && (submitButton.disabled = true);
+
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch('/api/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, locale }),
+      });
+      if (!response.ok) throw new Error('Request failed');
+      statusEl && (statusEl.textContent = successCopy);
+      statusEl?.classList.add('success');
+      form.reset();
+      if (tourInput && defaultTour) {
+        tourInput.value = defaultTour;
+      }
+    } catch (error) {
+      statusEl && (statusEl.textContent = errorCopy);
+      statusEl?.classList.add('error');
+    } finally {
+      submitButton && (submitButton.disabled = false);
+    }
+  });
+</script>
