@@ -1,12 +1,16 @@
 ---
-import { Container, FeatureCard } from "@components/odyssey-theme";
+import { Container, FeatureCard, ToursList } from "@components/odyssey-theme";
 import Layout from "../../layouts/Page.astro";
 import HomeHeroSection from "../../components/sections/heros/HomeHeroSection.astro";
 import ReassuranceSection from "../../components/sections/home/ReassuranceSection.astro";
-import { t, changeLanguage } from "i18next";
-import { localizePath } from "astro-i18next";
+import i18next, { t, changeLanguage } from "i18next";
+import { localizePath, AstroI18next } from "astro-i18next";
+import { getTours } from "../../utils/tours";
 
 changeLanguage("fr");
+
+const locale = i18next.resolvedLanguage || i18next.language || AstroI18next.config.defaultLocale;
+const tours = getTours(locale).slice(0, 2);
 ---
 
 <Layout>
@@ -14,13 +18,14 @@ changeLanguage("fr");
   ></script>
 
   <HomeHeroSection />
-  <ReassuranceSection locale="fr" />
+  <ReassuranceSection locale="en" />
   <Container>
     <section class="feature-card__section">
-      <h2>{t('home:sections.landing.title')}</h2>
-      <p>{t('home:sections.landing.description')}</p>
+      <h2>{t('home:sections.tours.title')}</h2>
+      <p>{t('home:sections.tours.description')}</p>
       <div class="feature-card__grid">
-        <FeatureCard
+        <ToursList {tours} />
+        <!-- <FeatureCard
           href={localizePath('/landing-pages/landing-1')}
           title={t('home:sections.landing.cards.landing1')}
           imgSrc="/assets/images/home/screenshots/landing-1"
@@ -29,12 +34,12 @@ changeLanguage("fr");
           href={localizePath('/landing-pages/landing-2')}
           title={t('home:sections.landing.cards.landing2')}
           imgSrc="/assets/images/home/screenshots/landing-2"
-        />
+        /> -->
       </div>
     </section>
   </Container>
 
-  <Container>
+  <!-- <Container>
     <section class="feature-card__section">
       <h2>{t('home:sections.company.title')}</h2>
       <p>{t('home:sections.company.description')}</p>
@@ -85,7 +90,7 @@ changeLanguage("fr");
         />
       </div>
     </section>
-  </Container>
+  </Container> -->
 </Layout>
 
 <style>
@@ -94,7 +99,7 @@ changeLanguage("fr");
   }
   .feature-card__grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    /* grid-template-columns: repeat(2, 1fr); */
     gap: var(--theme-grid-gap);
   }
   @media (max-width: 768px) {
