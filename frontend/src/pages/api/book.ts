@@ -44,17 +44,21 @@ export const POST: APIRoute = async ({ request }) => {
   const body = await request.json().catch(() => null);
 
   if (!body || !isValidBody(body)) {
-    return new Response(
-      JSON.stringify({ error: 'Invalid payload' }),
-      {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    return new Response(JSON.stringify({ error: 'Invalid payload' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
-  const { firstName, lastName, email, tour, people, message = '', locale } =
-    body as Record<string, string>;
+  const {
+    firstName,
+    lastName,
+    email,
+    tour,
+    people,
+    message = '',
+    locale,
+  } = body as Record<string, string>;
 
   const subject = `[Booking] ${tour} (${people} guest${people === '1' ? '' : 's'})`;
 
@@ -84,12 +88,9 @@ export const POST: APIRoute = async ({ request }) => {
     });
   } catch (error) {
     console.error('Booking email failed', error);
-    return new Response(
-      JSON.stringify({ error: 'Unable to send email' }),
-      {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    return new Response(JSON.stringify({ error: 'Unable to send email' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 };

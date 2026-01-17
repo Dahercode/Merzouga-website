@@ -1,5 +1,10 @@
 ---
-import { Container, Button, FormInput, FormTextarea } from '@components/odyssey-theme';
+import {
+  Container,
+  Button,
+  FormInput,
+  FormTextarea,
+} from '@components/odyssey-theme';
 import Layout from './Page.astro';
 import { generateTagData } from '../utils/helpers';
 import { localizePath, AstroI18next } from 'astro-i18next';
@@ -62,7 +67,9 @@ const seo = {
     {
       publishDate && (
         <p class="post-layout__date">
-          <time><em>{formattedPublishDate}</em></time>
+          <time>
+            <em>{formattedPublishDate}</em>
+          </time>
         </p>
       )
     }
@@ -92,11 +99,7 @@ const seo = {
       <slot />
     </article>
   </Container>
-  <div
-    id="booking-modal"
-    class="booking-modal"
-    aria-hidden="true"
-  >
+  <div id="booking-modal" class="booking-modal" aria-hidden="true">
     <div class="booking-modal__backdrop" data-booking-close></div>
     <div
       class="booking-modal__dialog"
@@ -179,7 +182,13 @@ const seo = {
         <div class="booking-form__actions">
           <Button type="submit">{t('tours:booking.submit')}</Button>
         </div>
-        <p id="booking-status" class="booking-status" role="status" aria-live="polite"></p>
+        <p
+          id="booking-status"
+          class="booking-status"
+          role="status"
+          aria-live="polite"
+        >
+        </p>
       </form>
     </div>
   </div>
@@ -219,7 +228,8 @@ const seo = {
     padding: 1.5rem;
     border-radius: var(--theme-shape-radius);
     background-color: var(--theme-surface-1);
-    background: linear-gradient(
+    background:
+      linear-gradient(
         135deg,
         color-mix(in srgb, var(--theme-surface-2) 50%, var(--theme-bg)),
         var(--theme-surface-1)

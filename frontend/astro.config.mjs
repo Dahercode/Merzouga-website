@@ -3,7 +3,7 @@ import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import icon from 'astro-icon';
 import lit from '@astrojs/lit';
-import astroI18next from "astro-i18next";
+import astroI18next from 'astro-i18next';
 
 import vercel from '@astrojs/vercel';
 
@@ -21,5 +21,5 @@ export default defineConfig({
   // Output directory for the built site
   output: 'static',
 
-  adapter: vercel()
+  adapter: vercel(),
 });

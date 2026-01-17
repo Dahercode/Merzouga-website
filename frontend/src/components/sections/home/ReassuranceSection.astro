@@ -7,64 +7,74 @@ import { frontmatter as esFrontmatter } from '../../../content/reassurance/es.md
 import { frontmatter as frFrontmatter } from '../../../content/reassurance/fr.mdx';
 
 interface Props {
-	locale?: 'en' | 'es' | 'fr';
+  locale?: 'en' | 'es' | 'fr';
 }
 
 const { locale = 'en' } = Astro.props as Props;
 
 const frontmatterByLocale = {
-	en: enFrontmatter,
-	es: esFrontmatter,
-	fr: frFrontmatter
+  en: enFrontmatter,
+  es: esFrontmatter,
+  fr: frFrontmatter,
 } satisfies Record<string, typeof enFrontmatter>;
 
 const frontmatter = frontmatterByLocale[locale] ?? enFrontmatter;
-const { title, subtitle, rating, sources = [], reviews = [], cta } = frontmatter;
+const {
+  title,
+  subtitle,
+  rating,
+  sources = [],
+  reviews = [],
+  cta,
+} = frontmatter;
 
 const STARS = Array.from({ length: 5 });
 
 type SourceConfig = {
-	color: string;
-	background: string;
-	icon?: string;
+  color: string;
+  background: string;
+  icon?: string;
 };
 
 const SOURCE_CONFIG: Record<string, SourceConfig> = {
-	'Google Reviews': {
-		color: '#c75c02',
-		background: '#ffe6cd',
-		icon: 'mdi:google'
-	},
-	TripAdvisor: {
-		color: '#c05f0a',
-		background: '#ffe9d7',
-		icon: 'mdi:owl'
-	},
-	'Booking.com': {
-		color: '#c45600',
-		background: '#ffe1c2',
-		icon: 'mdi:briefcase'
-	}
+  'Google Reviews': {
+    color: '#c75c02',
+    background: '#ffe6cd',
+    icon: 'mdi:google',
+  },
+  TripAdvisor: {
+    color: '#c05f0a',
+    background: '#ffe9d7',
+    icon: 'mdi:owl',
+  },
+  'Booking.com': {
+    color: '#c45600',
+    background: '#ffe1c2',
+    icon: 'mdi:briefcase',
+  },
 };
 
 const ITEMS_PER_PAGE = 3;
 const MIN_PAGES = 2;
 
 const paginateReviews = (list: typeof reviews) => {
-	if (!list.length) return { items: [], totalPages: 0 };
-	const normalized = [...list];
-	const pageCount = Math.max(Math.ceil(list.length / ITEMS_PER_PAGE), MIN_PAGES);
-	while (normalized.length < pageCount * ITEMS_PER_PAGE) {
-		const next = list[normalized.length % list.length];
-		normalized.push(next);
-	}
-	return {
-		items: normalized.map((review, index) => ({
-			...review,
-			page: Math.floor(index / ITEMS_PER_PAGE) + 1
-		})),
-		totalPages: pageCount
-	};
+  if (!list.length) return { items: [], totalPages: 0 };
+  const normalized = [...list];
+  const pageCount = Math.max(
+    Math.ceil(list.length / ITEMS_PER_PAGE),
+    MIN_PAGES
+  );
+  while (normalized.length < pageCount * ITEMS_PER_PAGE) {
+    const next = list[normalized.length % list.length];
+    normalized.push(next);
+  }
+  return {
+    items: normalized.map((review, index) => ({
+      ...review,
+      page: Math.floor(index / ITEMS_PER_PAGE) + 1,
+    })),
+    totalPages: pageCount,
+  };
 };
 
 const { items: paginatedReviews, totalPages } = paginateReviews(reviews);
@@ -112,556 +122,573 @@ const paginationScript = `
 		setPage(1);
 	})();
 `;
-
 ---
 
 <Container>
-	<section
-		class="reassurance"
-		id={sectionId}
-		data-total-pages={totalPages}
-		data-items-per-page={ITEMS_PER_PAGE}
-	>
-		<div class="reassurance__header">
-			<h2>{title}</h2>
-			<p>{subtitle}</p>
+  <section
+    class="reassurance"
+    id={sectionId}
+    data-total-pages={totalPages}
+    data-items-per-page={ITEMS_PER_PAGE}
+  >
+    <div class="reassurance__header">
+      <h2>{title}</h2>
+      <p>{subtitle}</p>
 
-			<div class="rating-summary" aria-label={`Rated ${rating?.value ?? ''} out of 5`}>
-				<div class="rating-summary__stars">
-					{STARS.map((_, index) => (
-						<Icon name="ic:round-star" key={`reassurance-star-${index}`} />
-					))}
-				</div>
-				<div class="rating-summary__score">
-					<span class="rating-summary__value">{rating?.value}</span>
-					<span class="rating-summary__label">{rating?.label}</span>
-				</div>
-			</div>
+      <div
+        class="rating-summary"
+        aria-label={`Rated ${rating?.value ?? ''} out of 5`}
+      >
+        <div class="rating-summary__stars">
+          {
+            STARS.map((_, index) => (
+              <Icon name="ic:round-star" key={`reassurance-star-${index}`} />
+            ))
+          }
+        </div>
+        <div class="rating-summary__score">
+          <span class="rating-summary__value">{rating?.value}</span>
+          <span class="rating-summary__label">{rating?.label}</span>
+        </div>
+      </div>
 
-			<ul class="rating-summary__sources">
-				{sources.map((source, index) => {
-					const config = SOURCE_CONFIG[source.label] ?? {
-						color: 'var(--reassurance-accent-strong)',
-						background: 'var(--reassurance-chip-bg)'
-					};
-					return (
-						<li
-							key={`source-${index}`}
-							style={`--chip-color:${config.color}; --chip-bg:${config.background};`}
-						>
-							<span class="rating-summary__logo" aria-hidden="true">
-								{config.icon ? (
-									<Icon name={config.icon} width="18" height="18" />
-								) : (
-									<span>•</span>
-								)}
-							</span>
-							<span>{source.label}</span>
-						</li>
-					);
-				})}
-			</ul>
-		</div>
+      <ul class="rating-summary__sources">
+        {
+          sources.map((source, index) => {
+            const config = SOURCE_CONFIG[source.label] ?? {
+              color: 'var(--reassurance-accent-strong)',
+              background: 'var(--reassurance-chip-bg)',
+            };
+            return (
+              <li
+                key={`source-${index}`}
+                style={`--chip-color:${config.color}; --chip-bg:${config.background};`}
+              >
+                <span class="rating-summary__logo" aria-hidden="true">
+                  {config.icon ? (
+                    <Icon name={config.icon} width="18" height="18" />
+                  ) : (
+                    <span>•</span>
+                  )}
+                </span>
+                <span>{source.label}</span>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
 
-		<div class="reassurance__reviews">
-			{paginatedReviews.map((review) => {
-				const isVisible = review.page === 1;
-				return (
-						<article
-							class={`review-card ${!isVisible ? 'review-card--hidden' : ''}`}
-							key={`${review.name}-${review.page}-${review.platform}`}
-							data-review-page={review.page}
-							aria-hidden={(!isVisible).toString()}
-						>
-						<div class="review-card__header">
-							<div class="review-card__profile">
-								<img src={review.avatar} alt={`Portrait of ${review.name}`} loading="lazy" />
-								<div>
-									<p class="review-card__name">{review.name}</p>
-									<p class="review-card__location">{review.location}</p>
-								</div>
-							</div>
-						</div>
-						<div class="review-card__meta-row">
-							<div class="review-card__stars">
-								{STARS.map((_, index) => (
-									<Icon name="ic:round-star" key={`review-star-${index}-${review.name}`} />
-								))}
-							</div>
-							<span class="review-card__platform">{review.platform}</span>
-						</div>
-						<blockquote>
-							<p>{review.quote}</p>
-						</blockquote>
-						<p class="review-card__date">
-							<Icon name="ic:round-calendar-today" width="16" height="16" />
-							{review.date}
-						</p>
-					</article>
-				);
-			})}
-		</div>
+    <div class="reassurance__reviews">
+      {
+        paginatedReviews.map((review) => {
+          const isVisible = review.page === 1;
+          return (
+            <article
+              class={`review-card ${!isVisible ? 'review-card--hidden' : ''}`}
+              key={`${review.name}-${review.page}-${review.platform}`}
+              data-review-page={review.page}
+              aria-hidden={(!isVisible).toString()}
+            >
+              <div class="review-card__header">
+                <div class="review-card__profile">
+                  <img
+                    src={review.avatar}
+                    alt={`Portrait of ${review.name}`}
+                    loading="lazy"
+                  />
+                  <div>
+                    <p class="review-card__name">{review.name}</p>
+                    <p class="review-card__location">{review.location}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="review-card__meta-row">
+                <div class="review-card__stars">
+                  {STARS.map((_, index) => (
+                    <Icon
+                      name="ic:round-star"
+                      key={`review-star-${index}-${review.name}`}
+                    />
+                  ))}
+                </div>
+                <span class="review-card__platform">{review.platform}</span>
+              </div>
+              <blockquote>
+                <p>{review.quote}</p>
+              </blockquote>
+              <p class="review-card__date">
+                <Icon name="ic:round-calendar-today" width="16" height="16" />
+                {review.date}
+              </p>
+            </article>
+          );
+        })
+      }
+    </div>
 
-		{totalPages > 0 && (
-			<div class="reassurance__pagination" data-pagination>
-				<button type="button" class="ghost" data-reassurance-prev>
-					&lt; Previous
-				</button>
-				{Array.from({ length: totalPages }).map((_, index) => {
-					const page = index + 1;
-					return (
-						<button
-							type="button"
-							data-page-btn
-							data-page={page}
-							class={`page-number ${page === 1 ? 'active' : ''}`}
-							aria-pressed={page === 1}
-						>
-							{page}
-						</button>
-					);
-				})}
-				<button type="button" class="ghost" data-reassurance-next>
-					Next &gt;
-				</button>
-			</div>
-		)}
+    {
+      totalPages > 0 && (
+        <div class="reassurance__pagination" data-pagination>
+          <button type="button" class="ghost" data-reassurance-prev>
+            &lt; Previous
+          </button>
+          {Array.from({ length: totalPages }).map((_, index) => {
+            const page = index + 1;
+            return (
+              <button
+                type="button"
+                data-page-btn
+                data-page={page}
+                class={`page-number ${page === 1 ? 'active' : ''}`}
+                aria-pressed={page === 1}
+              >
+                {page}
+              </button>
+            );
+          })}
+          <button type="button" class="ghost" data-reassurance-next>
+            Next &gt;
+          </button>
+        </div>
+      )
+    }
 
-		<div class="reassurance__cta">
-			<div>
-				<h3>{cta?.title}</h3>
-				<p>{cta?.description}</p>
-			</div>
-			<Button href={localizePath('/tours')}>
-				{cta?.buttonLabel ?? 'Book Your Tour Now'}
-			</Button>
-		</div>
-	</section>
+    <div class="reassurance__cta">
+      <div>
+        <h3>{cta?.title}</h3>
+        <p>{cta?.description}</p>
+      </div>
+      <Button href={localizePath('/tours')}>
+        {cta?.buttonLabel ?? 'Book Your Tour Now'}
+      </Button>
+    </div>
+  </section>
 </Container>
 
 <style>
-	:global(:root),
-	:global([data-theme='default']),
-	:global([data-theme='classic']) {
-		--reassurance-bg-start: var(--theme-surface-1, #fef7ec);
-		--reassurance-bg-end: var(--theme-surface-2, #ffe0c2);
-		--reassurance-card-bg: var(--theme-bg, #fff);
-		--reassurance-card-shadow: rgba(196, 137, 69, 0.2);
-		--reassurance-card-border: rgba(0, 0, 0, 0.04);
-		--reassurance-text: var(--theme-on-bg, #5c3a16);
-		--reassurance-muted: rgba(92, 58, 22, 0.75);
-		--reassurance-accent: var(--theme-primary, #f3a733);
-		--reassurance-accent-strong: var(--theme-primary-hover, #cf6b0a);
-		--reassurance-chip-bg: var(--theme-surface-1, rgba(255, 255, 255, 0.8));
-		--reassurance-cta-start: var(--theme-primary, #f39b2c);
-		--reassurance-cta-end: var(--theme-primary-hover, #e05d00);
-		--reassurance-cta-text: var(--theme-on-primary, #ffffff);
-	}
+  :global(:root),
+  :global([data-theme='default']),
+  :global([data-theme='classic']) {
+    --reassurance-bg-start: var(--theme-surface-1, #fef7ec);
+    --reassurance-bg-end: var(--theme-surface-2, #ffe0c2);
+    --reassurance-card-bg: var(--theme-bg, #fff);
+    --reassurance-card-shadow: rgba(196, 137, 69, 0.2);
+    --reassurance-card-border: rgba(0, 0, 0, 0.04);
+    --reassurance-text: var(--theme-on-bg, #5c3a16);
+    --reassurance-muted: rgba(92, 58, 22, 0.75);
+    --reassurance-accent: var(--theme-primary, #f3a733);
+    --reassurance-accent-strong: var(--theme-primary-hover, #cf6b0a);
+    --reassurance-chip-bg: var(--theme-surface-1, rgba(255, 255, 255, 0.8));
+    --reassurance-cta-start: var(--theme-primary, #f39b2c);
+    --reassurance-cta-end: var(--theme-primary-hover, #e05d00);
+    --reassurance-cta-text: var(--theme-on-primary, #ffffff);
+  }
 
-	:global([data-theme='sand']) {
-		--reassurance-bg-start: #fff4e6;
-		--reassurance-bg-end: #ffd5a2;
-		--reassurance-card-bg: #fffaf3;
-		--reassurance-card-shadow: rgba(212, 151, 94, 0.25);
-		--reassurance-card-border: rgba(210, 130, 70, 0.25);
-		--reassurance-text: #5a351d;
-		--reassurance-muted: rgba(90, 53, 29, 0.8);
-		--reassurance-accent: #f6a23c;
-		--reassurance-accent-strong: #c76102;
-		--reassurance-chip-bg: #fff1e3;
-		--reassurance-cta-start: #f7a333;
-		--reassurance-cta-end: #e06e02;
-		--reassurance-cta-text: #fffaf3;
-	}
+  :global([data-theme='sand']) {
+    --reassurance-bg-start: #fff4e6;
+    --reassurance-bg-end: #ffd5a2;
+    --reassurance-card-bg: #fffaf3;
+    --reassurance-card-shadow: rgba(212, 151, 94, 0.25);
+    --reassurance-card-border: rgba(210, 130, 70, 0.25);
+    --reassurance-text: #5a351d;
+    --reassurance-muted: rgba(90, 53, 29, 0.8);
+    --reassurance-accent: #f6a23c;
+    --reassurance-accent-strong: #c76102;
+    --reassurance-chip-bg: #fff1e3;
+    --reassurance-cta-start: #f7a333;
+    --reassurance-cta-end: #e06e02;
+    --reassurance-cta-text: #fffaf3;
+  }
 
-	:global([data-theme='dark']) {
-		--reassurance-bg-start: var(--theme-bg, #111);
-		--reassurance-bg-end: var(--theme-surface-1, #1f1f1b);
-		--reassurance-card-bg: var(--theme-surface-1, #1f1f1b);
-		--reassurance-card-shadow: rgba(0, 0, 0, 0.45);
-		--reassurance-card-border: rgba(255, 255, 255, 0.08);
-		--reassurance-text: var(--theme-on-bg, #f7e0c9);
-		--reassurance-muted: rgba(247, 224, 201, 0.65);
-		--reassurance-accent: var(--theme-primary, #f2b464);
-		--reassurance-accent-strong: var(--theme-primary-hover, #ffc176);
-		--reassurance-chip-bg: rgba(255, 255, 255, 0.08);
-		--reassurance-cta-start: var(--theme-primary, #f39b2c);
-		--reassurance-cta-end: var(--theme-primary-hover, #d86d05);
-		--reassurance-cta-text: var(--theme-on-primary, #fff);
-	}
+  :global([data-theme='dark']) {
+    --reassurance-bg-start: var(--theme-bg, #111);
+    --reassurance-bg-end: var(--theme-surface-1, #1f1f1b);
+    --reassurance-card-bg: var(--theme-surface-1, #1f1f1b);
+    --reassurance-card-shadow: rgba(0, 0, 0, 0.45);
+    --reassurance-card-border: rgba(255, 255, 255, 0.08);
+    --reassurance-text: var(--theme-on-bg, #f7e0c9);
+    --reassurance-muted: rgba(247, 224, 201, 0.65);
+    --reassurance-accent: var(--theme-primary, #f2b464);
+    --reassurance-accent-strong: var(--theme-primary-hover, #ffc176);
+    --reassurance-chip-bg: rgba(255, 255, 255, 0.08);
+    --reassurance-cta-start: var(--theme-primary, #f39b2c);
+    --reassurance-cta-end: var(--theme-primary-hover, #d86d05);
+    --reassurance-cta-text: var(--theme-on-primary, #fff);
+  }
 
-	.reassurance {
-		margin: var(--section-margin) auto;
-		padding: clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 3rem);
-		border-radius: var(--theme-shape-radius);
-		background: linear-gradient(
-			180deg,
-			var(--reassurance-bg-start),
-			var(--reassurance-bg-end)
-		);
-		display: flex;
-		flex-direction: column;
-		gap: clamp(2rem, 4vw, 3rem);
-		text-align: center;
-		box-shadow: 0 30px 60px var(--reassurance-card-shadow);
-		position: relative;
-		isolation: isolate;
-		color: var(--reassurance-text);
-		overflow: hidden;
-		max-width: 1280px;
-		width: 100%;
-	}
+  .reassurance {
+    margin: var(--section-margin) auto;
+    padding: clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 3rem);
+    border-radius: var(--theme-shape-radius);
+    background: linear-gradient(
+      180deg,
+      var(--reassurance-bg-start),
+      var(--reassurance-bg-end)
+    );
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 4vw, 3rem);
+    text-align: center;
+    box-shadow: 0 30px 60px var(--reassurance-card-shadow);
+    position: relative;
+    isolation: isolate;
+    color: var(--reassurance-text);
+    overflow: hidden;
+    max-width: 1280px;
+    width: 100%;
+  }
 
-	.reassurance::before {
-		content: '';
-		position: absolute;
-		inset: -40% -10%;
-		background: radial-gradient(
-			circle,
-			rgba(255, 255, 255, 0.45) 10%,
-			transparent 65%
-		);
-		z-index: -1;
-	}
+  .reassurance::before {
+    content: '';
+    position: absolute;
+    inset: -40% -10%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.45) 10%,
+      transparent 65%
+    );
+    z-index: -1;
+  }
 
-	.reassurance__header {
-		max-width: 680px;
-		margin: 0 auto;
-		display: flex;
-		flex-direction: column;
-		gap: 0.85rem;
-	}
+  .reassurance__header {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
 
-	.reassurance__header h2 {
-		font-size: clamp(1.75rem, 4vw, 2.5rem);
-		margin: 0;
-		color: var(--reassurance-text);
-	}
+  .reassurance__header h2 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    margin: 0;
+    color: var(--reassurance-text);
+  }
 
-	.reassurance__header p {
-		margin: 0;
-		color: var(--reassurance-muted);
-	}
+  .reassurance__header p {
+    margin: 0;
+    color: var(--reassurance-muted);
+  }
 
-	.rating-summary {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.75rem;
-		flex-wrap: wrap;
-		margin-top: 0.5rem;
-	}
+  .rating-summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
 
-	.rating-summary__stars {
-		color: #f8b84e;
-		display: flex;
-		gap: 0.2rem;
-	}
+  .rating-summary__stars {
+    color: #f8b84e;
+    display: flex;
+    gap: 0.2rem;
+  }
 
-	.rating-summary__stars :global(svg) {
-		width: 1.35rem;
-		height: 1.35rem;
-	}
+  .rating-summary__stars :global(svg) {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
 
-	.rating-summary__score {
-		display: inline-flex;
-		align-items: baseline;
-		gap: 0.45rem;
-		color: var(--reassurance-text);
-		font-weight: 600;
-	}
+  .rating-summary__score {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    color: var(--reassurance-text);
+    font-weight: 600;
+  }
 
-	.rating-summary__value {
-		font-size: 2rem;
-		line-height: 1;
-		color: var(--reassurance-accent-strong);
-	}
+  .rating-summary__value {
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--reassurance-accent-strong);
+  }
 
-	.rating-summary__label {
-		font-size: 0.85rem;
-		color: var(--reassurance-muted);
-		white-space: nowrap;
-	}
+  .rating-summary__label {
+    font-size: 0.85rem;
+    color: var(--reassurance-muted);
+    white-space: nowrap;
+  }
 
-	.rating-summary__sources {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: flex;
-		justify-content: center;
-		gap: 1rem;
-		flex-wrap: wrap;
-		font-weight: 600;
-		color: var(--reassurance-accent-strong);
-	}
+  .rating-summary__sources {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-weight: 600;
+    color: var(--reassurance-accent-strong);
+  }
 
-	.rating-summary__sources li {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.35rem;
-		padding: 0.45rem 1.15rem;
-		border-radius: 999px;
-		background: var(--chip-bg, var(--reassurance-chip-bg));
-		box-shadow: 0 12px 25px rgba(0, 0, 0, 0.07);
-		color: var(--chip-color, var(--reassurance-accent-strong));
-		font-weight: 600;
-	}
+  .rating-summary__sources li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 1.15rem;
+    border-radius: 999px;
+    background: var(--chip-bg, var(--reassurance-chip-bg));
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.07);
+    color: var(--chip-color, var(--reassurance-accent-strong));
+    font-weight: 600;
+  }
 
-	.rating-summary__logo {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 1rem;
-		height: 1rem;
-		color: currentColor;
-	}
+  .rating-summary__logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    color: currentColor;
+  }
 
-	.rating-summary__logo :global(svg) {
-		width: 100%;
-		height: 100%;
-	}
+  .rating-summary__logo :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
 
-	.rating-summary__logo span {
-		font-size: 1rem;
-		line-height: 1;
-	}
+  .rating-summary__logo span {
+    font-size: 1rem;
+    line-height: 1;
+  }
 
-	.reassurance__reviews {
-		display: grid;
-		grid-template-columns: repeat(3, minmax(320px, 1fr));
-		gap: 1.5rem;
-		text-align: left;
-		max-width: 1240px;
-		margin: 0 auto;
-		width: 100%;
-		justify-items: center;
-	}
+  .reassurance__reviews {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(320px, 1fr));
+    gap: 1.5rem;
+    text-align: left;
+    max-width: 1240px;
+    margin: 0 auto;
+    width: 100%;
+    justify-items: center;
+  }
 
-	.review-card {
-		background: var(--reassurance-card-bg);
-		border-radius: 1.5rem;
-		padding: 2rem;
-		box-shadow: 0 25px 60px var(--reassurance-card-shadow);
-		display: flex;
-		flex-direction: column;
-		gap: 1.25rem;
-		color: var(--reassurance-text);
-		border: 1px solid var(--reassurance-card-border);
-		height: 100%;
-		max-width: 360px;
-		width: 100%;
-		margin: 0 auto;
-	}
+  .review-card {
+    background: var(--reassurance-card-bg);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 25px 60px var(--reassurance-card-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    color: var(--reassurance-text);
+    border: 1px solid var(--reassurance-card-border);
+    height: 100%;
+    max-width: 360px;
+    width: 100%;
+    margin: 0 auto;
+  }
 
-	.review-card--hidden {
-		display: none;
-	}
+  .review-card--hidden {
+    display: none;
+  }
 
-	.review-card__header {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-	}
+  .review-card__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
 
-	.review-card__profile {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-	}
+  .review-card__profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
 
-	.review-card__profile img {
-		width: 62px;
-		height: 62px;
-		border-radius: 50%;
-		object-fit: cover;
-		border: 3px solid rgba(243, 167, 51, 0.25);
-		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-	}
+  .review-card__profile img {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(243, 167, 51, 0.25);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  }
 
-	.review-card__name {
-		margin: 0;
-		font-size: 1.05rem;
-		font-weight: 600;
-		color: var(--reassurance-text);
-	}
+  .review-card__name {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--reassurance-text);
+  }
 
-	.review-card__location {
-		margin: 0;
-		color: var(--reassurance-muted);
-		font-size: 0.85rem;
-	}
+  .review-card__location {
+    margin: 0;
+    color: var(--reassurance-muted);
+    font-size: 0.85rem;
+  }
 
-	.review-card__platform {
-		font-weight: 600;
-		color: var(--reassurance-accent-strong);
-		font-size: 0.85rem;
-	}
+  .review-card__platform {
+    font-weight: 600;
+    color: var(--reassurance-accent-strong);
+    font-size: 0.85rem;
+  }
 
-	.review-card__meta-row {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-top: 0.5rem;
-	}
+  .review-card__meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
 
-	.review-card__stars {
-		color: var(--reassurance-accent);
-		display: flex;
-		gap: 0.1rem;
-		font-size: 0.8rem;
-	}
+  .review-card__stars {
+    color: var(--reassurance-accent);
+    display: flex;
+    gap: 0.1rem;
+    font-size: 0.8rem;
+  }
 
-	blockquote {
-		margin: 0;
-		padding: 0;
-		border: none;
-		font-size: 0.8rem;
-		line-height: 1.6;
-		color: var(--reassurance-text);
-		font-family: var(--theme-font-family-serif);
-		font-style: italic;
-		font-weight: 200;
-	}
+  blockquote {
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--reassurance-text);
+    font-family: var(--theme-font-family-serif);
+    font-style: italic;
+    font-weight: 200;
+  }
 
-	.review-card__date {
-		margin: 0;
-		color: var(--reassurance-muted);
-		font-size: 0.85rem;
-		display: flex;
-		align-items: center;
-		gap: 0.4rem;
-	}
+  .review-card__date {
+    margin: 0;
+    color: var(--reassurance-muted);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
 
-	.review-card__date :global(svg) {
-		color: var(--reassurance-accent);
-	}
+  .review-card__date :global(svg) {
+    color: var(--reassurance-accent);
+  }
 
-	.reassurance__pagination {
-		display: flex;
-		justify-content: center;
-		gap: 0.5rem;
-		flex-wrap: wrap;
-	}
+  .reassurance__pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
 
-	.reassurance__pagination button {
-		border: none;
-		background: var(--reassurance-card-bg);
-		padding: 0.65rem 1.5rem;
-		border-radius: 999px;
-		font-weight: 600;
-		color: var(--reassurance-accent-strong);
-		box-shadow: 0 12px 30px var(--reassurance-card-shadow);
-		cursor: pointer;
-		transition: transform 0.2s ease, box-shadow 0.2s ease;
-	}
+  .reassurance__pagination button {
+    border: none;
+    background: var(--reassurance-card-bg);
+    padding: 0.65rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    color: var(--reassurance-accent-strong);
+    box-shadow: 0 12px 30px var(--reassurance-card-shadow);
+    cursor: pointer;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
 
-	.reassurance__pagination button.active {
-		background: linear-gradient(
-			135deg,
-			var(--reassurance-cta-start),
-			var(--reassurance-cta-end)
-		);
-		color: var(--reassurance-cta-text);
-	}
+  .reassurance__pagination button.active {
+    background: linear-gradient(
+      135deg,
+      var(--reassurance-cta-start),
+      var(--reassurance-cta-end)
+    );
+    color: var(--reassurance-cta-text);
+  }
 
-	.reassurance__pagination .page-number {
-		width: 2.5rem;
-		height: 2.5rem;
-		border-radius: 50%;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0;
-	}
+  .reassurance__pagination .page-number {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
 
-	.reassurance__pagination button.ghost {
-		background: transparent;
-		box-shadow: none;
-		border: 1px solid var(--reassurance-accent-strong);
-		color: var(--reassurance-accent-strong);
-		opacity: 0.85;
-	}
+  .reassurance__pagination button.ghost {
+    background: transparent;
+    box-shadow: none;
+    border: 1px solid var(--reassurance-accent-strong);
+    color: var(--reassurance-accent-strong);
+    opacity: 0.85;
+  }
 
-	.reassurance__pagination button:disabled {
-		opacity: 0.45;
-		cursor: not-allowed;
-	}
+  .reassurance__pagination button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
 
-	.reassurance__cta {
-		background: linear-gradient(
-			135deg,
-			var(--reassurance-cta-start),
-			var(--reassurance-cta-end)
-		);
-		color: var(--reassurance-cta-text);
-		padding: clamp(1.5rem, 3vw, 2.5rem);
-		border-radius: calc(var(--theme-shape-radius) / 1.15);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		text-align: center;
-		gap: 1rem;
-		max-width: 780px;
-		align-self: center;
-		width: 100%;
-	}
+  .reassurance__cta {
+    background: linear-gradient(
+      135deg,
+      var(--reassurance-cta-start),
+      var(--reassurance-cta-end)
+    );
+    color: var(--reassurance-cta-text);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    border-radius: calc(var(--theme-shape-radius) / 1.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    max-width: 780px;
+    align-self: center;
+    width: 100%;
+  }
 
-	.reassurance__cta h3 {
-		margin: 0 0 0.4rem;
-	}
+  .reassurance__cta h3 {
+    margin: 0 0 0.4rem;
+  }
 
-	.reassurance__cta p {
-		margin: 0;
-		opacity: 0.85;
-	}
+  .reassurance__cta p {
+    margin: 0;
+    opacity: 0.85;
+  }
 
-	.reassurance__cta :global(.btn) {
-		background: #fff;
-		color: var(--reassurance-accent-strong);
-		padding: 0.65rem 1.75rem;
-		font-weight: 700;
-		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-	}
+  .reassurance__cta :global(.btn) {
+    background: #fff;
+    color: var(--reassurance-accent-strong);
+    padding: 0.65rem 1.75rem;
+    font-weight: 700;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  }
 
-	.reassurance__cta :global(.btn:hover) {
-		background: rgba(255, 255, 255, 0.85);
-	}
+  .reassurance__cta :global(.btn:hover) {
+    background: rgba(255, 255, 255, 0.85);
+  }
 
-	@media (max-width: 1024px) {
-		.reassurance__reviews {
-			grid-template-columns: repeat(2, minmax(280px, 1fr));
-		}
-	}
+  @media (max-width: 1024px) {
+    .reassurance__reviews {
+      grid-template-columns: repeat(2, minmax(280px, 1fr));
+    }
+  }
 
-	@media (max-width: 768px) {
-		.reassurance__header {
-			text-align: center;
-		}
+  @media (max-width: 768px) {
+    .reassurance__header {
+      text-align: center;
+    }
 
-		.reassurance__reviews {
-			grid-template-columns: 1fr;
-		}
+    .reassurance__reviews {
+      grid-template-columns: 1fr;
+    }
 
-		.review-card {
-			padding: 1.25rem;
-		}
+    .review-card {
+      padding: 1.25rem;
+    }
 
-		.reassurance__cta {
-			flex-direction: column;
-			text-align: center;
-		}
+    .reassurance__cta {
+      flex-direction: column;
+      text-align: center;
+    }
 
-		.rating-summary__score {
-			justify-content: center;
-			flex-wrap: wrap;
-		}
+    .rating-summary__score {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
-		.rating-summary__sources {
-			flex-direction: column;
-		}
-	}
+    .rating-summary__sources {
+      flex-direction: column;
+    }
+  }
 </style>
 
-{totalPages > 0 && (
-	<script type="module" set:html={paginationScript}></script>
-)}
+{totalPages > 0 && <script type="module" set:html={paginationScript} />}

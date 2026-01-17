@@ -1,22 +1,27 @@
 ---
-import { Container, TextCardSection, ToursList } from "@components/odyssey-theme";
-import Layout from "../../../layouts/Page.astro";
-import i18next, { t, changeLanguage } from "i18next";
-import { AstroI18next } from "astro-i18next";
-import { getTours } from "../../../utils/tours";
+import {
+  Container,
+  TextCardSection,
+  ToursList,
+} from '@components/odyssey-theme';
+import Layout from '../../../layouts/Page.astro';
+import i18next, { t, changeLanguage } from 'i18next';
+import { AstroI18next } from 'astro-i18next';
+import { getTours } from '../../../utils/tours';
 
-changeLanguage("fr");
+changeLanguage('fr');
 
-const locale = i18next.resolvedLanguage ||
-    i18next.language ||
-    AstroI18next.config.defaultLocale;
+const locale =
+  i18next.resolvedLanguage ||
+  i18next.language ||
+  AstroI18next.config.defaultLocale;
 const tours = getTours(locale);
 i18next.resolvedLanguage ||
-    i18next.language ||
-    AstroI18next.config.defaultLocale;
+  i18next.language ||
+  AstroI18next.config.defaultLocale;
 const seo = {
-    title: t("tours:seo.title"),
-    description: t("tours:seo.description"),
+  title: t('tours:seo.title'),
+  description: t('tours:seo.description'),
 };
 ---
 
@@ -37,7 +42,7 @@ const seo = {
   .tours-list__section {
     margin: var(--section-margin) auto;
   }
-   .tours-list_description {
+  .tours-list_description {
     font-size: 25px;
     font-weight: 400;
   }

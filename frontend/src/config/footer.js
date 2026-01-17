@@ -41,7 +41,6 @@ export const footerLists = [
   },
   {
     titleKey: 'footer:theme.title',
-    items: [
-    ],
+    items: [],
   },
 ];
