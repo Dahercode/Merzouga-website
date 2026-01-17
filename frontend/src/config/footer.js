@@ -42,22 +42,6 @@ export const footerLists = [
   {
     titleKey: 'footer:theme.title',
     items: [
-      {
-        titleKey: 'footer:theme.getStarted',
-        slug: '/theme/get-started',
-      },
-      {
-        titleKey: 'footer:theme.styleGuide',
-        slug: '/theme/style-guide',
-      },
-      {
-        titleKey: 'footer:theme.themeSetup',
-        slug: '/theme/theme-setup',
-      },
-      {
-        titleKey: 'footer:theme.customizing',
-        slug: '/theme/customizing-odyssey',
-      },
     ],
   },
 ];
