@@ -1,18 +1,14 @@
 ---
-import { Container, ToursList } from '@components/odyssey-theme';
-import Layout from '../layouts/Page.astro';
-import HomeHeroSection from '../components/sections/heros/HomeHeroSection.astro';
-import ReassuranceSection from '../components/sections/home/ReassuranceSection.astro';
-import i18next, { t, changeLanguage } from 'i18next';
-import { AstroI18next } from 'astro-i18next';
-import { getTours } from '../utils/tours';
+import { Container, ToursList } from "@components/odyssey-theme";
+import Layout from "../layouts/Page.astro";
+import HomeHeroSection from "../components/sections/heros/HomeHeroSection.astro";
+import ReassuranceSection from "../components/sections/home/ReassuranceSection.astro";
+import i18next, { t, changeLanguage } from "i18next";
+import { getTours } from "../utils/tours";
 
-changeLanguage('en');
+changeLanguage("en");
 
-const locale =
-  i18next.resolvedLanguage ||
-  i18next.language ||
-  AstroI18next.config.defaultLocale;
+const locale = i18next.resolvedLanguage;
 const tours = getTours(locale).slice(0, 2);
 ---
 
@@ -20,8 +16,8 @@ const tours = getTours(locale).slice(0, 2);
   <script type="module" src="/src/components/theme-switcher/theme-switcher.ts"
   ></script>
 
-  <HomeHeroSection />
-  <ReassuranceSection locale="en" />
+  <HomeHeroSection/>
+  <ReassuranceSection locale={locale} />
   <Container>
     <section class="feature-card__section">
       <h2>{t('home:sections.tours.title')}</h2>

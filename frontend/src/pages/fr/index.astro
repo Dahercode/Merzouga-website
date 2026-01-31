@@ -1,18 +1,14 @@
 ---
-import { Container, FeatureCard, ToursList } from '@components/odyssey-theme';
-import Layout from '../../layouts/Page.astro';
-import HomeHeroSection from '../../components/sections/heros/HomeHeroSection.astro';
-import ReassuranceSection from '../../components/sections/home/ReassuranceSection.astro';
-import i18next, { t, changeLanguage } from 'i18next';
-import { localizePath, AstroI18next } from 'astro-i18next';
-import { getTours } from '../../utils/tours';
+import { Container, ToursList } from "@components/odyssey-theme";
+import Layout from "../../layouts/Page.astro";
+import HomeHeroSection from "../../components/sections/heros/HomeHeroSection.astro";
+import ReassuranceSection from "../../components/sections/home/ReassuranceSection.astro";
+import i18next, { t, changeLanguage } from "i18next";
+import { getTours } from "../../utils/tours";
 
-changeLanguage('fr');
+changeLanguage("fr");
 
-const locale =
-  i18next.resolvedLanguage ||
-  i18next.language ||
-  AstroI18next.config.defaultLocale;
+const locale = i18next.resolvedLanguage;
 const tours = getTours(locale).slice(0, 2);
 ---
 
@@ -20,70 +16,14 @@ const tours = getTours(locale).slice(0, 2);
   <script type="module" src="/src/components/theme-switcher/theme-switcher.ts"
   ></script>
 
-  <HomeHeroSection />
-  <ReassuranceSection locale="en" />
+  <HomeHeroSection/>
+  <ReassuranceSection locale={locale} />
   <Container>
     <section class="feature-card__section">
       <h2>{t('home:sections.tours.title')}</h2>
       <p>{t('home:sections.tours.description')}</p>
       <div class="feature-card__grid">
         <ToursList {tours} />
-      </div>
-    </section>
-  </Container>
-
-  <!-- <Container>
-    <section class="feature-card__section">
-      <h2>{t('home:sections.company.title')}</h2>
-      <p>{t('home:sections.company.description')}</p>
-      <div class="feature-card__grid">
-        <FeatureCard
-          href={localizePath('/company/about')}
-          title={t('home:sections.company.cards.about')}
-          imgSrc="/assets/images/home/screenshots/about"
-        />
-        <FeatureCard
-          href={localizePath('/company/contact')}
-          title={t('home:sections.company.cards.contact')}
-          imgSrc="/assets/images/home/screenshots/contact"
-        />
-        <FeatureCard
-          href={localizePath('/tours')}
-          title={t('home:sections.company.cards.tours')}
-          imgSrc="/assets/images/home/screenshots/blog"
-        />
-        <FeatureCard
-          href={localizePath('/tours/posts/remote-work-mental-health')}
-          title={t('home:sections.company.cards.tourPost')}
-          imgSrc="/assets/images/home/screenshots/tour-post"
-        />
-        <FeatureCard
-          href={localizePath('/company/legal')}
-          imgSrc="/assets/images/home/screenshots/legal"
-          title={t('home:sections.company.cards.legal')}
-        />
-      </div>
-    </section>
-  </Container>
-
-  <Container>
-    <section class="feature-card__section">
-      <h2>{t('home:sections.theme.title')}</h2>
-      <p>{t('home:sections.theme.description')}</p>
-      <div class="feature-card__grid">
-        <FeatureCard
-          href={localizePath('/theme/get-started')}
-          imgSrc="/assets/images/home/screenshots/get-started"
-          title={t('home:sections.theme.cards.getStarted')}
-        />
-        <FeatureCard
-          href={localizePath('/theme/style-guide')}
-          imgSrc="/assets/images/home/screenshots/style-guide"
-          title={t('home:sections.theme.cards.styleGuide')}
-        />
-      </div>
-    </section>
-  </Container> -->
 </Layout>
 
 <style>

@@ -262,7 +262,6 @@ class PhoneInput extends LitElement {
 
   constructor() {
     super();
-    console.log('PhoneInput constructor called');
     this.selectedCountry = COUNTRIES[0]; // Default: Morocco
     this.phoneNumber = '';
     this.dropdownOpen = false;
@@ -275,7 +274,6 @@ class PhoneInput extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    console.log('PhoneInput connected to DOM');
     document.addEventListener('click', this._handleOutsideClick, true);
   }
 
@@ -294,7 +292,6 @@ class PhoneInput extends LitElement {
   _toggleDropdown = (e) => {
     e.stopPropagation();
     this.dropdownOpen = !this.dropdownOpen;
-    console.log('Toggle dropdown:', this.dropdownOpen);
     if (this.dropdownOpen) {
       this.requestUpdate();
       setTimeout(() => {
@@ -310,7 +307,6 @@ class PhoneInput extends LitElement {
     if (e) {
       e.stopPropagation();
     }
-    console.log('Select country:', country.name);
     this.selectedCountry = country;
     this.dropdownOpen = false;
     this.searchQuery = '';
@@ -324,7 +320,6 @@ class PhoneInput extends LitElement {
     // Remove all non-digit characters
     const digitsOnly = input.replace(/\D/g, '');
     this.phoneNumber = digitsOnly;
-    console.log('Phone input:', digitsOnly, 'Valid:', this.validationState);
     this._validatePhone();
     this._notifyChange();
     this.requestUpdate();
@@ -410,14 +405,12 @@ class PhoneInput extends LitElement {
 
   _handleFocus = () => {
     this._isFocused = true;
-    console.log('Phone input focused');
     this.requestUpdate();
   };
 
   _handleBlur = () => {
     setTimeout(() => {
       this._isFocused = false;
-      console.log('Phone input blurred');
       this.requestUpdate();
     }, 100);
   };

@@ -219,7 +219,6 @@ class DateRangePicker extends LitElement {
 
   constructor() {
     super();
-    console.log('DateRangePicker constructor called');
     this.startDate = '';
     this.endDate = '';
     this.isOpen = false;
@@ -231,7 +230,6 @@ class DateRangePicker extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    console.log('DateRangePicker connected to DOM');
     document.addEventListener('click', this._handleOutsideClick, true);
   }
 
@@ -243,7 +241,6 @@ class DateRangePicker extends LitElement {
   _handleOutsideClick = (e) => {
     const path = e.composedPath();
     if (!path.includes(this)) {
-      console.log('Outside click detected, closing calendar');
       this.isOpen = false;
       this._isFocused = false;
       this.requestUpdate();
@@ -252,10 +249,8 @@ class DateRangePicker extends LitElement {
 
   _toggleCalendar = (e) => {
     e.stopPropagation();
-    console.log('Toggle calendar clicked, current isOpen:', this.isOpen);
     this.isOpen = !this.isOpen;
     this._isFocused = this.isOpen;
-    console.log('New isOpen state:', this.isOpen);
     this.requestUpdate();
   };
 
@@ -477,7 +472,4 @@ class DateRangePicker extends LitElement {
     `;
   }
 }
-
-console.log('Registering date-range-picker custom element');
 customElements.define('date-range-picker', DateRangePicker);
-console.log('date-range-picker registered successfully');
