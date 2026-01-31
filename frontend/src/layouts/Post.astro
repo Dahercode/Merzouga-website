@@ -155,21 +155,12 @@ const seo = {
               />
             </div>
           </div>
-          <div class="booking-form__field">
+          <div class="booking-form__field booking-form__field--phone">
             <label for="booking-phone">
               {t('tours:booking.fields.phone')}
             </label>
-            <div class="booking-form__input">
-              <Icon name="ic:baseline-phone" />
-              <input
-                id="booking-phone"
-                type="tel"
-                name="phoneDisplay"
-                placeholder="+212 6 12 34 56 78"
-                required
-                autocomplete="tel"
-              />
-            </div>
+            <phone-input id="booking-phone" required></phone-input>
+            <input type="hidden" name="phone" id="phone-hidden" />
           </div>
           <div class="booking-form__field">
             <label for="booking-people">
@@ -189,37 +180,13 @@ const seo = {
               />
             </div>
           </div>
-          <div class="booking-form__field">
-            <label for="booking-start-date">
-              {t('tours:booking.fields.startDate')}
+          <div class="booking-form__field booking-form__field--dates">
+            <label for="booking-dates">
+              {t('tours:booking.fields.startDate')} / {t('tours:booking.fields.endDate')}
             </label>
-            <div class="booking-form__input">
-              <Icon name="ic:baseline-event" />
-              <input
-                id="booking-start-date"
-                type="text"
-                name="startDate"
-                placeholder="YYYY-MM-DD"
-                required
-                data-date-start
-              />
-            </div>
-          </div>
-          <div class="booking-form__field">
-            <label for="booking-end-date">
-              {t('tours:booking.fields.endDate')}
-            </label>
-            <div class="booking-form__input">
-              <Icon name="ic:baseline-event-available" />
-              <input
-                id="booking-end-date"
-                type="text"
-                name="endDate"
-                placeholder="YYYY-MM-DD"
-                required
-                data-date-end
-              />
-            </div>
+            <date-range-picker id="booking-dates"></date-range-picker>
+            <input type="hidden" name="startDate" id="start-date-hidden" required />
+            <input type="hidden" name="endDate" id="end-date-hidden" required />
           </div>
           <div class="booking-form__full">
             <div class="booking-form__field booking-form__field--textarea">
@@ -231,7 +198,7 @@ const seo = {
                 <textarea
                   id="booking-message"
                   name="message"
-                  placeholder="Dates, préférences, questions..."
+                  placeholder="Préférences, questions..."
                   rows={4}
                 ></textarea>
               </div>
@@ -255,9 +222,6 @@ const seo = {
 </Layout>
 
 <style>
-  @import 'flatpickr/dist/flatpickr.min.css';
-  @import 'intl-tel-input/build/css/intlTelInput.css';
-
   #article {
     padding-bottom: 8rem;
   }
@@ -276,22 +240,24 @@ const seo = {
   }
   .booking-cta {
     box-sizing: border-box;
-    padding: 0.9rem clamp(1.25rem, 3vw, 2.5rem);
+    padding: 1.1rem clamp(1.5rem, 3vw, 2.5rem);
     border-radius: var(--theme-shape-radius);
-    background-color: var(--theme-surface-1);
     background:
       linear-gradient(
         135deg,
-        color-mix(in srgb, var(--theme-surface-2) 50%, var(--theme-bg)),
-        var(--theme-surface-1)
-      ),
-      var(--theme-surface-1);
-    border: 1px solid var(--theme-outline-variant, rgba(0, 0, 0, 0.08));
+        color-mix(in srgb, var(--theme-primary) 8%, var(--theme-bg)),
+        color-mix(in srgb, var(--theme-primary) 4%, var(--theme-surface-1))
+      );
+    border: 2px solid color-mix(in srgb, var(--theme-primary) 25%, transparent);
+    border-top: 3px solid var(--theme-primary);
     display: grid;
     grid-template-columns: minmax(0, 1.75fr) auto;
     align-items: center;
-    gap: 0.75rem;
-    box-shadow: 0 -10px 28px rgba(0, 0, 0, 0.14);
+    gap: 1rem;
+    box-shadow:
+      0 -10px 28px rgba(0, 0, 0, 0.14),
+      0 -2px 8px color-mix(in srgb, var(--theme-primary) 12%, transparent);
+    transition: all var(--theme-transition);
   }
   .booking-cta--sticky {
     position: fixed;
@@ -301,34 +267,61 @@ const seo = {
     transform: none;
     width: 100%;
     border-radius: 0;
-    padding: 0.85rem clamp(1.25rem, 4vw, 2.5rem);
-    padding-bottom: calc(0.85rem + env(safe-area-inset-bottom));
+    padding: 1rem clamp(1.5rem, 4vw, 2.5rem);
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
     z-index: 1100;
-    box-shadow: 0 -14px 34px rgba(0, 0, 0, 0.14);
+    box-shadow:
+      0 -14px 40px rgba(0, 0, 0, 0.18),
+      0 -4px 16px color-mix(in srgb, var(--theme-primary) 15%, transparent);
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
   }
   .booking-cta__eyebrow {
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    font-weight: 600;
     margin: 0;
-    opacity: 0.75;
+    color: var(--theme-primary);
+    opacity: 0.95;
   }
   .booking-cta h2 {
-    margin: 0;
-    font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.35rem);
+    margin: 0.25rem 0 0 0;
+    font-size: clamp(1.15rem, 1rem + 0.7vw, 1.5rem);
     line-height: 1.2;
+    font-weight: 700;
+    color: color-mix(in srgb, var(--theme-on-bg) 95%, var(--theme-primary));
   }
   .booking-cta__subtitle {
-    margin: 0.15rem 0 0 0;
-    opacity: 0.92;
-    font-size: clamp(0.94rem, 0.9rem + 0.35vw, 1.05rem);
+    margin: 0.25rem 0 0 0;
+    opacity: 0.88;
+    font-size: clamp(0.92rem, 0.88rem + 0.35vw, 1.02rem);
+    font-weight: 500;
   }
   .booking-cta__action {
     justify-self: end;
   }
   .booking-cta__action :global(.btn) {
-    padding: 0.4rem 0.9rem;
-    font-size: 0.95rem;
+    padding: 0.65rem 1.35rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: var(--theme-primary);
+    color: var(--theme-on-primary);
+    border: none;
+    box-shadow:
+      0 4px 12px color-mix(in srgb, var(--theme-primary) 35%, transparent),
+      0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+  }
+  .booking-cta__action :global(.btn:hover) {
+    transform: translateY(-1px);
+    box-shadow:
+      0 6px 16px color-mix(in srgb, var(--theme-primary) 45%, transparent),
+      0 3px 6px rgba(0, 0, 0, 0.15);
+  }
+  .booking-cta__action :global(.btn:active) {
+    transform: translateY(0);
   }
   .booking-modal {
     position: fixed;
@@ -362,6 +355,7 @@ const seo = {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    box-sizing: border-box;
   }
   .booking-modal__close {
     position: absolute;
@@ -401,16 +395,34 @@ const seo = {
     padding-right: 0.25rem;
     padding-bottom: 2rem;
     scrollbar-width: thin;
+    overflow-x: hidden;
   }
   .booking-form__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
+    width: 100%;
+    box-sizing: border-box;
   }
   .booking-form__field label {
     display: block;
     margin-bottom: 0.35rem;
     font-weight: 600;
+  }
+  .booking-form__field--phone {
+    display: flex;
+    flex-direction: column;
+  }
+  .booking-form__field--phone phone-input {
+    width: 100%;
+  }
+  .booking-form__field--dates {
+    /* grid-column: 1 / -1; */
+    display: flex;
+    flex-direction: column;
+  }
+  .booking-form__field--dates date-range-picker {
+    width: 100%;
   }
   .booking-form__input {
     display: grid;
@@ -433,6 +445,9 @@ const seo = {
     transition: border-color var(--theme-transition),
       box-shadow var(--theme-transition);
     color: var(--form-field-input-color, var(--theme-on-surface-1, #1f1f1f));
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
   }
   .booking-form__input:focus-within {
     border-color: var(--form-field-border-focus-color, var(--theme-primary, #5b4cff));
@@ -454,6 +469,8 @@ const seo = {
     color: var(--form-field-input-color, var(--theme-on-surface-1, #1f1f1f));
     font-size: 0.95rem;
     line-height: 1.45;
+    box-sizing: border-box;
+    min-width: 0;
   }
   .booking-form__input input::placeholder,
   .booking-form__input textarea::placeholder {
@@ -482,7 +499,6 @@ const seo = {
     position: sticky;
     bottom: 0;
     gap: 0.5rem;
-    padding: 0.35rem 0.85rem 0.5rem 0.85rem;
     background: var(--theme-bg);
     background: linear-gradient(
         180deg,
@@ -490,13 +506,6 @@ const seo = {
         var(--theme-bg)
       ),
       var(--theme-bg);
-    border-top: 1px solid
-      color-mix(
-        in srgb,
-        var(--form-field-border-color, var(--theme-outline-variant, #d0d0d0)) 75%,
-        #cfd6e5
-      );
-    box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.08);
     border-radius: 0 0 var(--theme-shape-radius) var(--theme-shape-radius);
   }
   .booking-form__actions :global(.btn) {
@@ -508,6 +517,7 @@ const seo = {
     color: var(--theme-on-primary);
     border: none;
     box-shadow: 0 8px 18px color-mix(in srgb, var(--theme-primary) 30%, transparent);
+    width: 100%;
   }
   .booking-status {
     margin: 0;
@@ -523,20 +533,24 @@ const seo = {
   @media (max-width: 900px) {
     .booking-cta {
       grid-template-columns: minmax(0, 1fr) auto;
-      gap: 0.65rem;
-      padding: 0.85rem clamp(1rem, 4vw, 1.5rem);
+      gap: 0.85rem;
+      padding: 1rem clamp(1.25rem, 4vw, 1.75rem);
     }
     .booking-cta h2 {
-      font-size: clamp(1rem, 0.9rem + 0.9vw, 1.2rem);
+      font-size: clamp(1.05rem, 0.95rem + 0.9vw, 1.25rem);
     }
     .booking-cta__subtitle {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
     }
     .booking-cta__action {
       justify-self: end;
     }
+    .booking-cta__action :global(.btn) {
+      padding: 0.6rem 1.2rem;
+      font-size: 0.95rem;
+    }
     .booking-cta--sticky {
-      padding-bottom: calc(0.85rem + env(safe-area-inset-bottom));
+      padding-bottom: calc(1rem + env(safe-area-inset-bottom));
     }
     .booking-modal__dialog {
       margin: 4vh 1rem;
@@ -550,22 +564,25 @@ const seo = {
     .booking-cta {
       grid-template-columns: 1fr;
       text-align: center;
-      gap: 0.5rem;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
     }
     .booking-cta__action {
       justify-self: stretch;
     }
     .booking-cta__action :global(.btn) {
       width: 100%;
-    }
-    .booking-cta h2 {
+      padding: 0.75rem 1.5rem;
       font-size: 1rem;
     }
+    .booking-cta h2 {
+      font-size: 1.05rem;
+    }
     .booking-cta__subtitle {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
     }
     .booking-cta--sticky {
-      padding: 0.85rem 1rem;
+      padding: 1rem 1.25rem;
     }
     .booking-modal__dialog {
       padding: 1.1rem;
@@ -588,6 +605,10 @@ const seo = {
 </style>
 
 <script type="module">
+  // Import web components for client-side
+  import '/src/components/PhoneInput.js';
+  import '/src/components/DateRangePicker.js';
+
   const modal = document.getElementById('booking-modal');
   const openButtons = Array.from(
     document.querySelectorAll('[data-booking-open]')
@@ -595,33 +616,34 @@ const seo = {
   const statusEl = document.getElementById('booking-status');
   const form = document.getElementById('booking-form');
   const tourInput = form?.querySelector("input[name='tour']");
-  const startDateInput = form?.querySelector('[data-date-start]');
-  const endDateInput = form?.querySelector('[data-date-end]');
+  const phoneInput = document.getElementById('booking-phone');
+  const phoneHidden = document.getElementById('phone-hidden');
+  const dateRangePicker = document.getElementById('booking-dates');
+  const startDateHidden = document.getElementById('start-date-hidden');
+  const endDateHidden = document.getElementById('end-date-hidden');
   const defaultTour = form?.dataset.tour || '';
   const successCopy = form?.dataset.success || '';
   const errorCopy = form?.dataset.error || '';
   const locale = form?.dataset.locale || 'en';
-  let startPicker;
-  let endPicker;
-  const flatpickrSrc =
-    'https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js';
-  const loadScript = (src) =>
-    new Promise((resolve, reject) => {
-      if (document.querySelector(`script[src="${src}"]`)) {
-        resolve();
-        return;
-      }
-      const script = document.createElement('script');
-      script.src = src;
-      script.async = false;
-      script.onload = () => resolve();
-      script.onerror = () => reject(new Error(`Failed to load ${src}`));
-      document.head.appendChild(script);
+  let phoneValid = false;
+  let datesValid = false;
+
+  // Handle phone input changes
+  if (phoneInput) {
+    phoneInput.addEventListener('phone-change', (e) => {
+      phoneHidden.value = e.detail.phone;
+      phoneValid = e.detail.isValid;
     });
-  const loadFlatpickr = () =>
-    window.flatpickr
-      ? Promise.resolve(window.flatpickr)
-      : loadScript(flatpickrSrc).then(() => window.flatpickr);
+  }
+
+  // Handle date range picker changes
+  if (dateRangePicker) {
+    dateRangePicker.addEventListener('date-change', (e) => {
+      startDateHidden.value = e.detail.startDate;
+      endDateHidden.value = e.detail.endDate;
+      datesValid = !!(e.detail.startDate && e.detail.endDate);
+    });
+  }
 
   const toggleModal = (open) => {
     if (!modal) return;
@@ -637,32 +659,7 @@ const seo = {
   };
 
   const hydrateEnhancements = () => {
-    hydrateDates();
-  };
-
-  const hydrateDates = async () => {
-    if (!startDateInput || !endDateInput || startPicker || endPicker) return;
-    try {
-      const flatpickr = await loadFlatpickr();
-      if (!flatpickr) throw new Error('flatpickr unavailable');
-      startPicker = flatpickr(startDateInput, {
-        dateFormat: 'Y-m-d',
-        minDate: 'today',
-        allowInput: true,
-      });
-      endPicker = flatpickr(endDateInput, {
-        dateFormat: 'Y-m-d',
-        minDate: 'today',
-        allowInput: true,
-      });
-      startPicker.config.onChange.push((selectedDates) => {
-        if (selectedDates[0]) {
-          endPicker.set('minDate', selectedDates[0]);
-        }
-      });
-    } catch (error) {
-      console.error('Date pickers init failed', error);
-    }
+    // All components are now web components that auto-initialize
   };
 
   const openModal = (event) => {
@@ -691,6 +688,23 @@ const seo = {
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form) return;
+
+    // Validate phone number
+    if (!phoneValid) {
+      statusEl?.classList.remove('success');
+      statusEl?.classList.add('error');
+      statusEl && (statusEl.textContent = 'Please enter a valid phone number');
+      return;
+    }
+
+    // Validate dates
+    if (!datesValid) {
+      statusEl?.classList.remove('success');
+      statusEl?.classList.add('error');
+      statusEl && (statusEl.textContent = 'Please select both start and end dates');
+      return;
+    }
+
     statusEl?.classList.remove('success', 'error');
     statusEl && (statusEl.textContent = '');
     const submitButton = form.querySelector('button[type=\"submit\"]');

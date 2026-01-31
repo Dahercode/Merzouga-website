@@ -29,8 +29,6 @@
   "dependencies": {
     "@astrojs/vercel": "^9.0.4",
     "astro-i18next": "^1.0.0-beta.21",
-    "flatpickr": "^4.6.13",
-    "intl-tel-input": "^19.5.7",
     "nodemailer": "^6.9.15"
   },
   "overrides": {
