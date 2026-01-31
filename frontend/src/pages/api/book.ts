@@ -26,7 +26,16 @@ const transporter = nodemailer.createTransport({
 });
 
 function isValidBody(body: Record<string, unknown>) {
-  const required = ['firstName', 'lastName', 'email', 'tour', 'people'];
+  const required = [
+    'firstName',
+    'lastName',
+    'email',
+    'tour',
+    'people',
+    'phone',
+    'startDate',
+    'endDate',
+  ];
   return required.every((key) => typeof body[key] === 'string');
 }
 
@@ -56,6 +65,9 @@ export const POST: APIRoute = async ({ request }) => {
     email,
     tour,
     people,
+    phone,
+    startDate,
+    endDate,
     message = '',
     locale,
   } = body as Record<string, string>;
@@ -66,7 +78,10 @@ export const POST: APIRoute = async ({ request }) => {
     `Tour: ${tour}`,
     `Name: ${firstName} ${lastName}`,
     `Email: ${email}`,
+    `Phone: ${phone}`,
     `People: ${people}`,
+    `Start date: ${startDate}`,
+    `End date: ${endDate}`,
     `Locale: ${locale || 'unknown'}`,
     '',
     'Notes:',

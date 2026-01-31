@@ -15,8 +15,11 @@
       "firstName": "Nombre",
       "lastName": "Apellido",
       "email": "Email",
+      "phone": "Teléfono",
       "tour": "Tour seleccionado",
       "people": "Número de personas",
+      "startDate": "Fecha de inicio deseada",
+      "endDate": "Fecha de fin deseada",
       "message": "Comentario"
     },
     "submit": "Confirmar",

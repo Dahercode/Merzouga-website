@@ -1,10 +1,5 @@
 ---
-import {
-  Container,
-  Button,
-  FormInput,
-  FormTextarea,
-} from '@components/odyssey-theme';
+import { Container, Button } from '@components/odyssey-theme';
 import Layout from './Page.astro';
 import { generateTagData } from '../utils/helpers';
 import { localizePath, AstroI18next } from 'astro-i18next';
@@ -80,25 +75,25 @@ const seo = {
     }
   </div>
   <Container narrow>
-    <section class="booking-cta">
-      <div class="booking-cta__copy">
-        <p class="booking-cta__eyebrow">{t('tours:booking.lead')}</p>
-        <h2>{t('tours:booking.title')}</h2>
-        <p class="booking-cta__subtitle">{t('tours:booking.subtitle')}</p>
-      </div>
-      <div class="booking-cta__action">
-        <Button id="booking-open" customIcon data-booking-open>
-          {t('tours:booking.cta')}
-          <Fragment slot="icon">
-            <Icon name="ic:baseline-chevron-right" />
-          </Fragment>
-        </Button>
-      </div>
-    </section>
     <article id="article">
       <slot />
     </article>
   </Container>
+  <section class="booking-cta booking-cta--sticky">
+    <div class="booking-cta__copy">
+      <p class="booking-cta__eyebrow">{t('tours:booking.lead')}</p>
+      <h2>{t('tours:booking.title')}</h2>
+      <p class="booking-cta__subtitle">{t('tours:booking.subtitle')}</p>
+    </div>
+    <div class="booking-cta__action">
+      <Button id="booking-open" customIcon data-booking-open>
+        {t('tours:booking.cta')}
+        <Fragment slot="icon">
+          <Icon name="ic:baseline-chevron-right" />
+        </Fragment>
+      </Button>
+    </div>
+  </section>
   <div id="booking-modal" class="booking-modal" aria-hidden="true">
     <div class="booking-modal__backdrop" data-booking-close></div>
     <div
@@ -128,55 +123,137 @@ const seo = {
         data-tour={title}
         data-locale={locale}
       >
-        <div class="booking-form__grid">
-          <FormInput
-            type="text"
-            label={t('tours:booking.fields.firstName')}
-            name="firstName"
-            placeholder="Amal"
-            required
-            autocomplete="given-name"
-          />
-          <FormInput
-            type="text"
-            label={t('tours:booking.fields.lastName')}
-            name="lastName"
-            placeholder="Ben Youssef"
-            required
-            autocomplete="family-name"
-          />
-          <FormInput
-            type="email"
-            label={t('tours:booking.fields.email')}
-            name="email"
-            placeholder="voyageur@email.com"
-            required
-            autocomplete="email"
-          />
-          <FormInput
-            type="text"
-            label={t('tours:booking.fields.tour')}
-            name="tour"
-            value={title}
-            readonly
-          />
-          <FormInput
-            type="number"
-            label={t('tours:booking.fields.people')}
-            name="people"
-            min="1"
-            step="1"
-            placeholder="2"
-            inputmode="numeric"
-            required
-          />
+        <input type="hidden" name="tour" value={title} />
+        <div class="booking-form__content">
+          <div class="booking-form__grid">
+          <div class="booking-form__field">
+            <label for="booking-first-name">
+              {t('tours:booking.fields.firstName')}
+            </label>
+            <div class="booking-form__input">
+              <Icon name="ic:baseline-person" />
+              <input
+                id="booking-first-name"
+                type="text"
+                name="firstName"
+                placeholder="Amal"
+                required
+                autocomplete="given-name"
+              />
+            </div>
+          </div>
+          <div class="booking-form__field">
+            <label for="booking-last-name">
+              {t('tours:booking.fields.lastName')}
+            </label>
+            <div class="booking-form__input">
+              <Icon name="ic:baseline-person-outline" />
+              <input
+                id="booking-last-name"
+                type="text"
+                name="lastName"
+                placeholder="Ben Youssef"
+                required
+                autocomplete="family-name"
+              />
+            </div>
+          </div>
+          <div class="booking-form__field">
+            <label for="booking-email">{t('tours:booking.fields.email')}</label>
+            <div class="booking-form__input">
+              <Icon name="ic:baseline-email" />
+              <input
+                id="booking-email"
+                type="email"
+                name="email"
+                placeholder="voyageur@email.com"
+                required
+                autocomplete="email"
+              />
+            </div>
+          </div>
+          <div class="booking-form__field">
+            <label for="booking-phone">
+              {t('tours:booking.fields.phone')}
+            </label>
+            <div class="booking-form__input">
+              <Icon name="ic:baseline-phone" />
+              <input
+                id="booking-phone"
+                type="tel"
+                name="phoneDisplay"
+                placeholder="+212 6 12 34 56 78"
+                required
+                autocomplete="tel"
+              />
+            </div>
+          </div>
+          <div class="booking-form__field">
+            <label for="booking-people">
+              {t('tours:booking.fields.people')}
+            </label>
+            <div class="booking-form__input">
+              <Icon name="ic:baseline-groups" />
+              <input
+                id="booking-people"
+                type="number"
+                name="people"
+                min="1"
+                step="1"
+                placeholder="2"
+                inputmode="numeric"
+                required
+              />
+            </div>
+          </div>
+          <div class="booking-form__field">
+            <label for="booking-start-date">
+              {t('tours:booking.fields.startDate')}
+            </label>
+            <div class="booking-form__input">
+              <Icon name="ic:baseline-event" />
+              <input
+                id="booking-start-date"
+                type="text"
+                name="startDate"
+                placeholder="YYYY-MM-DD"
+                required
+                data-date-start
+              />
+            </div>
+          </div>
+          <div class="booking-form__field">
+            <label for="booking-end-date">
+              {t('tours:booking.fields.endDate')}
+            </label>
+            <div class="booking-form__input">
+              <Icon name="ic:baseline-event-available" />
+              <input
+                id="booking-end-date"
+                type="text"
+                name="endDate"
+                placeholder="YYYY-MM-DD"
+                required
+                data-date-end
+              />
+            </div>
+          </div>
           <div class="booking-form__full">
-            <FormTextarea
-              label={t('tours:booking.fields.message')}
-              name="message"
-              placeholder="Dates, préférences, questions..."
-              rows={4}
-            />
+            <div class="booking-form__field booking-form__field--textarea">
+              <label for="booking-message">
+                {t('tours:booking.fields.message')}
+              </label>
+              <div class="booking-form__input booking-form__input--textarea">
+                <Icon name="ic:baseline-chat-bubble" />
+                <textarea
+                  id="booking-message"
+                  name="message"
+                  placeholder="Dates, préférences, questions..."
+                  rows={4}
+                ></textarea>
+              </div>
+            </div>
+          </div>
           </div>
         </div>
         <div class="booking-form__actions">
@@ -195,8 +272,11 @@ const seo = {
 </Layout>
 
 <style>
+  @import 'flatpickr/dist/flatpickr.min.css';
+  @import 'intl-tel-input/build/css/intlTelInput.css';
+
   #article {
-    padding-bottom: 3rem;
+    padding-bottom: 8rem;
   }
   .post-header__container {
     max-width: var(--theme-blog-post-header-width);
@@ -224,8 +304,8 @@ const seo = {
     opacity: 0.84;
   }
   .booking-cta {
-    margin: 2rem auto;
-    padding: 1.5rem;
+    box-sizing: border-box;
+    padding: 0.9rem clamp(1.25rem, 3vw, 2.5rem);
     border-radius: var(--theme-shape-radius);
     background-color: var(--theme-surface-1);
     background:
@@ -237,28 +317,52 @@ const seo = {
       var(--theme-surface-1);
     border: 1px solid var(--theme-outline-variant, rgba(0, 0, 0, 0.08));
     display: grid;
-    grid-template-columns: 2fr auto;
+    grid-template-columns: minmax(0, 1.75fr) auto;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
+    box-shadow: 0 -10px 28px rgba(0, 0, 0, 0.14);
+  }
+  .booking-cta--sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+    border-radius: 0;
+    padding: 0.85rem clamp(1.25rem, 4vw, 2.5rem);
+    padding-bottom: calc(0.85rem + env(safe-area-inset-bottom));
+    z-index: 1100;
+    box-shadow: 0 -14px 34px rgba(0, 0, 0, 0.14);
   }
   .booking-cta__eyebrow {
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    font-size: 0.85rem;
-    margin: 0 0 0.35rem 0;
-    opacity: 0.8;
+    font-size: 0.8rem;
+    margin: 0;
+    opacity: 0.75;
+  }
+  .booking-cta h2 {
+    margin: 0;
+    font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.35rem);
+    line-height: 1.2;
   }
   .booking-cta__subtitle {
-    margin: 0.35rem 0 0 0;
+    margin: 0.15rem 0 0 0;
     opacity: 0.92;
+    font-size: clamp(0.94rem, 0.9rem + 0.35vw, 1.05rem);
   }
   .booking-cta__action {
     justify-self: end;
   }
+  .booking-cta__action :global(.btn) {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.95rem;
+  }
   .booking-modal {
     position: fixed;
     inset: 0;
-    z-index: 999;
+    z-index: 1250;
     pointer-events: none;
     opacity: 0;
     transition: opacity var(--theme-transition);
@@ -275,13 +379,18 @@ const seo = {
   }
   .booking-modal__dialog {
     position: relative;
-    max-width: 720px;
+    max-width: 920px;
+    max-height: min(90vh, 920px);
+    width: min(920px, 92vw);
     margin: 6vh auto;
     background: var(--theme-bg);
     color: var(--theme-on-bg);
     padding: 2rem;
     border-radius: var(--theme-shape-radius);
     box-shadow: 0 24px 40px rgba(0, 0, 0, 0.18);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
   .booking-modal__close {
     position: absolute;
@@ -308,23 +417,126 @@ const seo = {
     opacity: 0.92;
   }
   .booking-form {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
+    min-height: 0;
+    height: 100%;
+  }
+  .booking-form__content {
+    flex: 1 1 auto;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 0.25rem;
+    padding-bottom: 2rem;
+    scrollbar-width: thin;
   }
   .booking-form__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
   }
+  .booking-form__field label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+  }
+  .booking-form__input {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid
+      color-mix(
+        in srgb,
+        var(--form-field-border-color, var(--theme-outline-variant, #d0d0d0)) 70%,
+        #cfd6e5
+      );
+    border-radius: var(--form-field-border-radius, 0.6rem);
+    background: color-mix(
+      in srgb,
+      var(--theme-surface-1, #ffffff) 12%,
+      #ffffff
+    );
+    transition: border-color var(--theme-transition),
+      box-shadow var(--theme-transition);
+    color: var(--form-field-input-color, var(--theme-on-surface-1, #1f1f1f));
+  }
+  .booking-form__input:focus-within {
+    border-color: var(--form-field-border-focus-color, var(--theme-primary, #5b4cff));
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--theme-primary, #5b4cff) 14%, transparent);
+  }
+  .booking-form__input svg {
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+    color: color-mix(in srgb, var(--theme-on-surface-2, #4a4a4a) 85%, #7a7a7a);
+  }
+  .booking-form__input input,
+  .booking-form__input textarea {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    color: var(--form-field-input-color, var(--theme-on-surface-1, #1f1f1f));
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+  .booking-form__input input::placeholder,
+  .booking-form__input textarea::placeholder {
+    color: color-mix(
+      in srgb,
+      var(--form-field-input-color, var(--theme-on-surface-1, #1f1f1f)) 48%,
+      transparent
+    );
+  }
+  .booking-form__input textarea {
+    resize: vertical;
+  }
+  .booking-form__input--textarea {
+    align-items: flex-start;
+  }
+  .booking-form__input--textarea svg {
+    margin-top: 0.3rem;
+  }
   .booking-form__full {
     grid-column: 1 / -1;
-  }
-  .booking-form__grid :global(.form-field__container textarea) {
-    min-height: 100%;
   }
   .booking-form__actions {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    position: sticky;
+    bottom: 0;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem 0.5rem 0.85rem;
+    background: var(--theme-bg);
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--theme-bg) 92%, transparent),
+        var(--theme-bg)
+      ),
+      var(--theme-bg);
+    border-top: 1px solid
+      color-mix(
+        in srgb,
+        var(--form-field-border-color, var(--theme-outline-variant, #d0d0d0)) 75%,
+        #cfd6e5
+      );
+    box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.08);
+    border-radius: 0 0 var(--theme-shape-radius) var(--theme-shape-radius);
+  }
+  .booking-form__actions :global(.btn) {
+    padding: 0.65rem 1.55rem;
+    min-height: 48px;
+    align-self: center;
+    margin-left: auto;
+    background-color: var(--theme-primary);
+    color: var(--theme-on-primary);
+    border: none;
+    box-shadow: 0 8px 18px color-mix(in srgb, var(--theme-primary) 30%, transparent);
   }
   .booking-status {
     margin: 0;
@@ -338,36 +550,107 @@ const seo = {
     color: #b3261e;
   }
   @media (max-width: 900px) {
+    .booking-cta {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.65rem;
+      padding: 0.85rem clamp(1rem, 4vw, 1.5rem);
+    }
+    .booking-cta h2 {
+      font-size: clamp(1rem, 0.9rem + 0.9vw, 1.2rem);
+    }
+    .booking-cta__subtitle {
+      font-size: 0.9rem;
+    }
+    .booking-cta__action {
+      justify-self: end;
+    }
+    .booking-cta--sticky {
+      padding-bottom: calc(0.85rem + env(safe-area-inset-bottom));
+    }
     .booking-modal__dialog {
       margin: 4vh 1rem;
+      padding: 1.5rem;
     }
     .booking-form__grid {
       grid-template-columns: 1fr;
     }
+  }
+  @media (max-width: 550px) {
     .booking-cta {
       grid-template-columns: 1fr;
+      text-align: center;
+      gap: 0.5rem;
     }
     .booking-cta__action {
-      justify-self: start;
+      justify-self: stretch;
     }
-  }
-  @media (max-width: 600px) {
+    .booking-cta__action :global(.btn) {
+      width: 100%;
+    }
+    .booking-cta h2 {
+      font-size: 1rem;
+    }
+    .booking-cta__subtitle {
+      font-size: 0.88rem;
+    }
+    .booking-cta--sticky {
+      padding: 0.85rem 1rem;
+    }
     .booking-modal__dialog {
-      padding: 1.25rem;
+      padding: 1.1rem;
+    }
+    .booking-form__input input,
+    .booking-form__input textarea {
+      line-height: 1.35;
+      font-size: 0.93rem;
+    }
+    .booking-form__actions {
+      padding: 0.45rem 0.5rem 0.55rem 0.5rem;
+    }
+    .booking-form__actions :global(.btn) {
+      width: 100%;
+      justify-content: center;
+      padding: 0.7rem 1.35rem;
+      font-size: 1rem;
     }
   }
 </style>
 
 <script type="module">
   const modal = document.getElementById('booking-modal');
-  const openButton = document.querySelector('[data-booking-open]');
+  const openButtons = Array.from(
+    document.querySelectorAll('[data-booking-open]')
+  );
   const statusEl = document.getElementById('booking-status');
   const form = document.getElementById('booking-form');
   const tourInput = form?.querySelector("input[name='tour']");
+  const startDateInput = form?.querySelector('[data-date-start]');
+  const endDateInput = form?.querySelector('[data-date-end]');
   const defaultTour = form?.dataset.tour || '';
   const successCopy = form?.dataset.success || '';
   const errorCopy = form?.dataset.error || '';
   const locale = form?.dataset.locale || 'en';
+  let startPicker;
+  let endPicker;
+  const flatpickrSrc =
+    'https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js';
+  const loadScript = (src) =>
+    new Promise((resolve, reject) => {
+      if (document.querySelector(`script[src="${src}"]`)) {
+        resolve();
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = false;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error(`Failed to load ${src}`));
+      document.head.appendChild(script);
+    });
+  const loadFlatpickr = () =>
+    window.flatpickr
+      ? Promise.resolve(window.flatpickr)
+      : loadScript(flatpickrSrc).then(() => window.flatpickr);
 
   const toggleModal = (open) => {
     if (!modal) return;
@@ -377,9 +660,54 @@ const seo = {
     if (open && tourInput && defaultTour) {
       tourInput.value = defaultTour;
     }
+    if (open) {
+      hydrateEnhancements();
+    }
   };
 
-  openButton?.addEventListener('click', () => toggleModal(true));
+  const hydrateEnhancements = () => {
+    hydrateDates();
+  };
+
+  const hydrateDates = async () => {
+    if (!startDateInput || !endDateInput || startPicker || endPicker) return;
+    try {
+      const flatpickr = await loadFlatpickr();
+      if (!flatpickr) throw new Error('flatpickr unavailable');
+      startPicker = flatpickr(startDateInput, {
+        dateFormat: 'Y-m-d',
+        minDate: 'today',
+        allowInput: true,
+      });
+      endPicker = flatpickr(endDateInput, {
+        dateFormat: 'Y-m-d',
+        minDate: 'today',
+        allowInput: true,
+      });
+      startPicker.config.onChange.push((selectedDates) => {
+        if (selectedDates[0]) {
+          endPicker.set('minDate', selectedDates[0]);
+        }
+      });
+    } catch (error) {
+      console.error('Date pickers init failed', error);
+    }
+  };
+
+  const openModal = (event) => {
+    event?.preventDefault();
+    toggleModal(true);
+  };
+
+  openButtons.forEach((button) => {
+    button.addEventListener('click', openModal);
+  });
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-booking-open]');
+    if (trigger) {
+      openModal(event);
+    }
+  });
   modal?.querySelectorAll('[data-booking-close]')?.forEach((element) => {
     element.addEventListener('click', () => toggleModal(false));
   });

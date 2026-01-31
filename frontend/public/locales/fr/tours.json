@@ -15,8 +15,11 @@
       "firstName": "Prénom",
       "lastName": "Nom",
       "email": "Email",
+      "phone": "Téléphone",
       "tour": "Circuit sélectionné",
       "people": "Nombre de personnes",
+      "startDate": "Date de début souhaitée",
+      "endDate": "Date de fin souhaitée",
       "message": "Commentaire"
     },
     "submit": "Valider",
