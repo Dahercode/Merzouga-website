@@ -18,8 +18,8 @@
       "phone": "Teléfono",
       "tour": "Tour seleccionado",
       "people": "Número de personas",
-      "startDate": "Fecha de inicio deseada",
-      "endDate": "Fecha de fin deseada",
+      "startDate": "Fecha de inicio",
+      "endDate": "Fecha de fin",
       "message": "Comentario"
     },
     "submit": "Confirmar",

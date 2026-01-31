@@ -18,8 +18,8 @@
       "phone": "Téléphone",
       "tour": "Circuit sélectionné",
       "people": "Nombre de personnes",
-      "startDate": "Date de début souhaitée",
-      "endDate": "Date de fin souhaitée",
+      "startDate": "Date de début",
+      "endDate": "Date de fin",
       "message": "Commentaire"
     },
     "submit": "Valider",

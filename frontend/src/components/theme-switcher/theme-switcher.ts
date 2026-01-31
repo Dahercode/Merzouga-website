@@ -11,25 +11,25 @@ import {
 
 const themes = [
   {
-    name: 'default',
+    name: 'classic',
     icon: classicThemeIcon,
     label: 'Classic',
   },
-  {
-    name: 'dark',
-    icon: darkThemeIcon,
-    label: 'Dark',
-  },
-  {
-    name: 'earth',
-    icon: earthThemeIcon,
-    label: 'Earth',
-  },
-  {
-    name: 'ocean',
-    icon: blueThemeIcon,
-    label: 'Ocean',
-  },
+  // {
+  //   name: 'dark',
+  //   icon: darkThemeIcon,
+  //   label: 'Dark',
+  // },
+  // {
+  //   name: 'earth',
+  //   icon: earthThemeIcon,
+  //   label: 'Earth',
+  // },
+  // {
+  //   name: 'ocean',
+  //   icon: blueThemeIcon,
+  //   label: 'Ocean',
+  // },
   {
     name: 'sand',
     icon: orangeThemeIcon,
@@ -96,10 +96,10 @@ export class ThemeSwitcher extends LitElement {
         window.matchMedia &&
         window.matchMedia('(prefers-color-scheme: dark)').matches
       ) {
-        this._setTheme('dark');
+        this._setTheme('classic');
       } else {
         // Set to default/light theme if no specification, or light theme is specified
-        this._setTheme('default');
+        this._setTheme('sand');
       }
     }
   }
@@ -115,7 +115,7 @@ export class ThemeSwitcher extends LitElement {
     const _heroImage = document.querySelector(
       '#home-hero-image'
     ) as HTMLImageElement;
-    if (theme === 'default') {
+    if (theme === 'classic') {
       _heroImage.src = '/assets/images/home/classic-hero.jpg';
     }
     if (theme === 'dark') {

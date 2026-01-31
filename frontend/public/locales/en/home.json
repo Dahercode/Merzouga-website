@@ -29,10 +29,6 @@
     "theme": {
       "title": "Theme Pages",
       "description": "Learn more about how to set up and use the Odyssey Theme.",
-      "cards": {
-        "getStarted": "Get Started",
-        "styleGuide": "Style Guide"
-      }
     }
   }
 }
