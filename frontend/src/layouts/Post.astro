@@ -1,8 +1,7 @@
 ---
 import { Container, Button } from '@components/odyssey-theme';
 import Layout from './Page.astro';
-import { generateTagData } from '../utils/helpers';
-import { localizePath, AstroI18next } from 'astro-i18next';
+import { AstroI18next } from 'astro-i18next';
 import { Icon } from 'astro-icon/components';
 import { t, changeLanguage } from 'i18next';
 
@@ -13,7 +12,6 @@ const {
     publishDate,
     canonicalURL,
     featuredImage,
-    tags,
   },
 } = Astro.props;
 
@@ -32,12 +30,6 @@ const formattedPublishDate = publishDate
     }).format(new Date(publishDate))
   : '';
 
-let allTagsData = [];
-
-if (tags && tags.length > 0) {
-  allTagsData = generateTagData(tags);
-}
-
 const seo = {
   title,
   description,
@@ -49,15 +41,6 @@ const seo = {
 
 <Layout seo={seo}>
   <div class="post-header__container">
-    <ul class="post-tags__list">
-      {
-        allTagsData.map((tag) => (
-          <li class="post-tags__tag">
-            <a href={localizePath(`/tours/tags/${tag.slug}`)}>{tag.title}</a>
-          </li>
-        ))
-      }
-    </ul>
     <h1>{title}</h1>
     {
       publishDate && (
@@ -282,18 +265,6 @@ const seo = {
     max-width: var(--theme-blog-post-header-width);
     margin: 1rem auto;
     padding: var(--container-padding);
-  }
-  .post-tags__list {
-    margin: 1rem auto;
-    padding: 0;
-    list-style: none;
-  }
-  .post-tags__tag {
-    text-transform: uppercase;
-  }
-  .post-tags__tag a {
-    font-size: var(--font-size-sm);
-    text-decoration: none;
   }
   .post-layout__img {
     margin: 0 auto 1rem auto;

@@ -9,14 +9,3 @@ export function generateSlug(string) {
     .replace(/^-+/, '')
     .replace(/-+$/, '');
 }
-
-export function generateTagData(categories) {
-  let categoryData = [];
-  categories.forEach((category) => {
-    categoryData.push({
-      title: category,
-      slug: `${generateSlug(category)}`,
-    });
-  });
-  return categoryData;
-}
