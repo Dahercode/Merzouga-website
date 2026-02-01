@@ -64,16 +64,7 @@ function checkRateLimit(ip: string): boolean {
 }
 
 function isValidBody(body: Record<string, unknown>) {
-  const required = [
-    'firstName',
-    'lastName',
-    'email',
-    'tour',
-    'people',
-    'phone',
-    'startDate',
-    'endDate',
-  ];
+  const required = ['email', 'message'];
   return required.every((key) => typeof body[key] === 'string');
 }
 
@@ -95,7 +86,7 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(
       JSON.stringify({
         error: 'Too many requests',
-        message: 'Please wait before submitting another booking request',
+        message: 'Please wait before submitting another contact request',
       }),
       {
         status: 429,
@@ -117,33 +108,30 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const {
-    firstName,
-    lastName,
+    name = '',
     email,
-    tour,
-    people,
-    phone,
-    startDate,
-    endDate,
-    message = '',
+    hearAbout = '',
+    hearAboutOther = '',
+    message,
     locale,
   } = body as Record<string, string>;
 
-  const subject = `[Booking] ${tour} (${people} guest${people === '1' ? '' : 's'})`;
+  const hearAboutText = hearAbout === 'other' ? hearAboutOther : hearAbout;
+  const subject = `[Contact] Message from ${name || email}`;
 
   const textBody = [
-    `Tour: ${tour}`,
-    `Name: ${firstName} ${lastName}`,
+    `Contact Form Submission`,
+    '',
+    name ? `Name: ${name}` : null,
     `Email: ${email}`,
-    `Phone: ${phone}`,
-    `People: ${people}`,
-    `Start date: ${startDate}`,
-    `End date: ${endDate}`,
+    hearAboutText ? `How they heard about us: ${hearAboutText}` : null,
     `Locale: ${locale || 'unknown'}`,
     '',
-    'Notes:',
-    message || 'No additional message provided.',
-  ].join('\n');
+    'Message:',
+    message,
+  ]
+    .filter((line) => line !== null)
+    .join('\n');
 
   try {
     await transporter.sendMail({

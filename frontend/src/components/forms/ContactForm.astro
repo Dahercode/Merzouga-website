@@ -1,35 +1,459 @@
 ---
-import {
-  Button,
-  FormInput,
-  FormSelect,
-  FormTextarea,
-} from '@components/odyssey-theme';
+import { t } from 'i18next';
+import { Button } from '@components/odyssey-theme';
+import { Icon } from 'astro-icon/components';
 
-const selectOptions = ['Google Search', 'Social Media', 'Email'];
+const hearAboutOptions = [
+  { value: '', label: t('contact:form.fields.hearAboutPlaceholder') },
+  { value: 'friends', label: t('contact:form.hearAboutOptions.friends') },
+  { value: 'socialMedia', label: t('contact:form.hearAboutOptions.socialMedia') },
+  { value: 'youtube', label: t('contact:form.hearAboutOptions.youtube') },
+  { value: 'other', label: t('contact:form.hearAboutOptions.other') },
+];
+
+const validationMessages = {
+  emailRequired: t('contact:validation.email.required'),
+  emailInvalid: t('contact:validation.email.invalid'),
+  messageRequired: t('contact:validation.message.required'),
+  hearAboutOtherRequired: t('contact:validation.hearAboutOther.required'),
+};
 ---
 
-<form name="Contact Form" method="POST" action="/contact-thank-you">
-  <FormInput type="text" label="Name" name="Name" placeholder="John Doe" />
-  <FormInput
-    type="email"
-    label="Email"
-    name="Email"
-    placeholder="hello@example.com"
-  />
-  <FormSelect label="How Did You Hear About Us?" options={selectOptions} />
-  <FormTextarea
-    label="Message"
-    name="Message"
-    placeholder="Your message here..."
-  />
-  <Button>Submit</Button>
-</form>
+<div class="contact-form-wrapper">
+  <h2 class="contact-form__title">{t('contact:form.title')}</h2>
+  <form
+    id="contact-form"
+    class="contact-form"
+    novalidate
+    data-submit-text={t('contact:form.submit')}
+    data-submitting-text={t('contact:form.submitting')}
+    data-success-text={t('contact:form.success')}
+    data-error-text={t('contact:form.error')}
+    data-validation-messages={JSON.stringify(validationMessages)}
+  >
+    <div class="contact-form__field">
+      <label for="contact-name">{t('contact:form.fields.name')}</label>
+      <div class="contact-form__input">
+        <Icon name="ic:baseline-person" />
+        <input
+          id="contact-name"
+          type="text"
+          name="name"
+          placeholder={t('contact:form.fields.namePlaceholder')}
+          autocomplete="name"
+        />
+      </div>
+    </div>
+
+    <div class="contact-form__field">
+      <label for="contact-email">
+        {t('contact:form.fields.email')} <span class="required">*</span>
+      </label>
+      <div class="contact-form__input">
+        <Icon name="ic:baseline-email" />
+        <input
+          id="contact-email"
+          type="email"
+          name="email"
+          placeholder={t('contact:form.fields.emailPlaceholder')}
+          required
+          autocomplete="email"
+        />
+        <span class="contact-form__status-icon" data-status-icon="email" aria-hidden="true">
+          ✓
+        </span>
+      </div>
+      <p class="contact-form__error" data-error-for="email" role="alert"></p>
+    </div>
+
+    <div class="contact-form__field">
+      <label for="contact-hear-about">{t('contact:form.fields.hearAbout')}</label>
+      <div class="contact-form__input">
+        <Icon name="ic:baseline-info" />
+        <select id="contact-hear-about" name="hearAbout">
+          {hearAboutOptions.map((option) => (
+            <option value={option.value}>{option.label}</option>
+          ))}
+        </select>
+      </div>
+    </div>
+
+    <div class="contact-form__field contact-form__field--other" id="hear-about-other-field" style="display: none;">
+      <label for="contact-hear-about-other">
+        {t('contact:form.fields.hearAboutOther')} <span class="required">*</span>
+      </label>
+      <div class="contact-form__input">
+        <Icon name="ic:baseline-chat-bubble" />
+        <input
+          id="contact-hear-about-other"
+          type="text"
+          name="hearAboutOther"
+          placeholder={t('contact:form.fields.hearAboutOtherPlaceholder')}
+        />
+        <span class="contact-form__status-icon" data-status-icon="hearAboutOther" aria-hidden="true">
+          ✓
+        </span>
+      </div>
+      <p class="contact-form__error" data-error-for="hearAboutOther" role="alert"></p>
+    </div>
+
+    <div class="contact-form__field contact-form__field--full">
+      <label for="contact-message">
+        {t('contact:form.fields.message')} <span class="required">*</span>
+      </label>
+      <div class="contact-form__input contact-form__input--textarea">
+        <Icon name="ic:baseline-chat" />
+        <textarea
+          id="contact-message"
+          name="message"
+          placeholder={t('contact:form.fields.messagePlaceholder')}
+          rows={6}
+          required
+        ></textarea>
+        <span class="contact-form__status-icon" data-status-icon="message" aria-hidden="true">
+          ✓
+        </span>
+      </div>
+      <p class="contact-form__error" data-error-for="message" role="alert"></p>
+    </div>
+
+    <div class="contact-form__actions">
+      <Button type="submit" disabled>
+        {t('contact:form.submit')}
+      </Button>
+    </div>
+
+    <p id="contact-status" class="contact-status" role="status" aria-live="polite"></p>
+  </form>
+</div>
 
 <style>
-  form {
+  .contact-form-wrapper {
+    background-color: var(--theme-surface-1);
+    padding: 2rem;
+    border-radius: var(--theme-shape-radius);
+  }
+
+  .contact-form__title {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .contact-form {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.25rem;
+  }
+
+  .contact-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact-form__field--full {
+    grid-column: 1 / -1;
+  }
+
+  .contact-form__field label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--theme-on-surface-1);
+  }
+
+  .required {
+    color: var(--theme-primary);
+  }
+
+  .contact-form__input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--theme-bg);
+    border: 2px solid color-mix(in srgb, var(--theme-on-bg) 20%, transparent);
+    border-radius: var(--theme-shape-radius);
+    transition: all var(--theme-transition);
+  }
+
+  .contact-form__input :global(svg) {
+    position: absolute;
+    left: 1rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--theme-on-bg);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .contact-form__input input,
+  .contact-form__input select,
+  .contact-form__input textarea {
+    flex: 1;
+    padding: 0.75rem 1rem 0.75rem 3rem;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--theme-on-bg);
+    outline: none;
+  }
+
+  .contact-form__input select {
+    cursor: pointer;
+  }
+
+  .contact-form__input textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .contact-form__input--textarea {
+    align-items: flex-start;
+  }
+
+  .contact-form__input--textarea :global(svg) {
+    top: 1rem;
+  }
+
+  .contact-form__input:focus-within {
+    border-color: var(--theme-primary);
+  }
+
+  .contact-form__input.is-valid {
+    border-color: #22c55e;
+  }
+
+  .contact-form__input.is-error {
+    border-color: #ef4444;
+  }
+
+  .contact-form__status-icon {
+    position: absolute;
+    right: 1rem;
+    color: #22c55e;
+    font-weight: 700;
+    font-size: 1.25rem;
+    display: none;
+  }
+
+  .contact-form__input.is-valid .contact-form__status-icon {
+    display: block;
+  }
+
+  .contact-form__error {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin: 0;
+    min-height: 1.25rem;
+  }
+
+  .contact-form__actions {
+    margin-top: 0.5rem;
+  }
+
+  .contact-form__actions :global(.btn) {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .contact-form__actions :global(.btn:disabled) {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .contact-status {
+    margin: 1rem 0 0 0;
+    padding: 0.875rem;
+    border-radius: var(--theme-shape-radius);
+    font-weight: 500;
+    text-align: center;
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contact-status.success {
+    background-color: color-mix(in srgb, #22c55e 15%, transparent);
+    color: #22c55e;
+  }
+
+  .contact-status.error {
+    background-color: color-mix(in srgb, #ef4444 15%, transparent);
+    color: #ef4444;
+  }
+
+  @media (max-width: 768px) {
+    .contact-form-wrapper {
+      padding: 1.5rem;
+    }
   }
 </style>
+
+<script>
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const emailInput = document.getElementById('contact-email') as HTMLInputElement;
+    const messageInput = document.getElementById('contact-message') as HTMLTextAreaElement;
+    const hearAboutSelect = document.getElementById('contact-hear-about') as HTMLSelectElement;
+    const hearAboutOtherField = document.getElementById('hear-about-other-field') as HTMLDivElement;
+    const hearAboutOtherInput = document.getElementById('contact-hear-about-other') as HTMLInputElement;
+    const submitButton = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const statusEl = document.getElementById('contact-status') as HTMLParagraphElement;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Get locale from URL
+    const pathParts = window.location.pathname.split('/').filter(Boolean);
+    const locale = ['fr', 'es'].includes(pathParts[0]) ? pathParts[0] : 'en';
+
+    // Get translated messages from data attributes
+    const submitText = form?.dataset.submitText || 'Send Message';
+    const submittingText = form?.dataset.submittingText || 'Sending...';
+    const successText = form?.dataset.successText || 'Message sent successfully!';
+    const errorText = form?.dataset.errorText || 'Failed to send message';
+    const validationMessages = form?.dataset.validationMessages
+      ? JSON.parse(form.dataset.validationMessages)
+      : {};
+
+    // Show/hide "Other" field
+    hearAboutSelect?.addEventListener('change', () => {
+      const isOther = hearAboutSelect.value === 'other';
+      if (hearAboutOtherField) {
+        hearAboutOtherField.style.display = isOther ? 'block' : 'none';
+      }
+      if (!isOther && hearAboutOtherInput) {
+        hearAboutOtherInput.value = '';
+        updateFieldUI(hearAboutOtherInput.parentElement as HTMLElement, '');
+      }
+      updateSubmitButton();
+    });
+
+  // Validation
+    const validateEmail = (email: string): string => {
+      if (!email.trim()) {
+        return validationMessages.emailRequired || 'Email is required';
+      }
+      if (!emailRegex.test(email)) {
+        return validationMessages.emailInvalid || 'Invalid email';
+      }
+      return '';
+    };
+
+    const validateMessage = (message: string): string => {
+      if (!message.trim()) {
+        return validationMessages.messageRequired || 'Message is required';
+      }
+      return '';
+    };
+
+    const validateHearAboutOther = (value: string): string => {
+      if (hearAboutSelect?.value === 'other' && !value.trim()) {
+        return validationMessages.hearAboutOtherRequired || 'Please specify';
+      }
+      return '';
+    };
+
+    const updateFieldUI = (wrapper: HTMLElement, error: string) => {
+      const errorEl = wrapper.parentElement?.querySelector('[data-error-for]') as HTMLElement;
+      wrapper.classList.toggle('is-error', !!error);
+      wrapper.classList.toggle('is-valid', !error && wrapper.querySelector('input, textarea')?.value.trim() !== '');
+      if (errorEl) {
+        errorEl.textContent = error;
+      }
+    };
+
+    const updateSubmitButton = () => {
+      const emailError = validateEmail(emailInput?.value || '');
+      const messageError = validateMessage(messageInput?.value || '');
+      const otherError = validateHearAboutOther(hearAboutOtherInput?.value || '');
+
+      const isValid = !emailError && !messageError && !otherError;
+      if (submitButton) {
+        submitButton.disabled = !isValid;
+      }
+    };
+
+    // Field validation on blur
+    emailInput?.addEventListener('blur', () => {
+      const error = validateEmail(emailInput.value);
+      updateFieldUI(emailInput.parentElement as HTMLElement, error);
+      updateSubmitButton();
+    });
+
+    messageInput?.addEventListener('blur', () => {
+      const error = validateMessage(messageInput.value);
+      updateFieldUI(messageInput.parentElement as HTMLElement, error);
+      updateSubmitButton();
+    });
+
+    hearAboutOtherInput?.addEventListener('blur', () => {
+      const error = validateHearAboutOther(hearAboutOtherInput.value);
+      updateFieldUI(hearAboutOtherInput.parentElement as HTMLElement, error);
+      updateSubmitButton();
+    });
+
+    // Real-time validation
+    emailInput?.addEventListener('input', updateSubmitButton);
+    messageInput?.addEventListener('input', updateSubmitButton);
+    hearAboutOtherInput?.addEventListener('input', updateSubmitButton);
+
+    // Form submission
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = submittingText;
+      }
+
+    const formData = {
+      name: (form.elements.namedItem('name') as HTMLInputElement)?.value || '',
+      email: emailInput.value,
+      hearAbout: hearAboutSelect.value,
+      hearAboutOther: hearAboutOtherInput.value,
+      message: messageInput.value,
+      locale,
+    };
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        statusEl.textContent = successText;
+        statusEl.className = 'contact-status success';
+        form.reset();
+        if (hearAboutOtherField) hearAboutOtherField.style.display = 'none';
+
+        // Clear validation states
+        form.querySelectorAll('.contact-form__input').forEach((input) => {
+          input.classList.remove('is-valid', 'is-error');
+        });
+      } else {
+        throw new Error(data.error || 'Failed to send message');
+      }
+    } catch (error) {
+      statusEl.textContent = errorText;
+      statusEl.className = 'contact-status error';
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = submitText;
+      }
+      updateSubmitButton();
+    }
+    });
+
+    // Initialize button state on page load
+    updateSubmitButton();
+  });
+</script>

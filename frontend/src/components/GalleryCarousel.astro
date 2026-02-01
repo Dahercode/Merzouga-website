@@ -30,7 +30,7 @@ try {
       title: t(`gallery:carousel.images.${index}.title`)
     }));
 } catch (error) {
-  console.error('Error reading gallery directory:', error);
+  // Silently handle error
 }
 
 const { class: className = '' } = Astro.props;

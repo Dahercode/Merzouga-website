@@ -1,0 +1,45 @@
+{
+  "page": {
+    "title": "Contactez-nous",
+    "description": "Contactez-nous pour toute question concernant nos circuits ou arrangements de voyage personnalisés.",
+    "phone": "(+212) 6 88 45 06 66",
+    "email": "truemoroccotours1@gmail.com"
+  },
+  "form": {
+    "title": "Envoyez-nous un message",
+    "fields": {
+      "name": "Nom",
+      "namePlaceholder": "Votre nom",
+      "email": "Email",
+      "emailPlaceholder": "votre.email@exemple.com",
+      "hearAbout": "Comment avez-vous entendu parler de nous ?",
+      "hearAboutPlaceholder": "Sélectionnez une option",
+      "hearAboutOther": "Veuillez préciser",
+      "hearAboutOtherPlaceholder": "Dites-nous en plus...",
+      "message": "Message",
+      "messagePlaceholder": "Votre message ici..."
+    },
+    "hearAboutOptions": {
+      "friends": "Amis",
+      "socialMedia": "Réseaux sociaux",
+      "youtube": "YouTube",
+      "other": "Autre"
+    },
+    "submit": "Envoyer le message",
+    "submitting": "Envoi en cours...",
+    "success": "Merci ! Votre message a été envoyé avec succès.",
+    "error": "Impossible d'envoyer votre message. Veuillez réessayer."
+  },
+  "validation": {
+    "email": {
+      "required": "L'email est requis",
+      "invalid": "Veuillez entrer une adresse email valide"
+    },
+    "message": {
+      "required": "Le message est requis"
+    },
+    "hearAboutOther": {
+      "required": "Veuillez préciser comment vous avez entendu parler de nous"
+    }
+  }
+}
