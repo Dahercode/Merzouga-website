@@ -13,9 +13,9 @@ const tours = getTours(locale).slice(0, 2);
 ---
 
 <Layout>
-  <script type="module" src="/src/components/theme-switcher/theme-switcher.ts"
-  ></script>
-
+  <script>
+   import "../components/theme-switcher/theme-switcher.ts";
+  </script>
   <HomeHeroSection/>
   <ReassuranceSection locale={locale} />
   <Container>

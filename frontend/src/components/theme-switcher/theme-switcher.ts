@@ -89,48 +89,60 @@ export class ThemeSwitcher extends LitElement {
     // check for a local storage theme first
     const localStorageTheme = localStorage.getItem('theme');
     if (localStorageTheme !== null) {
-      this._setTheme(localStorageTheme);
+      return localStorageTheme;
     } else {
       // Set default theme to dark if the operating system specifies this preference
       if (
         window.matchMedia &&
         window.matchMedia('(prefers-color-scheme: dark)').matches
       ) {
-        this._setTheme('classic');
+        return 'classic';
       } else {
         // Set to default/light theme if no specification, or light theme is specified
-        this._setTheme('sand');
+        return 'sand';
       }
     }
   }
 
-  firstUpdated() {
+  connectedCallback() {
+    super.connectedCallback();
     this._doc = document.firstElementChild;
-    this._getCurrentTheme();
+    // Set initial theme before first render
+    const initialTheme = this._getCurrentTheme();
+    this.theme = initialTheme;
+    this._applyTheme(initialTheme);
   }
 
-  private _setTheme(theme) {
-    this._doc.setAttribute('data-theme', theme);
+  private _applyTheme(theme: string) {
+    if (this._doc) {
+      this._doc.setAttribute('data-theme', theme);
+    }
 
     const _heroImage = document.querySelector(
       '#home-hero-image'
     ) as HTMLImageElement;
-    if (theme === 'classic') {
-      _heroImage.src = '/assets/images/home/classic-hero.jpg';
-    }
-    if (theme === 'dark') {
-      _heroImage.src = '/assets/images/home/dark-hero.jpg';
-    }
-    if (theme === 'earth') {
-      _heroImage.src = '/assets/images/home/earth-hero.jpg';
-    }
-    if (theme === 'ocean') {
-      _heroImage.src = '/assets/images/home/ocean-hero.jpg';
-    }
-    if (theme === 'sand') {
-      _heroImage.src = '/assets/images/home/sand-hero.jpg';
+    if (_heroImage) {
+      if (theme === 'classic') {
+        _heroImage.src = '/assets/images/home/classic-hero.jpg';
+      }
+      if (theme === 'dark') {
+        _heroImage.src = '/assets/images/home/dark-hero.jpg';
+      }
+      if (theme === 'earth') {
+        _heroImage.src = '/assets/images/home/earth-hero.jpg';
+      }
+      if (theme === 'ocean') {
+        _heroImage.src = '/assets/images/home/ocean-hero.jpg';
+      }
+      if (theme === 'sand') {
+        _heroImage.src = '/assets/images/home/sand-hero.jpg';
+      }
     }
     localStorage.setItem('theme', theme);
+  }
+
+  private _setTheme(theme: string) {
+    this._applyTheme(theme);
     this.theme = theme;
   }
 
