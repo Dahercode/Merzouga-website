@@ -10,12 +10,9 @@
     "tours": "Tours",
     "contact": "Contacto"
   },
-  "theme": {
-    "title": "Tema",
-    "getStarted": "Empezar",
-    "styleGuide": "Guía de estilo",
-    "themeSetup": "Configuración del tema",
-    "customizing": "Personalizar Odyssey"
+  "media": {
+    "title": "Medios",
+    "gallery" : "Galería de fotos"
   },
   "tours": {
     "title": "Nuestros itinerarios destacados"

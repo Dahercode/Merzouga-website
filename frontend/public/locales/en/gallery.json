@@ -1,0 +1,54 @@
+{
+  "seo": {
+    "title": "Gallery - Discover Morocco Through Our Lens",
+    "description": "Explore our stunning collection of photos from the Moroccan desert, mountains, and imperial cities. Get inspired for your next adventure."
+  },
+  "heading": "Photo Gallery",
+  "intro": "Discover the beauty of Morocco through our curated collection of stunning landscapes, authentic moments, and unforgettable experiences from our tours.",
+  "carousel": {
+    "imageAlt": "Moroccan landscape {{index}}",
+    "actionButton": "Join us now",
+    "prevButton": "Previous image",
+    "nextButton": "Next image",
+    "pagination": "Gallery navigation",
+    "slideLabel": "Slide {{index}} of {{total}}",
+    "images": {
+      "0": {
+        "title": "Atlas Mountains"
+      },
+      "1": {
+        "title": "Unforgettable Memories"
+      },
+      "2": {
+        "title": "Authentic experiences"
+      },
+      "3": {
+        "title": "Splendid gorges"
+      },
+      "4": {
+        "title": "Majestic Sand Formations"
+      },
+      "5": {
+        "title": "The Blue City"
+      },
+      "6": {
+        "title": "Ceblebrations"
+      },
+      "7": {
+        "title": "Nomadic Heritage"
+      },
+      "8": {
+        "title": "Ancient Kasbahs & Valleys"
+      },
+      "9": {
+        "title": "Ancient Kasbahs & Valleys"
+      },
+      "10": {
+        "title": "Gathering"
+      },
+      "11": {
+        "title": "Full availability"
+      }
+    }
+  }
+}

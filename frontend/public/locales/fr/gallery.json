@@ -1,0 +1,54 @@
+{
+  "seo": {
+    "title": "Galerie - Découvrez le Maroc à Travers Notre Objectif",
+    "description": "Explorez notre magnifique collection de photos du désert marocain, des montagnes et des cités impériales. Laissez-vous inspirer pour votre prochaine aventure."
+  },
+  "heading": "Galerie Photos",
+  "intro": "Découvrez la beauté du Maroc à travers notre collection soigneusement sélectionnée de paysages époustouflants, de moments authentiques et d'expériences inoubliables de nos circuits.",
+  "carousel": {
+    "imageAlt": "Paysage marocain {{index}}",
+    "actionButton": "Rejoignez-nous maintenant",
+    "prevButton": "Image précédente",
+    "nextButton": "Image suivante",
+    "pagination": "Navigation de la galerie",
+    "slideLabel": "Diapositive {{index}} sur {{total}}",
+    "images": {
+      "0": {
+        "title": "Montagnes de l'Atlas"
+      },
+      "1": {
+        "title": "Souvenirs Inoubliables"
+      },
+      "2": {
+        "title": "Expériences Authentiques"
+      },
+      "3": {
+        "title": "Gorges Splendides"
+      },
+      "4": {
+        "title": "Majestueuses Formations de Sable"
+      },
+      "5": {
+        "title": "La Ville Bleue"
+      },
+      "6": {
+        "title": "Célébrations"
+      },
+      "7": {
+        "title": "Héritage Nomade"
+      },
+      "8": {
+        "title": "Kasbahs Anciennes et Vallées"
+      },
+      "9": {
+        "title": "Kasbahs Anciennes et Vallées"
+      },
+      "10": {
+        "title": "Rassemblement"
+      },
+      "11": {
+        "title": "Disponibilité Complète"
+      }
+    }
+  }
+}

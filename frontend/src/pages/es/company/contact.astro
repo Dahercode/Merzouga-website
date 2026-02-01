@@ -1,14 +1,14 @@
 ---
-import { changeLanguage } from 'i18next';
-import ContactForm from '../../../components/forms/ContactForm.astro';
-import Layout from '../../../layouts/Page.astro';
-import { Container } from '@components/odyssey-theme';
+import { changeLanguage, t } from "i18next";
+import ContactForm from "../../../components/forms/ContactForm.astro";
+import Layout from "../../../layouts/Page.astro";
+import { Container } from "@components/odyssey-theme";
 
-changeLanguage('es');
+changeLanguage("es");
 
 const seo = {
-  title: 'Contact | Astro Odyssey Theme',
-  description: 'Contact Page',
+    title: t("contact:page.title") + " | True Morocco Tours",
+    description: t("contact:page.description"),
 };
 ---
 
@@ -16,17 +16,14 @@ const seo = {
   <Container>
     <section class="contact-hero__section">
       <div class="contact-hero__text-section">
-        <h1>Contact Us</h1>
+        <h1>{t('contact:page.title')}</h1>
         <p>
-          This is a contact form using Odyssey's form components to create a
-          contact form component. The contact form is setup to use Netlify's
-          form detection; however, it can easily be translated to other popular
-          form services such as Formspree, Getform, Formspark, etc.
+          {t('contact:page.description')}
         </p>
-        <div>
+        <div class="contact-info">
           <p>
-            <em><a href="tel:8008675309">(800) 867-5309</a></em> • <em
-              ><a href="mailto:hello@odysseytheme.com">hello@ourcompany.com</a
+            <em><a href={`tel:${t('contact:page.phone')}`}>{t('contact:page.phone')}</a></em> • <em
+              ><a href={`mailto:${t('contact:page.email')}`}>{t('contact:page.email')}</a
               ></em
             >
           </p>
@@ -55,6 +52,28 @@ const seo = {
     background-color: var(--theme-surface-1);
     border-radius: var(--theme-shape-radius);
   }
+  .contact-hero__text-section h1 {
+    margin-bottom: 1.5rem;
+  }
+  .contact-hero__text-section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .contact-info {
+    margin-top: auto;
+  }
+  .contact-info p {
+    font-size: 1rem;
+  }
+  .contact-info a {
+    color: var(--theme-primary);
+    text-decoration: none;
+    transition: color var(--theme-transition);
+  }
+  .contact-info a:hover {
+    color: color-mix(in srgb, var(--theme-primary) 80%, var(--theme-on-bg));
+  }
   .col-2__container {
     display: flex;
     flex-direction: column;
@@ -63,6 +82,7 @@ const seo = {
   @media (max-width: 768px) {
     .contact-hero__section {
       grid-template-columns: 1fr;
+      gap: 2rem;
     }
   }
 </style>

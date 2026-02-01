@@ -1,0 +1,45 @@
+{
+  "page": {
+    "title": "Contact Us",
+    "description": "Get in touch with us for any questions about our tours or custom travel arrangements.",
+    "phone": "(+212) 6 88 45 06 66",
+    "email": "truemoroccotours1@gmail.com"
+  },
+  "form": {
+    "title": "Send us a message",
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "your.email@example.com",
+      "hearAbout": "How did you hear about us?",
+      "hearAboutPlaceholder": "Select an option",
+      "hearAboutOther": "Please specify",
+      "hearAboutOtherPlaceholder": "Tell us more...",
+      "message": "Message",
+      "messagePlaceholder": "Your message here..."
+    },
+    "hearAboutOptions": {
+      "friends": "Friends",
+      "socialMedia": "Social Media",
+      "youtube": "YouTube",
+      "other": "Other"
+    },
+    "submit": "Send Message",
+    "submitting": "Sending...",
+    "success": "Thank you! Your message has been sent successfully.",
+    "error": "Unable to send your message. Please try again."
+  },
+  "validation": {
+    "email": {
+      "required": "Email is required",
+      "invalid": "Please enter a valid email address"
+    },
+    "message": {
+      "required": "Message is required"
+    },
+    "hearAboutOther": {
+      "required": "Please specify how you heard about us"
+    }
+  }
+}

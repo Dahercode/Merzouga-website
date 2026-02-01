@@ -1,14 +1,4 @@
 export const footerSocials = [
-  // {
-  //   name: 'Twitter',
-  //   url: 'https://twitter.com/jaydanurwin',
-  //   icon: 'mdi:twitter',
-  // },
-  // {
-  //   name: 'Youtube',
-  //   url: 'https://youtube.com/@jaydanurwin',
-  //   icon: 'mdi:youtube',
-  // },
   {
     name: 'Instagram',
     url: 'https://www.instagram.com/true_morocco_tours/',
@@ -40,7 +30,12 @@ export const footerLists = [
     ],
   },
   {
-    titleKey: 'footer:theme.title',
-    items: [],
+    titleKey: 'footer:media.title',
+    items: [
+      {
+        titleKey: 'footer:media.gallery',
+        slug: '/gallery'
+      }
+    ],
   },
 ];

@@ -1,0 +1,54 @@
+{
+  "seo": {
+    "title": "Galería - Descubre Marruecos a Través de Nuestro Objetivo",
+    "description": "Explora nuestra impresionante colección de fotos del desierto marroquí, las montañas y las ciudades imperiales. Inspírate para tu próxima aventura."
+  },
+  "heading": "Galería de Fotos",
+  "intro": "Descubre la belleza de Marruecos a través de nuestra colección cuidadosamente seleccionada de paisajes impresionantes, momentos auténticos y experiencias inolvidables de nuestros tours.",
+  "carousel": {
+    "imageAlt": "Paisaje marroquí {{index}}",
+    "actionButton": "Únete a nosotros ahora",
+    "prevButton": "Imagen anterior",
+    "nextButton": "Imagen siguiente",
+    "pagination": "Navegación de la galería",
+    "slideLabel": "Diapositiva {{index}} de {{total}}",
+    "images": {
+      "0": {
+        "title": "Montañas del Atlas"
+      },
+      "1": {
+        "title": "Recuerdos Inolvidables"
+      },
+      "2": {
+        "title": "Experiencias Auténticas"
+      },
+      "3": {
+        "title": "Gargantas Espléndidas"
+      },
+      "4": {
+        "title": "Majestuosas Formaciones de Arena"
+      },
+      "5": {
+        "title": "La Ciudad Azul"
+      },
+      "6": {
+        "title": "Celebraciones"
+      },
+      "7": {
+        "title": "Herencia Nómada"
+      },
+      "8": {
+        "title": "Kasbahs Antiguas y Valles"
+      },
+      "9": {
+        "title": "Kasbahs Antiguas y Valles"
+      },
+      "10": {
+        "title": "Reunión"
+      },
+      "11": {
+        "title": "Disponibilidad Completa"
+      }
+    }
+  }
+}

@@ -1,12 +1,15 @@
 ---
-
+import { Image } from 'astro:assets';
 ---
 
 <p class="odyssey-logo">
-  <img
+  <Image
     class="logo"
     src="/assets/images/logo.svg"
-    alt="True Morocco Tours logo"
+    alt="True Morocco Tours"
+    width={150}
+    height={50}
+    loading="eager"
   />
 </p>
 

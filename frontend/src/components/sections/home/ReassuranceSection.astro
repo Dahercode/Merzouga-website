@@ -1,6 +1,7 @@
 ---
 import { Container, Button } from '@components/odyssey-theme';
 import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
 import { localizePath } from 'astro-i18next';
 import { frontmatter as enFrontmatter } from '../../../content/reassurance/en.mdx';
 import { frontmatter as esFrontmatter } from '../../../content/reassurance/es.mdx';
@@ -192,10 +193,12 @@ const paginationScript = `
             >
               <div class="review-card__header">
                 <div class="review-card__profile">
-                  <img
+                  <Image
                     src={review.avatar}
-                    alt={`Portrait of ${review.name}`}
+                    alt={review.name}
                     loading="lazy"
+                    width={48}
+                    height={48}
                   />
                   <div>
                     <p class="review-card__name">{review.name}</p>
