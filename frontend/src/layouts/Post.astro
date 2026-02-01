@@ -1,6 +1,7 @@
 ---
 import { Container, Button } from '@components/odyssey-theme';
 import Layout from './Page.astro';
+import { Image } from 'astro:assets';
 import { AstroI18next } from 'astro-i18next';
 import { Icon } from 'astro-icon/components';
 import { t, changeLanguage } from 'i18next';
@@ -53,7 +54,14 @@ const seo = {
     }
     {
       featuredImage && (
-        <img class="post-layout__img" src={featuredImage} alt={title} />
+        <Image
+          class="post-layout__img"
+          src={featuredImage}
+          alt={title}
+          width={1200}
+          height={600}
+          loading="eager"
+        />
       )
     }
   </div>

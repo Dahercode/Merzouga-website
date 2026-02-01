@@ -25,14 +25,6 @@
         "tourPost": "Article de circuit",
         "legal": "Page légale"
       }
-    },
-    "theme": {
-      "title": "Pages du thème",
-      "description": "Apprenez à configurer et utiliser le thème Odyssey.",
-      "cards": {
-        "getStarted": "Bien démarrer",
-        "styleGuide": "Style Guide"
-      }
     }
   }
 }

@@ -1,6 +1,7 @@
 ---
 import { changeLanguage } from 'i18next';
 import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
 import {
   AnnouncementBar,
   Button,
@@ -90,12 +91,14 @@ const seo = {
         mollitia cumque. Velit.
       </p>
     </div>
-    <picture slot="image-container">
-      <img
+    <div slot="image-container">
+      <Image
         src="/assets/images/landing-1/landing-sticky.jpg"
         alt="Astro Odyssey"
-        loading="lazy"
+        loading="eager"
+        width={800}
+        height={1000}
       />
-    </picture>
+    </div>
   </StickyTextImageSection>
 </Layout>

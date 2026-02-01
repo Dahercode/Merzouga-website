@@ -1,0 +1,33 @@
+---
+import { Container, TextCardSection } from "@components/odyssey-theme";
+import Layout from "../../layouts/Page.astro";
+import GalleryCarousel from "../../components/GalleryCarousel.astro";
+import i18next, { t, changeLanguage } from "i18next";
+
+changeLanguage("es");
+
+const seo = {
+    title: t("gallery:seo.title"),
+    description: t("gallery:seo.description"),
+};
+---
+
+<Layout {seo}>
+  <Container>
+    <TextCardSection>
+      <h1>{t('gallery:heading')}</h1>
+      <p class="gallery__description">{t('gallery:intro')}</p>
+    </TextCardSection>
+
+    <GalleryCarousel />
+  </Container>
+</Layout>
+
+<style>
+  .gallery__description {
+    font-size: 1.25rem;
+    font-weight: 400;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+</style>

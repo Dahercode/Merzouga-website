@@ -10,11 +10,9 @@
     "tours": "Tours",
     "contact": "Contact"
   },
-  "theme": {
-    "title": "Theme",
-    "styleGuide": "Style Guide",
-    "themeSetup": "Theme Setup",
-    "customizing": "Customizing Odyssey"
+  "media": {
+    "title": "Media",
+    "gallery": "Photo gallery"
   },
   "tours": {
     "title": "Our signature tours"

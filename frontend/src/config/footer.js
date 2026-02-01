@@ -30,7 +30,12 @@ export const footerLists = [
     ],
   },
   {
-    titleKey: 'footer:theme.title',
-    items: [],
+    titleKey: 'footer:media.title',
+    items: [
+      {
+        titleKey: 'footer:media.gallery',
+        slug: '/gallery'
+      }
+    ],
   },
 ];

@@ -1,5 +1,6 @@
 ---
 import { changeLanguage } from 'i18next';
+import { Image } from 'astro:assets';
 import Layout from '../../../layouts/Base.astro';
 import LandingContactForm from '../../../components/forms/LandingContactForm.astro';
 import Logo from '../../../components/Logo.astro';
@@ -20,13 +21,14 @@ const seo = {
           <Logo />
         </a>
       </div>
-      <picture>
-        <img
-          src="/assets/images/home/classic-hero.jpg"
-          alt="Astro Odyssey"
-          class="full-page-split__image"
-        />
-      </picture>
+      <Image
+        src="/assets/images/home/classic-hero.jpg"
+        alt="Astro Odyssey"
+        class="full-page-split__image"
+        width={800}
+        height={1000}
+        loading="eager"
+      />
     </section>
     <section class="full-page-split__content-section">
       <div class="full-page-split__content-container">

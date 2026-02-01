@@ -11,11 +11,8 @@
     "contact": "Contact"
   },
   "theme": {
-    "title": "Thème",
-    "getStarted": "Commencer",
-    "styleGuide": "Guide de style",
-    "themeSetup": "Configuration du thème",
-    "customizing": "Personnaliser Odyssey"
+    "title": "Médias", 
+    "gallery" : "Galerie photos"
   },
   "tours": {
     "title": "Nos itinéraires phares"

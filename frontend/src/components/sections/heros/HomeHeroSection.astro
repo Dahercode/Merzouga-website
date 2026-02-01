@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { Container, Button } from '@components/odyssey-theme';
+import { Image } from 'astro:assets';
 import settings from '../../../config/settings.js';
 import { t } from 'i18next';
 import { localizePath } from 'astro-i18next';
@@ -22,13 +23,14 @@ import { localizePath } from 'astro-i18next';
       {settings.enableThemeSwitcher && <theme-switcher />}
     </div>
     <div class="hero-section__image">
-      <picture>
-        <img
-          src="/assets/images/home/classic-hero.jpg"
-          alt={t('home:hero.imageAlt')}
-          id="home-hero-image"
-        />
-      </picture>
+      <Image
+        src="/assets/images/home/classic-hero.jpg"
+        alt={t('home:hero.imageAlt')}
+        id="home-hero-image"
+        width={800}
+        height={600}
+        loading="eager"
+      />
     </div>
   </section>
 </Container>

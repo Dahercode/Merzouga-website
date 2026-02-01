@@ -1,10 +1,18 @@
 ---
+import { Image } from 'astro:assets';
+
 const { tour } = Astro.props;
 ---
 
 <li class="tour__preview">
   <a href={tour.href}>
-    <img src={tour.featuredImage} />
+    <Image
+      src={tour.featuredImage}
+      alt={tour.title}
+      width={600}
+      height={400}
+      loading="lazy"
+    />
     <h4>{tour.title}</h4>
     {tour.excerpt && <p>{tour.excerpt}</p>}
   </a>
