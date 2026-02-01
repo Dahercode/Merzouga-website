@@ -38,6 +38,27 @@ const seo = {
   canonicalURL,
   image: featuredImage,
 };
+
+const validationMessages = {
+  firstName: { required: t('tours:validation.firstName.required') },
+  lastName: { required: t('tours:validation.lastName.required') },
+  email: {
+    required: t('tours:validation.email.required'),
+    invalid: t('tours:validation.email.invalid'),
+  },
+  phone: {
+    required: t('tours:validation.phone.required'),
+    tooShort: t('tours:validation.phone.tooShort'),
+    invalid: t('tours:validation.phone.invalid'),
+  },
+  numberOfPeople: {
+    required: t('tours:validation.numberOfPeople.required'),
+    minimum: t('tours:validation.numberOfPeople.minimum'),
+  },
+  startDate: { required: t('tours:validation.startDate.required') },
+  endDate: { required: t('tours:validation.endDate.required') },
+  dateRange: { invalid: t('tours:validation.dateRange.invalid') },
+};
 ---
 
 <Layout seo={seo}>
@@ -113,6 +134,8 @@ const seo = {
         data-error={t('tours:booking.error')}
         data-tour={title}
         data-locale={locale}
+        data-validation-messages={JSON.stringify(validationMessages)}
+        novalidate
       >
         <input type="hidden" name="tour" value={title} />
         <div class="booking-form__content">
@@ -131,7 +154,19 @@ const seo = {
                 required
                 autocomplete="given-name"
               />
+              <span
+                class="booking-form__status-icon"
+                data-status-icon="firstName"
+                aria-hidden="true"
+              >
+                ✓
+              </span>
             </div>
+            <p
+              class="booking-form__error"
+              data-error-for="firstName"
+              role="alert"
+            ></p>
           </div>
           <div class="booking-form__field">
             <label for="booking-last-name">
@@ -147,7 +182,19 @@ const seo = {
                 required
                 autocomplete="family-name"
               />
+              <span
+                class="booking-form__status-icon"
+                data-status-icon="lastName"
+                aria-hidden="true"
+              >
+                ✓
+              </span>
             </div>
+            <p
+              class="booking-form__error"
+              data-error-for="lastName"
+              role="alert"
+            ></p>
           </div>
           <div class="booking-form__field">
             <label for="booking-email">{t('tours:booking.fields.email')}</label>
@@ -161,7 +208,19 @@ const seo = {
                 required
                 autocomplete="email"
               />
+              <span
+                class="booking-form__status-icon"
+                data-status-icon="email"
+                aria-hidden="true"
+              >
+                ✓
+              </span>
             </div>
+            <p
+              class="booking-form__error"
+              data-error-for="email"
+              role="alert"
+            ></p>
           </div>
           <div class="booking-form__field booking-form__field--phone">
             <label for="booking-phone">
@@ -186,7 +245,19 @@ const seo = {
                 inputmode="numeric"
                 required
               />
+              <span
+                class="booking-form__status-icon"
+                data-status-icon="people"
+                aria-hidden="true"
+              >
+                ✓
+              </span>
             </div>
+            <p
+              class="booking-form__error"
+              data-error-for="people"
+              role="alert"
+            ></p>
           </div>
           <div class="booking-form__field booking-form__field--dates">
             <label for="booking-dates">
@@ -195,6 +266,11 @@ const seo = {
             <date-range-picker id="booking-dates"></date-range-picker>
             <input type="hidden" name="startDate" id="start-date-hidden" required />
             <input type="hidden" name="endDate" id="end-date-hidden" required />
+            <p
+              class="booking-form__error"
+              data-error-for="dates"
+              role="alert"
+            ></p>
           </div>
           <div class="booking-form__full">
             <div class="booking-form__field booking-form__field--textarea">
@@ -215,7 +291,9 @@ const seo = {
           </div>
         </div>
         <div class="booking-form__actions">
-          <Button type="submit">{t('tours:booking.submit')}</Button>
+          <Button type="submit" disabled>
+            {t('tours:booking.submit')}
+          </Button>
         </div>
         <p
           id="booking-status"
@@ -395,6 +473,9 @@ const seo = {
     gap: 1rem;
     min-height: 0;
     height: 100%;
+    --form-field-border-focus-color: #00bcd4;
+    --form-field-border-error-color: #dc2626;
+    --form-field-border-valid-color: #16a34a;
   }
   .booking-form__content {
     flex: 1 1 auto;
@@ -423,6 +504,12 @@ const seo = {
   }
   .booking-form__field--phone phone-input {
     width: 100%;
+    --theme-primary: var(--form-field-border-focus-color, #00bcd4);
+    --form-field-border-color: color-mix(
+      in srgb,
+      var(--form-field-border-color-base, var(--theme-outline-variant, #d0d0d0)) 70%,
+      #cfd6e5
+    );
   }
   .booking-form__field--dates {
     /* grid-column: 1 / -1; */
@@ -431,10 +518,18 @@ const seo = {
   }
   .booking-form__field--dates date-range-picker {
     width: 100%;
+    --form-field-border-focus-color: var(--form-field-border-focus-color, #00bcd4);
+    --date-valid-color: var(--form-field-border-valid-color, #16a34a);
+    --date-error-color: var(--form-field-border-error-color, #dc2626);
+    --date-border-color: color-mix(
+      in srgb,
+      var(--form-field-border-color-base, var(--theme-outline-variant, #d0d0d0)) 70%,
+      #cfd6e5
+    );
   }
   .booking-form__input {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 0.5rem;
     padding: 0.45rem 0.75rem;
@@ -456,11 +551,24 @@ const seo = {
     box-sizing: border-box;
     min-width: 0;
     max-width: 100%;
+    position: relative;
   }
   .booking-form__input:focus-within {
-    border-color: var(--form-field-border-focus-color, var(--theme-primary, #5b4cff));
+    border-color: var(--form-field-border-focus-color, #00bcd4);
     box-shadow: 0 0 0 3px
-      color-mix(in srgb, var(--theme-primary, #5b4cff) 14%, transparent);
+      color-mix(in srgb, var(--form-field-border-focus-color, #00bcd4) 18%, transparent);
+  }
+  .booking-form__input.is-error,
+  .booking-form__input.is-error:focus-within {
+    border-color: var(--form-field-border-error-color, #dc2626);
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--form-field-border-error-color, #dc2626) 18%, transparent);
+  }
+  .booking-form__input.is-valid,
+  .booking-form__input.is-valid:focus-within {
+    border-color: var(--form-field-border-valid-color, #16a34a);
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--form-field-border-valid-color, #16a34a) 18%, transparent);
   }
   .booking-form__input svg {
     width: 20px;
@@ -480,6 +588,22 @@ const seo = {
     box-sizing: border-box;
     min-width: 0;
   }
+  .booking-form__status-icon {
+    font-size: 1.05rem;
+    color: var(--form-field-border-valid-color, #16a34a);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    align-self: center;
+    justify-self: end;
+    width: 1.2rem;
+    text-align: right;
+    pointer-events: none;
+  }
+  .booking-form__input.is-valid .booking-form__status-icon {
+    opacity: 1;
+    visibility: visible;
+  }
   .booking-form__input input::placeholder,
   .booking-form__input textarea::placeholder {
     color: color-mix(
@@ -493,12 +617,31 @@ const seo = {
   }
   .booking-form__input--textarea {
     align-items: flex-start;
+    grid-template-columns: auto 1fr;
   }
   .booking-form__input--textarea svg {
     margin-top: 0.3rem;
   }
   .booking-form__full {
     grid-column: 1 / -1;
+  }
+  .booking-form__error {
+    margin: 0.35rem 0 0 0;
+    font-size: 0.85rem;
+    color: var(--form-field-border-error-color, #dc2626);
+    font-weight: 500;
+    min-height: 1em;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .booking-form__error:empty {
+    min-height: 0;
+    display: none;
+  }
+  .booking-form__error:not(:empty)::before {
+    content: '⚠';
+    font-size: 0.9rem;
   }
   .booking-form__actions {
     display: flex;
@@ -526,6 +669,16 @@ const seo = {
     border: none;
     box-shadow: 0 8px 18px color-mix(in srgb, var(--theme-primary) 30%, transparent);
     width: 100%;
+  }
+  .booking-form__actions :global(.btn:disabled) {
+    background: #e0e0e0;
+    color: #9e9e9e;
+    cursor: not-allowed;
+    opacity: 0.5;
+    box-shadow: none;
+  }
+  .booking-form__actions :global(.btn:disabled:hover) {
+    background: #e0e0e0;
   }
   .booking-status {
     margin: 0;
@@ -629,29 +782,20 @@ const seo = {
   const dateRangePicker = document.getElementById('booking-dates');
   const startDateHidden = document.getElementById('start-date-hidden');
   const endDateHidden = document.getElementById('end-date-hidden');
+  const firstNameInput = document.getElementById('booking-first-name');
+  const lastNameInput = document.getElementById('booking-last-name');
+  const emailInput = document.getElementById('booking-email');
+  const peopleInput = document.getElementById('booking-people');
+  const submitButton = form?.querySelector('button[type="submit"]');
   const defaultTour = form?.dataset.tour || '';
   const successCopy = form?.dataset.success || '';
   const errorCopy = form?.dataset.error || '';
   const locale = form?.dataset.locale || 'en';
+  const validationMessages = form?.dataset.validationMessages
+    ? JSON.parse(form.dataset.validationMessages)
+    : {};
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   let phoneValid = false;
-  let datesValid = false;
-
-  // Handle phone input changes
-  if (phoneInput) {
-    phoneInput.addEventListener('phone-change', (e) => {
-      phoneHidden.value = e.detail.phone;
-      phoneValid = e.detail.isValid;
-    });
-  }
-
-  // Handle date range picker changes
-  if (dateRangePicker) {
-    dateRangePicker.addEventListener('date-change', (e) => {
-      startDateHidden.value = e.detail.startDate;
-      endDateHidden.value = e.detail.endDate;
-      datesValid = !!(e.detail.startDate && e.detail.endDate);
-    });
-  }
 
   const toggleModal = (open) => {
     if (!modal) return;
@@ -663,6 +807,7 @@ const seo = {
     }
     if (open) {
       hydrateEnhancements();
+      updateSubmitButton();
     }
   };
 
@@ -693,29 +838,313 @@ const seo = {
     }
   });
 
+  const setStatusMessage = (message, type = '') => {
+    statusEl?.classList.remove('success', 'error');
+    if (!statusEl) return;
+    statusEl.textContent = message || '';
+    if (type) statusEl.classList.add(type);
+  };
+
+  const useFormValidation = ({ onStateChange } = {}) => {
+    const fields = new Map();
+
+    const hasContent = (value) => {
+      if (value === null || value === undefined) return false;
+      if (typeof value === 'object') {
+        return Object.values(value).some((item) => hasContent(item));
+      }
+      if (typeof value === 'string') return value.trim() !== '';
+      return `${value}`.trim() !== '';
+    };
+
+    const applyFieldUI = (field) => {
+      const { wrapper, errorEl, statusIcon, status } = field;
+      wrapper?.classList.toggle('is-error', status === 'error');
+      wrapper?.classList.toggle('is-valid', status === 'valid');
+      if (statusIcon) statusIcon.hidden = status !== 'valid';
+      if (errorEl) {
+        errorEl.textContent = status === 'error' ? field.message || '' : '';
+      }
+      if (typeof field.setHostStatus === 'function') {
+        field.setHostStatus(status, field.message);
+      }
+    };
+
+    const setFieldState = (name, status, message = '') => {
+      const field = fields.get(name);
+      if (!field) return;
+      field.status = status;
+      field.message = message;
+      applyFieldUI(field);
+      onStateChange?.();
+    };
+
+    const registerField = (name, config) => {
+      fields.set(name, {
+        ...config,
+        name,
+        status: 'idle',
+        message: '',
+        touched: false,
+      });
+      applyFieldUI(fields.get(name));
+    };
+
+    const validateField = (name, { isBlur = false, force = false } = {}) => {
+      const field = fields.get(name);
+      if (!field || typeof field.validate !== 'function') return true;
+
+      if (isBlur) field.touched = true;
+      const value = typeof field.getValue === 'function' ? field.getValue() : undefined;
+      const result = field.validate(value, {
+        touched: field.touched,
+        isBlur,
+        force,
+      });
+
+      let status = result?.status || 'idle';
+      let message = result?.message || '';
+
+      if (status === 'error' && !field.touched && !force && !hasContent(value)) {
+        status = 'idle';
+        message = '';
+      }
+
+      setFieldState(name, status, message);
+      return status === 'valid';
+    };
+
+    const validateAll = () => {
+      let allValid = true;
+      fields.forEach((_, name) => {
+        const valid = validateField(name, { force: true, isBlur: true });
+        const field = fields.get(name);
+        if (field) field.touched = true;
+        if (!valid) allValid = false;
+      });
+      return allValid;
+    };
+
+    const isFormValid = () => {
+      let valid = true;
+      fields.forEach((field) => {
+        if (field.required && field.status !== 'valid') valid = false;
+      });
+      return valid;
+    };
+
+    const reset = () => {
+      fields.forEach((field) => {
+        field.touched = false;
+        setFieldState(field.name, 'idle', '');
+      });
+    };
+
+    return {
+      registerField,
+      validateField,
+      validateAll,
+      isFormValid,
+      reset,
+    };
+  };
+
+  const validation = useFormValidation({ onStateChange: () => updateSubmitButton() });
+
+  const wireField = (name, inputEl) => {
+    if (!inputEl) return;
+    inputEl.addEventListener('input', () => validation.validateField(name));
+    inputEl.addEventListener('blur', () => validation.validateField(name, { isBlur: true }));
+  };
+
+  validation.registerField('firstName', {
+    required: true,
+    wrapper: firstNameInput?.closest('.booking-form__input'),
+    errorEl: form?.querySelector('[data-error-for="firstName"]'),
+    statusIcon: form?.querySelector('[data-status-icon="firstName"]'),
+    getValue: () => firstNameInput?.value?.trim() || '',
+    validate: (value) => {
+      if (!value) {
+        return { status: 'error', message: validationMessages.firstName?.required || '' };
+      }
+      return { status: 'valid' };
+    },
+  });
+  wireField('firstName', firstNameInput);
+
+  validation.registerField('lastName', {
+    required: true,
+    wrapper: lastNameInput?.closest('.booking-form__input'),
+    errorEl: form?.querySelector('[data-error-for="lastName"]'),
+    statusIcon: form?.querySelector('[data-status-icon="lastName"]'),
+    getValue: () => lastNameInput?.value?.trim() || '',
+    validate: (value) => {
+      if (!value) {
+        return { status: 'error', message: validationMessages.lastName?.required || '' };
+      }
+      return { status: 'valid' };
+    },
+  });
+  wireField('lastName', lastNameInput);
+
+  validation.registerField('email', {
+    required: true,
+    wrapper: emailInput?.closest('.booking-form__input'),
+    errorEl: form?.querySelector('[data-error-for="email"]'),
+    statusIcon: form?.querySelector('[data-status-icon="email"]'),
+    getValue: () => emailInput?.value?.trim() || '',
+    validate: (value) => {
+      if (!value) {
+        return { status: 'error', message: validationMessages.email?.required || '' };
+      }
+      if (!emailRegex.test(value)) {
+        return { status: 'error', message: validationMessages.email?.invalid || '' };
+      }
+      return { status: 'valid' };
+    },
+  });
+  wireField('email', emailInput);
+
+  validation.registerField('people', {
+    required: true,
+    wrapper: peopleInput?.closest('.booking-form__input'),
+    errorEl: form?.querySelector('[data-error-for="people"]'),
+    statusIcon: form?.querySelector('[data-status-icon="people"]'),
+    getValue: () => peopleInput?.value,
+    validate: (value) => {
+      if (value === undefined || value === null || `${value}`.trim() === '') {
+        return { status: 'error', message: validationMessages.numberOfPeople?.required || '' };
+      }
+      const numberValue = Number(value);
+      if (!Number.isFinite(numberValue) || numberValue <= 0) {
+        return { status: 'error', message: validationMessages.numberOfPeople?.minimum || '' };
+      }
+      return { status: 'valid' };
+    },
+  });
+  wireField('people', peopleInput);
+
+  validation.registerField('phone', {
+    required: true,
+    getValue: () => phoneHidden?.value?.trim() || '',
+    validate: (value) => {
+      if (!value) {
+        return { status: 'error', message: validationMessages.phone?.required || '' };
+      }
+      if (!phoneValid) {
+        const fallback = validationMessages.phone?.invalid || '';
+        const message =
+          phoneInput?.errorMessage ||
+          (phoneInput?.validationState === 'error' && fallback) ||
+          fallback;
+        return { status: 'error', message };
+      }
+      return { status: 'valid' };
+    },
+    setHostStatus: (status, message) => {
+      if (!phoneInput) return;
+      if (status === 'error' && phoneInput.validationState === 'idle') {
+        phoneInput.validationState = 'error';
+        phoneInput.errorMessage = message || phoneInput.errorMessage;
+        phoneInput.requestUpdate();
+      }
+    },
+  });
+
+  validation.registerField('dates', {
+    required: true,
+    errorEl: form?.querySelector('[data-error-for="dates"]'),
+    getValue: () => ({
+      start: startDateHidden?.value || '',
+      end: endDateHidden?.value || '',
+    }),
+    validate: (value) => {
+      const start = value?.start || '';
+      const end = value?.end || '';
+      if (!start) {
+        return { status: 'error', message: validationMessages.startDate?.required || '' };
+      }
+      if (!end) {
+        return { status: 'error', message: validationMessages.endDate?.required || '' };
+      }
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      if (!(startDate instanceof Date && endDate instanceof Date) || endDate <= startDate) {
+        return { status: 'error', message: validationMessages.dateRange?.invalid || '' };
+      }
+      return { status: 'valid' };
+    },
+    setHostStatus: (status) => {
+      if (!dateRangePicker) return;
+      dateRangePicker.classList.toggle('error', status === 'error');
+      dateRangePicker.classList.toggle('valid', status === 'valid');
+    },
+  });
+
+  const updateSubmitButton = () => {
+    if (!submitButton) return;
+    submitButton.disabled = !validation.isFormValid();
+  };
+
+  // Handle phone input changes
+  if (phoneInput) {
+    phoneInput.addEventListener('phone-change', (e) => {
+      phoneHidden.value = e.detail.phone || '';
+      phoneValid = e.detail.isValid;
+      validation.validateField('phone', { force: true });
+    });
+    phoneInput.addEventListener('validation-change', (e) => {
+      phoneValid = e.detail.isValid;
+      validation.validateField('phone', { force: true });
+    });
+  }
+
+  // Handle date range picker changes
+  if (dateRangePicker) {
+    dateRangePicker.addEventListener('date-change', (e) => {
+      startDateHidden.value = e.detail.startDate || '';
+      endDateHidden.value = e.detail.endDate || '';
+      validation.validateField('dates', { force: true });
+    });
+    dateRangePicker.addEventListener('focusout', () =>
+      validation.validateField('dates', { isBlur: true, force: true })
+    );
+  }
+
+  updateSubmitButton();
+
+  const resetInteractiveFields = () => {
+    phoneValid = false;
+    if (phoneInput) {
+      phoneInput.phoneNumber = '';
+      phoneInput.validationState = 'idle';
+      phoneInput.errorMessage = '';
+      phoneInput._touched = false;
+      phoneInput.requestUpdate();
+    }
+    if (dateRangePicker) {
+      dateRangePicker.startDate = '';
+      dateRangePicker.endDate = '';
+      dateRangePicker.isOpen = false;
+      dateRangePicker.classList.remove('valid', 'error');
+      dateRangePicker.requestUpdate();
+    }
+    if (startDateHidden) startDateHidden.value = '';
+    if (endDateHidden) endDateHidden.value = '';
+  };
+
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form) return;
 
-    // Validate phone number
-    if (!phoneValid) {
-      statusEl?.classList.remove('success');
-      statusEl?.classList.add('error');
-      statusEl && (statusEl.textContent = 'Please enter a valid phone number');
+    const formIsValid = validation.validateAll();
+    updateSubmitButton();
+    if (!formIsValid) {
+      setStatusMessage('', '');
       return;
     }
 
-    // Validate dates
-    if (!datesValid) {
-      statusEl?.classList.remove('success');
-      statusEl?.classList.add('error');
-      statusEl && (statusEl.textContent = 'Please select both start and end dates');
-      return;
-    }
-
-    statusEl?.classList.remove('success', 'error');
-    statusEl && (statusEl.textContent = '');
-    const submitButton = form.querySelector('button[type=\"submit\"]');
+    setStatusMessage('', '');
     submitButton && (submitButton.disabled = true);
 
     const formData = new FormData(form);
@@ -728,17 +1157,17 @@ const seo = {
         body: JSON.stringify({ ...payload, locale }),
       });
       if (!response.ok) throw new Error('Request failed');
-      statusEl && (statusEl.textContent = successCopy);
-      statusEl?.classList.add('success');
+      setStatusMessage(successCopy, 'success');
       form.reset();
+      resetInteractiveFields();
+      validation.reset();
       if (tourInput && defaultTour) {
         tourInput.value = defaultTour;
       }
     } catch (error) {
-      statusEl && (statusEl.textContent = errorCopy);
-      statusEl?.classList.add('error');
+      setStatusMessage(errorCopy, 'error');
     } finally {
-      submitButton && (submitButton.disabled = false);
+      submitButton && (submitButton.disabled = !validation.isFormValid());
     }
   });
 </script>

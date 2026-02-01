@@ -27,16 +27,36 @@ class DateRangePicker extends LitElement {
       align-items: center;
       gap: 0.5rem;
       padding: 0.45rem 0.75rem;
-      border: 1px solid var(--form-field-border-color, #d0d0d0);
+      padding-right: 2.1rem;
+      border: 1px solid var(--date-border-color, var(--form-field-border-color, #d0d0d0));
       border-radius: var(--form-field-border-radius, 0.6rem);
       background: color-mix(in srgb, var(--theme-surface-1, #ffffff) 12%, #ffffff);
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
       cursor: pointer;
+      position: relative;
     }
 
     .date-range-input.focused {
-      border-color: var(--theme-primary, #5b4cff);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-primary, #5b4cff) 14%, transparent);
+      border-color: var(
+        --date-focus-color,
+        var(--form-field-border-focus-color, var(--theme-primary, #5b4cff))
+      );
+      box-shadow: 0 0 0 3px
+        color-mix(
+          in srgb,
+          var(--date-focus-color, var(--form-field-border-focus-color, var(--theme-primary, #5b4cff))) 18%,
+          transparent
+        );
+    }
+
+    :host(.error) .date-range-input {
+      border-color: var(--date-error-color, #dc2626);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--date-error-color, #dc2626) 18%, transparent);
+    }
+
+    :host(.valid) .date-range-input {
+      border-color: var(--date-valid-color, #16a34a);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--date-valid-color, #16a34a) 18%, transparent);
     }
 
     .date-range-input svg {
@@ -214,6 +234,22 @@ class DateRangePicker extends LitElement {
 
     .calendar-footer .btn-apply:hover {
       background: color-mix(in srgb, var(--theme-primary, #5b4cff) 90%, #000);
+    }
+
+    .validation-icon {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.1rem;
+      color: var(--date-valid-color, #16a34a);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    :host(.valid) .validation-icon {
+      opacity: 1;
     }
   `;
 
@@ -464,6 +500,7 @@ class DateRangePicker extends LitElement {
           <div class="date-range-display ${displayText ? '' : 'placeholder'}">
             ${displayText || placeholder}
           </div>
+          <span class="validation-icon" aria-hidden="true">✓</span>
         </div>
         <div class="calendar-dropdown ${this.isOpen ? 'open' : ''}" @click="${(e) => e.stopPropagation()}">
           ${this._renderCalendar()}

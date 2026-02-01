@@ -26,5 +26,35 @@
     "success": "Merci ! Nous avons bien reçu votre demande et nous vous répondons rapidement.",
     "error": "Une erreur est survenue. Réessayez ou contactez-nous directement.",
     "close": "Fermer la fenêtre de réservation"
+  },
+  "validation": {
+    "firstName": {
+      "required": "Le prénom est requis"
+    },
+    "lastName": {
+      "required": "Le nom est requis"
+    },
+    "email": {
+      "required": "L'adresse e-mail est requise",
+      "invalid": "Veuillez saisir une adresse e-mail valide"
+    },
+    "phone": {
+      "required": "Le numéro de téléphone est requis",
+      "tooShort": "Numéro de téléphone trop court",
+      "invalid": "Numéro de téléphone invalide"
+    },
+    "numberOfPeople": {
+      "required": "Le nombre de personnes est requis",
+      "minimum": "Indiquez au moins 1 personne"
+    },
+    "startDate": {
+      "required": "La date de début est requise"
+    },
+    "endDate": {
+      "required": "La date de fin est requise"
+    },
+    "dateRange": {
+      "invalid": "La date de fin doit être postérieure à la date de début"
+    }
   }
 }

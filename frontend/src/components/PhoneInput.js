@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import i18next from 'i18next';
 
 // Countries data with validation rules and formatting
 const COUNTRIES = [
@@ -40,6 +41,7 @@ class PhoneInput extends LitElement {
     errorMessage: { type: String },
     required: { type: Boolean },
     _isFocused: { type: Boolean },
+    _touched: { type: Boolean },
   };
 
   static styles = css`
@@ -65,8 +67,16 @@ class PhoneInput extends LitElement {
     }
 
     .phone-input-wrapper.focused {
-      border-color: var(--theme-primary, #5b4cff);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-primary, #5b4cff) 14%, transparent);
+      border-color: var(
+        --form-field-border-focus-color,
+        var(--theme-primary, #5b4cff)
+      );
+      box-shadow: 0 0 0 3px
+        color-mix(
+          in srgb,
+          var(--form-field-border-focus-color, var(--theme-primary, #5b4cff)) 18%,
+          transparent
+        );
     }
 
     .phone-input-wrapper.error {
@@ -270,6 +280,7 @@ class PhoneInput extends LitElement {
     this.errorMessage = '';
     this.required = false;
     this._isFocused = false;
+    this._touched = false;
   }
 
   connectedCallback() {
@@ -320,6 +331,7 @@ class PhoneInput extends LitElement {
     // Remove all non-digit characters
     const digitsOnly = input.replace(/\D/g, '');
     this.phoneNumber = digitsOnly;
+    this._touched = true;
     this._validatePhone();
     this._notifyChange();
     this.requestUpdate();
@@ -356,36 +368,67 @@ class PhoneInput extends LitElement {
     return formatted;
   }
 
-  _validatePhone() {
+  _translate(key, fallback = '', options = {}) {
+    const keyWithNs = key.includes(':') ? key : `tours:${key}`;
+    try {
+      const value = i18next?.t ? i18next.t(keyWithNs, options) : '';
+      if (value && value !== keyWithNs) return value;
+    } catch (error) {
+      // Fallback below
+    }
+    return fallback || key;
+  }
+
+  _emitValidationChange() {
+    this.dispatchEvent(
+      new CustomEvent('validation-change', {
+        detail: {
+          isValid: this.validationState === 'valid',
+          validationState: this.validationState,
+          errorMessage: this.errorMessage,
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  _validatePhone({ force = false } = {}) {
     const length = this.phoneNumber.length;
     const requiredLength = this.selectedCountry.length;
 
     if (!this.phoneNumber || length === 0) {
-      this.validationState = 'idle';
-      this.errorMessage = '';
+      if (this.required && (this._touched || force)) {
+        this.validationState = 'error';
+        this.errorMessage = this._translate('validation.phone.required', 'Phone number is required');
+      } else {
+        this.validationState = 'idle';
+        this.errorMessage = '';
+      }
+      this._emitValidationChange();
       return;
     }
 
     if (length < requiredLength) {
       this.validationState = 'error';
       const remaining = requiredLength - length;
-      this.errorMessage = `Invalid phone number | ${this.selectedCountry.code}: too short (${remaining} digit${remaining > 1 ? 's' : ''} missing)`;
+      this.errorMessage = this._translate(
+        'validation.phone.tooShort',
+        'Phone number is too short',
+        { count: remaining, remaining }
+      );
     } else if (length === requiredLength) {
       this.validationState = 'valid';
       this.errorMessage = '';
     } else {
       this.validationState = 'error';
-      this.errorMessage = `Invalid phone number | ${this.selectedCountry.code}: too long`;
+      this.errorMessage = this._translate(
+        'validation.phone.invalid',
+        'Invalid phone number'
+      );
     }
 
-    // Dispatch validation event
-    this.dispatchEvent(
-      new CustomEvent('validation-change', {
-        detail: { isValid: this.validationState === 'valid' },
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this._emitValidationChange();
   }
 
   _notifyChange() {
@@ -396,6 +439,8 @@ class PhoneInput extends LitElement {
           phone: fullNumber,
           countryCode: this.selectedCountry.code,
           isValid: this.validationState === 'valid',
+          validationState: this.validationState,
+          errorMessage: this.errorMessage,
         },
         bubbles: true,
         composed: true,
@@ -409,6 +454,8 @@ class PhoneInput extends LitElement {
   };
 
   _handleBlur = () => {
+    this._touched = true;
+    this._validatePhone({ force: true });
     setTimeout(() => {
       this._isFocused = false;
       this.requestUpdate();
@@ -504,4 +551,3 @@ class PhoneInput extends LitElement {
 if (!customElements.get('phone-input')) {
   customElements.define('phone-input', PhoneInput);
 }
-
