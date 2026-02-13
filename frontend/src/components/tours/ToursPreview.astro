@@ -20,6 +20,10 @@ const { tour } = Astro.props;
 
 <style>
   .tour__preview img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
     margin-bottom: 1rem;
     border-radius: calc(var(--theme-shape-radius) / 2);
     transition: border-radius var(--theme-transition);
