@@ -1,0 +1,180 @@
+---
+const { days = [] } = Astro.props;
+
+// Simple markdown-to-HTML parser for descriptions
+function parseMarkdown(text: string): string {
+  return text
+    // Convert unordered lists (lines starting with -)
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    // Wrap consecutive <li> items in <ul>
+    .replace(/(<li>.*<\/li>\n?)+/g, (match) => `<ul>${match}</ul>`)
+    // Convert paragraphs (double line breaks)
+    .replace(/\n\n/g, '</p><p>')
+    // Wrap in initial paragraph
+    .replace(/^(?!<ul>|<p>)(.+)/, '<p>$1')
+    // Close final paragraph if needed
+    .replace(/([^>])$/, '$1</p>')
+    // Clean up empty paragraphs
+    .replace(/<p><\/p>/g, '')
+    .replace(/<p>\s*<\/p>/g, '');
+}
+
+const parsedDays = days.map((day: any) => ({
+  ...day,
+  descriptionHtml: parseMarkdown(day.description)
+}));
+---
+
+<div class="tour-itinerary">
+  <div class="tour-itinerary__timeline">
+    {parsedDays.map((day: any, index: number) => (
+      <div class="tour-itinerary__day">
+        <div class="tour-itinerary__day-badge">
+          {index + 1}
+        </div>
+        <div class="tour-itinerary__day-content">
+          <h3 class="tour-itinerary__day-title">{day.title}</h3>
+          <div class="tour-itinerary__day-description" set:html={day.descriptionHtml} />
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .tour-itinerary {
+    margin: 3rem 0;
+  }
+
+  .tour-itinerary__timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  /* Vertical timeline line */
+  .tour-itinerary__timeline::before {
+    content: '';
+    position: absolute;
+    left: 22px;
+    top: 22px;
+    bottom: 22px;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      #f59e0b 0%,
+      color-mix(in srgb, #f59e0b 25%, transparent) 100%
+    );
+  }
+
+  .tour-itinerary__day {
+    position: relative;
+    display: flex;
+    gap: 2rem;
+    padding-left: 4rem;
+  }
+
+  .tour-itinerary__day-badge {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+    border: 3px solid var(--theme-bg);
+    flex-shrink: 0;
+  }
+
+  .tour-itinerary__day-content {
+    flex: 1;
+    padding-top: 0;
+  }
+
+  .tour-itinerary__day-title {
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #d97706;
+    line-height: 1.4;
+  }
+
+  .tour-itinerary__day-description {
+    margin: 0;
+    color: var(--theme-on-bg);
+    opacity: 0.88;
+    line-height: 1.6;
+    font-size: 0.98rem;
+  }
+
+  /* Style paragraphs within description */
+  .tour-itinerary__day-description p {
+    margin: 0 0 0.75rem 0;
+  }
+
+  .tour-itinerary__day-description p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Style lists within description */
+  .tour-itinerary__day-description ul {
+    margin: 0.5rem 0;
+    padding-left: 1.25rem;
+    list-style-type: disc;
+  }
+
+  .tour-itinerary__day-description li {
+    margin: 0.25rem 0;
+    padding-left: 0.25rem;
+    line-height: 1.5;
+  }
+
+  .tour-itinerary__day-description li::marker {
+    color: #f59e0b;
+  }
+
+  @media (max-width: 768px) {
+    .tour-itinerary__timeline::before {
+      left: 19px;
+      top: 19px;
+      bottom: 19px;
+    }
+
+    .tour-itinerary__timeline {
+      gap: 2rem;
+    }
+
+    .tour-itinerary__day {
+      padding-left: 3.5rem;
+      gap: 1.5rem;
+    }
+
+    .tour-itinerary__day-badge {
+      width: 38px;
+      height: 38px;
+      font-size: 1rem;
+      border-width: 2px;
+    }
+
+    .tour-itinerary__day-title {
+      font-size: 1.1rem;
+    }
+
+    .tour-itinerary__day-description {
+      font-size: 0.96rem;
+      line-height: 1.55;
+    }
+
+    .tour-itinerary__day-description li {
+      margin: 0.2rem 0;
+    }
+  }
+</style>

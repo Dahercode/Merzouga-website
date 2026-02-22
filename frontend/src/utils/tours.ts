@@ -3,10 +3,13 @@ import { parseISO, isBefore } from 'date-fns';
 type Frontmatter = {
   title: string;
   description: string;
-  authors: string[];
   publishDate: string;
   featuredImage: string;
   excerpt: string;
+  price?: string;
+  duration?: string;
+  tags?: string[];
+  mapUrl?: string;
 };
 
 type TourModule = {
@@ -34,10 +37,13 @@ export function getTours(locale: string) {
     .map(({ frontmatter, url }) => ({
       title: frontmatter.title,
       description: frontmatter.description,
-      authors: frontmatter.authors,
       publishDate: parseISO(frontmatter.publishDate),
       featuredImage: frontmatter.featuredImage,
       excerpt: frontmatter.excerpt,
+      price: frontmatter.price,
+      duration: frontmatter.duration,
+      tags: frontmatter.tags,
+      mapUrl: frontmatter.mapUrl,
       href: url,
     }))
     .sort((a, b) => {

@@ -1,0 +1,148 @@
+---
+const { faqs = [] } = Astro.props;
+---
+
+<div class="tour-faq">
+  <div class="tour-faq__list">
+    {faqs.map((faq, index) => (
+      <details class="tour-faq__item" data-faq-item>
+        <summary class="tour-faq__question">
+          <span class="tour-faq__question-text">{faq.question}</span>
+          <svg class="tour-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </summary>
+        <div class="tour-faq__answer">
+          <p>{faq.answer}</p>
+        </div>
+      </details>
+    ))}
+  </div>
+</div>
+
+<style>
+  .tour-faq {
+    margin: 2rem 0;
+  }
+
+  .tour-faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .tour-faq__item {
+    background: var(--theme-surface-1);
+    border: 2px solid color-mix(in srgb, var(--theme-primary) 20%, transparent);
+    border-radius: calc(var(--theme-shape-radius) / 1.5);
+    overflow: hidden;
+    transition: all var(--theme-transition);
+  }
+
+  .tour-faq__item:hover {
+    border-color: color-mix(in srgb, var(--theme-primary) 40%, transparent);
+    box-shadow: 0 3px 12px color-mix(in srgb, var(--theme-primary) 15%, transparent);
+  }
+
+  .tour-faq__item[open] {
+    background: linear-gradient(135deg,
+      color-mix(in srgb, var(--theme-primary) 6%, var(--theme-surface-1)),
+      var(--theme-surface-1));
+    border-color: var(--theme-primary);
+  }
+
+  .tour-faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    font-weight: 600;
+    color: var(--theme-on-bg);
+    transition: all var(--theme-transition);
+  }
+
+  .tour-faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .tour-faq__question:hover {
+    color: var(--theme-primary);
+  }
+
+  .tour-faq__question-text {
+    flex: 1;
+    line-height: 1.4;
+  }
+
+  .tour-faq__icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--theme-primary);
+    transition: transform var(--theme-transition);
+  }
+
+  .tour-faq__item[open] .tour-faq__icon {
+    transform: rotate(180deg);
+  }
+
+  .tour-faq__answer {
+    padding: 0 1.25rem 1.25rem 1.25rem;
+    color: var(--theme-on-bg);
+    opacity: 0.92;
+    line-height: 1.7;
+    font-size: 1.01rem;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .tour-faq__answer p {
+    margin: 0;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 0.9;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .tour-faq__question {
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+    }
+
+    .tour-faq__answer {
+      padding: 0 1rem 1rem 1rem;
+      font-size: 0.93rem;
+    }
+  }
+</style>
+
+<script>
+  // Optional: Close other FAQs when one is opened (accordion behavior)
+  document.addEventListener('DOMContentLoaded', () => {
+    const faqItems = document.querySelectorAll('[data-faq-item]');
+
+    faqItems.forEach((item) => {
+      item.addEventListener('toggle', (e) => {
+        if (item.open) {
+          // Optionally close others - comment out for multi-open behavior
+          // faqItems.forEach((otherItem) => {
+          //   if (otherItem !== item && otherItem.open) {
+          //     otherItem.open = false;
+          //   }
+          // });
+        }
+      });
+    });
+  });
+</script>

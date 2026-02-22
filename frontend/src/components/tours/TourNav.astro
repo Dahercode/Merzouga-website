@@ -1,0 +1,171 @@
+---
+const { sections = [] } = Astro.props;
+---
+
+{sections.length > 0 && (
+  <nav class="tour-nav" data-tour-nav>
+    <div class="tour-nav__container">
+      <ul class="tour-nav__list">
+        {sections.map((section) => (
+          <li class="tour-nav__item">
+            <a href={`#${section.id}`} class="tour-nav__link" data-section-link={section.id}>
+              {section.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+)}
+
+<style>
+  .tour-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--theme-bg);
+    border-bottom: 1px solid color-mix(in srgb, var(--theme-outline-variant) 30%, transparent);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin: 0 calc(-1 * var(--container-padding));
+    padding: 0 var(--container-padding);
+    transition: all var(--theme-transition);
+  }
+
+  .tour-nav__container {
+    max-width: var(--theme-blog-post-header-width);
+    margin: 0 auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .tour-nav__container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tour-nav__list {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0.75rem 0;
+    min-width: min-content;
+  }
+
+  .tour-nav__item {
+    flex-shrink: 0;
+  }
+
+  .tour-nav__link {
+    display: block;
+    padding: 0.5rem 1rem;
+    border-radius: calc(var(--theme-shape-radius) / 2);
+    text-decoration: none;
+    color: var(--theme-on-bg);
+    font-weight: 500;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: all var(--theme-transition);
+    border: 1px solid transparent;
+    opacity: 0.8;
+  }
+
+  .tour-nav__link:hover {
+    background: color-mix(in srgb, var(--theme-primary) 8%, var(--theme-surface-1));
+    color: var(--theme-primary);
+    opacity: 1;
+  }
+
+  .tour-nav__link.active {
+    background: var(--theme-primary);
+    color: var(--theme-on-primary);
+    font-weight: 600;
+    opacity: 1;
+    box-shadow: 0 2px 6px color-mix(in srgb, var(--theme-primary) 30%, transparent);
+  }
+
+  @media (max-width: 768px) {
+    .tour-nav__list {
+      gap: 0.35rem;
+      padding: 0.5rem 0;
+    }
+
+    .tour-nav__link {
+      padding: 0.45rem 0.85rem;
+      font-size: 0.85rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.querySelector('[data-tour-nav]');
+    if (!nav) return;
+
+    const links = nav.querySelectorAll('[data-section-link]');
+    const sections = Array.from(links).map((link) => {
+      const id = link.getAttribute('data-section-link');
+      return id ? document.getElementById(id) : null;
+    }).filter(Boolean);
+
+    // Smooth scroll to section
+    links.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = link.getAttribute('data-section-link');
+        const target = id ? document.getElementById(id) : null;
+
+        if (target) {
+          const navHeight = nav.offsetHeight;
+          const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = targetPosition - navHeight - 20;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Highlight active section on scroll
+    const observerOptions = {
+      root: null,
+      rootMargin: `-${nav.offsetHeight + 50}px 0px -60% 0px`,
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.id;
+        const link = nav.querySelector(`[data-section-link="${id}"]`);
+
+        if (entry.isIntersecting && link) {
+          links.forEach((l) => l.classList.remove('active'));
+          link.classList.add('active');
+
+          // Scroll link into view horizontally if needed
+          const container = nav.querySelector('.tour-nav__container');
+          if (container) {
+            const linkRect = link.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+
+            if (linkRect.left < containerRect.left) {
+              container.scrollLeft -= containerRect.left - linkRect.left + 20;
+            } else if (linkRect.right > containerRect.right) {
+              container.scrollLeft += linkRect.right - containerRect.right + 20;
+            }
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach((section) => observer.observe(section));
+
+    // Set initial active state
+    if (links.length > 0) {
+      links[0].classList.add('active');
+    }
+  });
+</script>
