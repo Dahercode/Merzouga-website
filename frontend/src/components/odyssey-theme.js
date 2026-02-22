@@ -23,6 +23,12 @@ export { default as CtaCardSection } from './sections/CtaCardSection.astro';
 // Tours
 export { default as ToursList } from './tours/ToursList.astro';
 export { default as ToursPreview } from './tours/ToursPreview.astro';
+export { default as TourHighlights } from './tours/TourHighlights.astro';
+export { default as TourItinerary } from './tours/TourItinerary.astro';
+export { default as TourInclusions } from './tours/TourInclusions.astro';
+export { default as TourFAQ } from './tours/TourFAQ.astro';
+export { default as TourMap } from './tours/TourMap.astro';
+export { default as TourNav } from './tours/TourNav.astro';
 
 // Form Fields
 export { default as FormInput } from './form-fields/FormInput.astro';

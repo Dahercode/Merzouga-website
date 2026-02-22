@@ -1,0 +1,87 @@
+---
+const { mapUrl, title = 'Tour Route' } = Astro.props;
+---
+
+{mapUrl ? (
+  <div class="tour-map">
+    <div class="tour-map__container">
+      <iframe
+        class="tour-map__iframe"
+        src={mapUrl}
+        title={title}
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+  </div>
+) : (
+  <div class="tour-map tour-map--placeholder">
+    <div class="tour-map__placeholder">
+      <svg class="tour-map__placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+        <circle cx="12" cy="10" r="3" />
+      </svg>
+      <p class="tour-map__placeholder-text">Map coming soon</p>
+    </div>
+  </div>
+)}
+
+<style>
+  .tour-map {
+    margin: 2rem 0;
+  }
+
+  .tour-map__container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    border-radius: var(--theme-shape-radius);
+    overflow: hidden;
+    border: 2px solid color-mix(in srgb, var(--theme-primary) 15%, transparent);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .tour-map__iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .tour-map--placeholder .tour-map__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    min-height: 300px;
+    padding: 2rem;
+    background: color-mix(in srgb, var(--theme-primary) 4%, var(--theme-surface-1));
+    border: 2px dashed color-mix(in srgb, var(--theme-primary) 25%, transparent);
+    border-radius: var(--theme-shape-radius);
+  }
+
+  .tour-map__placeholder-icon {
+    width: 48px;
+    height: 48px;
+    color: var(--theme-primary);
+    opacity: 0.7;
+  }
+
+  .tour-map__placeholder-text {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--theme-on-bg);
+    opacity: 0.7;
+  }
+
+  @media (max-width: 768px) {
+    .tour-map__container {
+      padding-bottom: 75%; /* Taller on mobile */
+    }
+  }
+</style>

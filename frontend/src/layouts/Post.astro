@@ -1,5 +1,5 @@
 ---
-import { Container, Button } from '@components/odyssey-theme';
+import { Container, Button, TourNav } from '@components/odyssey-theme';
 import Layout from './Page.astro';
 import { Image } from 'astro:assets';
 import { AstroI18next } from 'astro-i18next';
@@ -13,8 +13,20 @@ const {
     publishDate,
     canonicalURL,
     featuredImage,
+    price,
+    duration,
+    tags,
   },
 } = Astro.props;
+
+const tourSections = [
+  { id: 'overview', label: t('tours:sections.overview') || 'Overview' },
+  { id: 'highlights', label: t('tours:sections.highlights') || 'Highlights' },
+  { id: 'itinerary', label: t('tours:sections.itinerary') || 'Itinerary' },
+  { id: 'inclusions', label: t('tours:sections.inclusions') || 'Inclusions' },
+  { id: 'faq', label: t('tours:sections.faq') || 'FAQ' },
+  { id: 'map', label: t('tours:sections.map') || 'Map' },
+];
 
 const supportedLocales = AstroI18next?.config?.locales ?? [];
 const defaultLocale = AstroI18next?.config?.defaultLocale ?? 'en';
@@ -64,6 +76,22 @@ const validationMessages = {
 <Layout seo={seo}>
   <div class="post-header__container">
     <h1>{title}</h1>
+    {(price || duration) && (
+      <div class="tour-metadata">
+        {duration && (
+          <div class="tour-metadata__item">
+            <Icon name="ic:baseline-calendar-today" />
+            <span>{duration}</span>
+          </div>
+        )}
+        {price && (
+          <div class="tour-metadata__item tour-metadata__item--price">
+            <Icon name="ic:baseline-local-offer" />
+            <span>{price}</span>
+          </div>
+        )}
+      </div>
+    )}
     {
       publishDate && (
         <p class="post-layout__date">
@@ -86,6 +114,7 @@ const validationMessages = {
       )
     }
   </div>
+  <TourNav sections={tourSections} />
   <Container narrow>
     <article id="article">
       <slot />
@@ -324,6 +353,35 @@ const validationMessages = {
     margin-bottom: 1rem;
     opacity: 0.84;
   }
+  .tour-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0 1.5rem 0;
+  }
+  .tour-metadata__item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: color-mix(in srgb, var(--theme-primary) 6%, var(--theme-surface-1));
+    border-radius: calc(var(--theme-shape-radius) / 2);
+    font-weight: 500;
+    color: var(--theme-on-bg);
+  }
+  .tour-metadata__item svg {
+    width: 18px;
+    height: 18px;
+    color: var(--theme-primary);
+  }
+  .tour-metadata__item--price {
+    background: linear-gradient(135deg, var(--theme-primary), color-mix(in srgb, var(--theme-primary) 85%, #000));
+    color: var(--theme-on-primary);
+    font-weight: 600;
+  }
+  .tour-metadata__item--price svg {
+    color: var(--theme-on-primary);
+  }
   .booking-cta {
     box-sizing: border-box;
     padding: 1.1rem clamp(1.5rem, 3vw, 2.5rem);
@@ -355,7 +413,7 @@ const validationMessages = {
     border-radius: 0;
     padding: 1rem clamp(1.5rem, 4vw, 2.5rem);
     padding-bottom: calc(1rem + env(safe-area-inset-bottom));
-    z-index: 1100;
+    z-index: 1100; /* Above TourNav (z-index: 100) */
     box-shadow:
       0 -14px 40px rgba(0, 0, 0, 0.18),
       0 -4px 16px color-mix(in srgb, var(--theme-primary) 15%, transparent);
