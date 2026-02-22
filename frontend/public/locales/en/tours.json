@@ -6,6 +6,25 @@
   "heading": "Our tours",
   "intro": "Explore the Merzouga desert, the Atlas mountains, and the imperial cities. Our authentic tours depart from Marrakech, Casablanca, or Tangier for 3 to 10 days.",
   "featured": "Signature itineraries",
+  "filters": {
+    "departureFrom": "Departure from",
+    "nightsLabel": "Nights",
+    "all": "All",
+    "cities": {
+      "marrakech": "Marrakech",
+      "fes": "Fès",
+      "casablanca": "Casablanca"
+    },
+    "nights": {
+      "1-2": "1–2 nights",
+      "3-4": "3–4 nights",
+      "5-7": "5–7 nights",
+      "8+": "8+ nights"
+    },
+    "results": "{{count}} tour found",
+    "results_plural": "{{count}} tours found",
+    "noResults": "No tours match your selection. Try adjusting the filters."
+  },
   "sections": {
     "overview": "Overview",
     "highlights": "Highlights",

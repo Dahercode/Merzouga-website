@@ -2,9 +2,18 @@
 import { Image } from 'astro:assets';
 
 const { tour } = Astro.props;
+
+// Extract city from href slug (e.g. /tours/posts/marrakech-3-days-merzouga → marrakech)
+const slugPart = tour.href?.split('/').pop() || '';
+const dataCity = slugPart.split('-')[0] || 'other';
+
+// Extract nights from duration string by taking the number after "/"
+// Works for any language: "3 days / 2 nights", "7 jours / 6 nuits", "7 días / 6 noches"
+const nightsPart = (tour.duration || '').split('/')[1] || '';
+const dataNights = parseInt(nightsPart.trim(), 10) || 0;
 ---
 
-<li class="tour__preview">
+<li class="tour__preview" data-city={dataCity} data-nights={dataNights}>
   <a href={tour.href}>
     <div class="tour__preview-image-wrapper">
       <Image

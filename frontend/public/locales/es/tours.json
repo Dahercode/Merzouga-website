@@ -6,6 +6,25 @@
   "heading": "Nuestros circuitos",
   "intro": "Explore el desierto de Merzouga, las montañas del Atlas y las ciudades imperiales. Nuestros circuitos auténticos salen de Marrakech, Casablanca o Tánger de 3 a 10 días.",
   "featured": "Nuestros itinerarios destacados",
+  "filters": {
+    "departureFrom": "Salida desde",
+    "nightsLabel": "Noches",
+    "all": "Todos",
+    "cities": {
+      "marrakech": "Marrakech",
+      "fes": "Fès",
+      "casablanca": "Casablanca"
+    },
+    "nights": {
+      "1-2": "1–2 noches",
+      "3-4": "3–4 noches",
+      "5-7": "5–7 noches",
+      "8+": "8+ noches"
+    },
+    "results": "{{count}} circuito encontrado",
+    "results_plural": "{{count}} circuitos encontrados",
+    "noResults": "Ningún circuito coincide con tu selección. Prueba a ajustar los filtros."
+  },
   "booking": {
     "cta": "Reservar",
     "lead": "Planifica este itinerario con nuestro equipo.",
