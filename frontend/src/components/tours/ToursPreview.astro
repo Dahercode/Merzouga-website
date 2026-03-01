@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { t } from 'i18next';
 
 const { tour } = Astro.props;
 
@@ -33,7 +34,10 @@ const dataNights = parseInt(nightsPart.trim(), 10) || 0;
         </span>
       )}
       {tour.price && (
-        <span class="tour__preview-price">{tour.price}</span>
+        <span class="tour__preview-price">
+          {/* TODO: replace t('tours:priceOnRequest') with {tour.price} when prices are set */}
+          {t('tours:priceOnRequest')}
+        </span>
       )}
     </div>
     <h4>{tour.title}</h4>
@@ -64,12 +68,15 @@ const dataNights = parseInt(nightsPart.trim(), 10) || 0;
     position: absolute;
     top: 0.75rem;
     right: 0.75rem;
-    background: var(--theme-primary);
-    color: var(--theme-on-primary);
+    /* Amber warm: signals bespoke/on-request, not a fixed price */
+    /* TODO: switch back to var(--theme-primary) when real prices are set */
+    background: rgba(160, 105, 20, 0.88);
+    color: #fff;
     padding: 0.4rem 0.85rem;
     border-radius: calc(var(--theme-shape-radius) / 2);
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 500;
+    font-style: italic;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(4px);
   }

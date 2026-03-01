@@ -7,6 +7,11 @@
     "imageAlt": "Viajeros montando camellos al atardecer en el desierto del Sáhara"
   },
   "sections": {
+    "tours": {
+      "title": "Nuestros circuitos principales",
+      "description": "Reserva ahora uno de nuestros circuitos más populares.",
+      "seeMore": "Ver todos los circuitos"
+    },
     "landing": {
       "title": "Páginas de destino",
       "description": "Utiliza una de nuestras páginas de destino para impulsar tu sitio web o campaña publicitaria.",

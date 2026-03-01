@@ -87,7 +87,8 @@ const validationMessages = {
         {price && (
           <div class="tour-metadata__item tour-metadata__item--price">
             <Icon name="ic:baseline-local-offer" />
-            <span>{price}</span>
+            {/* TODO: replace t('tours:priceOnRequest') with {price} when prices are set */}
+            <span>{t('tours:priceOnRequest')}</span>
           </div>
         )}
       </div>
@@ -346,6 +347,10 @@ const validationMessages = {
     padding: var(--container-padding);
   }
   .post-layout__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
     margin: 0 auto 1rem auto;
     border-radius: var(--theme-shape-radius);
   }
@@ -375,12 +380,15 @@ const validationMessages = {
     color: var(--theme-primary);
   }
   .tour-metadata__item--price {
-    background: linear-gradient(135deg, var(--theme-primary), color-mix(in srgb, var(--theme-primary) 85%, #000));
-    color: var(--theme-on-primary);
-    font-weight: 600;
+    /* Amber warm: signals bespoke/on-request, not a fixed price */
+    /* TODO: switch back to primary gradient when real prices are set */
+    background: linear-gradient(135deg, #a06814, #c4891a);
+    color: #fff;
+    font-weight: 500;
+    font-style: italic;
   }
   .tour-metadata__item--price svg {
-    color: var(--theme-on-primary);
+    color: #fff;
   }
   .booking-cta {
     box-sizing: border-box;

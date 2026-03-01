@@ -9,11 +9,8 @@
   "sections": {
     "tours": {
       "title": "Our main tours",
-      "description": "Book one of our most succesful tours right now",
-      "cards": {
-        "landing1": "Landing Page 1",
-        "landing2": "Landing Page 2"
-      }
+      "description": "Book one of our most successful tours right now",
+      "seeMore": "See all tours"
     },
     "company": {
       "title": "Company Pages",

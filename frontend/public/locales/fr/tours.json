@@ -25,6 +25,15 @@
     "results_plural": "{{count}} circuits trouvés",
     "noResults": "Aucun circuit ne correspond à votre sélection. Essayez d'ajuster les filtres."
   },
+  "priceOnRequest": "Prix sur demande",
+  "sections": {
+    "overview": "Aperçu",
+    "highlights": "Points forts",
+    "itinerary": "Itinéraire",
+    "inclusions": "Inclusions",
+    "faq": "FAQ",
+    "map": "Carte"
+  },
   "booking": {
     "cta": "Réserver",
     "lead": "Planifiez cet itinéraire avec notre équipe.",

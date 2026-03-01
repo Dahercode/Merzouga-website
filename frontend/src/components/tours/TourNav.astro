@@ -29,6 +29,25 @@ const { sections = [] } = Astro.props;
     margin: 0 calc(-1 * var(--container-padding));
     padding: 0 var(--container-padding);
     transition: all var(--theme-transition);
+    overflow: hidden; /* contain horizontal scroll inside the nav, not the page */
+  }
+
+  /* Right-edge fade to indicate more content is scrollable */
+  .tour-nav::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4rem;
+    height: 100%;
+    background: linear-gradient(to right, transparent, var(--theme-bg));
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  .tour-nav.is-scrolled-end::after {
+    opacity: 0;
   }
 
   .tour-nav__container {
@@ -166,6 +185,17 @@ const { sections = [] } = Astro.props;
     // Set initial active state
     if (links.length > 0) {
       links[0].classList.add('active');
+    }
+
+    // Fade indicator: hide when scrolled to end
+    const container = nav.querySelector<HTMLElement>('.tour-nav__container');
+    if (container) {
+      const updateFade = () => {
+        const atEnd = container.scrollLeft + container.clientWidth >= container.scrollWidth - 4;
+        nav.classList.toggle('is-scrolled-end', atEnd);
+      };
+      container.addEventListener('scroll', updateFade, { passive: true });
+      updateFade(); // initial check (hide fade if all items fit)
     }
   });
 </script>
