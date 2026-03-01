@@ -51,6 +51,30 @@ const seo = {
   image: featuredImage,
 };
 
+const siteUrl = 'https://truemoroccotours.com';
+const tourUrl = canonicalURL || `${siteUrl}${Astro.url.pathname}`;
+const tourJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Trip",
+  "name": title,
+  "description": description,
+  "image": featuredImage ? `${siteUrl}${featuredImage}` : undefined,
+  "url": tourUrl,
+  "provider": {
+    "@type": "TravelAgency",
+    "name": "True Morocco Tours",
+    "url": siteUrl
+  },
+  ...(duration ? { "offers": {
+    "@type": "Offer",
+    "availability": "https://schema.org/InStock",
+    "price": "0",
+    "priceCurrency": "EUR",
+    "description": t('tours:priceOnRequest')
+  }} : {}),
+  ...(tags?.length ? { "keywords": tags.join(', ') } : {}),
+};
+
 const validationMessages = {
   firstName: { required: t('tours:validation.firstName.required') },
   lastName: { required: t('tours:validation.lastName.required') },
@@ -74,6 +98,8 @@ const validationMessages = {
 ---
 
 <Layout seo={seo}>
+  <!-- Structured Data: Trip / Tour -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(tourJsonLd)} />
   <div class="post-header__container">
     <h1>{title}</h1>
     {(price || duration) && (

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://truemoroccotours.com/sitemap-index.xml

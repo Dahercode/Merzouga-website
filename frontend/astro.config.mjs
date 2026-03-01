@@ -12,11 +12,24 @@ export default defineConfig({
   // Your public domain, e.g.: https://my-site.dev/. Used to generate sitemaps and canonical URLs.
   site: 'https://truemoroccotours.com',
 
-  // Generate sitemap (set to "false" to disable)
-  sitemap: true,
-
   // Add renderers to the config
-  integrations: [sitemap(), mdx(), lit(), icon(), astroI18next()],
+  integrations: [
+    sitemap({
+      // Generate hreflang alternate links for each locale in the sitemap
+      i18n: {
+        defaultLocale: 'en',
+        locales: {
+          en: 'en',
+          fr: 'fr',
+          es: 'es',
+        },
+      },
+    }),
+    mdx(),
+    lit(),
+    icon(),
+    astroI18next(),
+  ],
 
   // Output directory for the built site
   output: 'static',

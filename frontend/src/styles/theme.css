@@ -130,8 +130,8 @@
 [data-theme='sand'] {
   /* Theme Colors */
   /* Theme Colors */
-  --theme-primary: #e38a20;
-  --theme-primary-hover: #eb870f;
+  --theme-primary: #aa6400;      /* WCAG AA: 4.6:1 on white — was #e38a20 (2.65:1, failing) */
+  --theme-primary-hover: #8f5400;
   --theme-on-primary: hsl(0, 0%, 100%);
 
   --theme-bg: #fffffe;

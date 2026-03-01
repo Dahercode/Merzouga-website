@@ -22,6 +22,7 @@ const image = new URL(Astro.props.image || './social.png', Astro.site);
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width" />
 <link rel="icon" type="image/png" href="/favicon.png" />
+<link rel="sitemap" href="/sitemap-index.xml" />
 <!-- Primary Meta Tags -->
 <title>{title}</title>
 <meta name="title" content={title} />
@@ -45,6 +46,42 @@ const image = new URL(Astro.props.image || './social.png', Astro.site);
 
 <!-- For Demonstration of the themes -->
 {settings.enableThemeSwitcher && <ThemeProvider />}
+
+<!-- Structured Data: WebSite + TravelAgency -->
+<script is:inline type="application/ld+json" set:html={JSON.stringify([
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": settings.name,
+    "url": settings.url,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `${settings.url}/tours?q={search_term_string}`
+      },
+      "query-input": "required name=search_term_string"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": settings.name,
+    "url": settings.url,
+    "logo": `${settings.url}/assets/images/logo.svg`,
+    "image": `${settings.url}/social.png`,
+    "description": settings.description,
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Merzouga",
+      "addressRegion": "Drâa-Tafilalet",
+      "addressCountry": "MA"
+    },
+    "areaServed": "MA",
+    "priceRange": "€€",
+    "sameAs": []
+  }
+])} />
 
 <!-- Google Analytics -->
 <script>
