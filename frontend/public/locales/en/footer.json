@@ -15,6 +15,9 @@
     "gallery": "Photo gallery"
   },
   "tours": {
-    "title": "Our signature tours"
+    "title": "Our signature tours",
+    "fromMarrakech": "Tours from Marrakech",
+    "fromCasablanca": "Tours from Casablanca",
+    "fromFes": "Tours from Fès"
   }
 }

@@ -15,6 +15,9 @@
     "gallery" : "Galería de fotos"
   },
   "tours": {
-    "title": "Nuestros itinerarios destacados"
+    "title": "Nuestros itinerarios destacados",
+    "fromMarrakech": "Circuitos desde Marrakech",
+    "fromCasablanca": "Circuitos desde Casablanca",
+    "fromFes": "Circuitos desde Fès"
   }
 }

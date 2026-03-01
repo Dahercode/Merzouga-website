@@ -1,15 +1,16 @@
 ---
-import { Container, ToursList } from "@components/odyssey-theme";
+import { Container } from "@components/odyssey-theme";
+import HomeTourSlider from "@components/tours/HomeTourSlider.astro";
 import Layout from "../../layouts/Page.astro";
 import HomeHeroSection from "../../components/sections/heros/HomeHeroSection.astro";
 import ReassuranceSection from "../../components/sections/home/ReassuranceSection.astro";
-import i18next, { t, changeLanguage } from "i18next";
+import i18next, { changeLanguage } from "i18next";
 import { getTours } from "../../utils/tours";
 
 changeLanguage("es");
 
 const locale = i18next.resolvedLanguage;
-const tours = getTours(locale).slice(0, 2);
+const tours = getTours(locale);
 ---
 
 <Layout>
@@ -19,25 +20,6 @@ const tours = getTours(locale).slice(0, 2);
   <HomeHeroSection/>
   <ReassuranceSection locale={locale} />
   <Container>
-    <section class="feature-card__section">
-      <h2>{t('home:sections.tours.title')}</h2>
-      <p>{t('home:sections.tours.description')}</p>
-      <div class="feature-card__grid">
-        <ToursList {tours} />
+    <HomeTourSlider {tours} {locale} />
+  </Container>
 </Layout>
-
-<style>
-  .feature-card__section {
-    margin: var(--section-margin) auto;
-  }
-  .feature-card__grid {
-    display: grid;
-    /* grid-template-columns: repeat(2, 1fr); */
-    gap: var(--theme-grid-gap);
-  }
-  @media (max-width: 768px) {
-    .feature-card__grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

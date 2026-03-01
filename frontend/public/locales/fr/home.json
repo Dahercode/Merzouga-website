@@ -7,6 +7,11 @@
     "imageAlt": "Voyageurs à dos de chameau au coucher du soleil dans le désert du Sahara"
   },
   "sections": {
+    "tours": {
+      "title": "Nos circuits phares",
+      "description": "Réservez dès maintenant l'un de nos circuits les plus appréciés.",
+      "seeMore": "Voir tous les circuits"
+    },
     "landing": {
       "title": "Pages d'atterrissage",
       "description": "Utilisez l'une de nos pages d'atterrissage pour lancer votre site web ou votre campagne marketing.",

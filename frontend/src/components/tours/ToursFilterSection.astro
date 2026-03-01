@@ -153,8 +153,17 @@ const msgTemplatePlural = t('tours:filters.results_plural');
       });
     });
 
-    // Run once on load to set correct initial count
-    applyFilters();
+    // Pre-apply city filter from URL query param (e.g. ?city=marrakech)
+    const cityParam = new URLSearchParams(window.location.search).get('city');
+    if (cityParam) {
+      const cityBtn = document.querySelector<HTMLElement>(
+        `.filter-pill[data-filter="city"][data-value="${cityParam}"]`
+      );
+      if (cityBtn) cityBtn.click();
+    } else {
+      // Run once on load to set correct initial count
+      applyFilters();
+    }
   }
 </script>
 

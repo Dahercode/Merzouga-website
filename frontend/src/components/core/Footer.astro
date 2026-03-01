@@ -3,7 +3,6 @@ import { Icon } from 'astro-icon/components';
 import Container from '../core/Container.astro';
 import Plug from './Plug.astro';
 import { t } from 'i18next';
-import { getTours } from '../../utils/tours';
 
 const {
   footerSocials,
@@ -16,15 +15,14 @@ const {
 
 const pathLocale = Astro.url.pathname.split('/')[1];
 const locale = ['en', 'fr', 'es'].includes(pathLocale) ? pathLocale : 'en';
+const toursBase = locale === 'en' ? '/tours' : `/${locale}/tours`;
 const toursList = {
   titleKey: 'footer:tours.title',
-  items: getTours(locale)
-    .slice(0, 3)
-    .map((tour) => ({
-      titleKey: tour.title ? undefined : undefined,
-      title: tour.title,
-      slug: tour.href,
-    })),
+  items: [
+    { titleKey: 'footer:tours.fromMarrakech', slug: `${toursBase}?city=marrakech` },
+    { titleKey: 'footer:tours.fromCasablanca', slug: `${toursBase}?city=casablanca` },
+    { titleKey: 'footer:tours.fromFes',        slug: `${toursBase}?city=fes` },
+  ],
 };
 const computedFooterLists = [toursList, ...footerLists];
 ---
