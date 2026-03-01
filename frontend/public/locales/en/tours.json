@@ -25,6 +25,7 @@
     "results_plural": "{{count}} tours found",
     "noResults": "No tours match your selection. Try adjusting the filters."
   },
+  "priceOnRequest": "Price on request",
   "sections": {
     "overview": "Overview",
     "highlights": "Highlights",
