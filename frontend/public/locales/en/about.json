@@ -1,0 +1,30 @@
+{
+  "seo": {
+    "title": "About Moha | True Morocco Tours",
+    "description": "Meet Mohamed (Moha), an Amazigh guide born in the desert of Merzouga, offering authentic tours across Morocco."
+  },
+  "hero": {
+    "eyebrow": "Amazigh Guide · Merzouga",
+    "title": "Meet Your Guide",
+    "intro": "My name is Mohamed, but everyone calls me Moha. I am an Amazigh guide, born in the desert of Merzouga, in the southeast of Morocco. I grew up among the dunes, in a unique environment where nature, traditions, and hospitality are part of everyday life."
+  },
+  "sections": {
+    "s1": {
+      "title": "The Desert in My Blood",
+      "body": "The desert is not just where I was born — it is part of who I am. It taught me patience, respect, and the importance of sharing. These are strong values in Amazigh culture, and I am proud to pass them on to the people I meet."
+    },
+    "s2": {
+      "title": "From Curiosity to Calling",
+      "body": "From a young age, I was in contact with travelers coming to discover this region. That is how my passion for guiding began. Over the years, I have developed a deep knowledge of the desert, as well as many other regions of Morocco."
+    },
+    "s3": {
+      "title": "All of Morocco, at Your Feet",
+      "body": "Today, I organize and guide tours across the country — from the dunes of Merzouga to imperial cities like Marrakech and Fes, as well as the Atlas Mountains, Chefchaouen (my favorite city), oases, and traditional villages."
+    }
+  },
+  "quote": {
+    "text": "I care a lot about human connection. For me, every trip is more than a journey — it is a meeting, a shared experience, and a real cultural exchange.",
+    "highlight": "With me, you don't just visit Morocco. You experience it."
+  },
+  "closing": "Welcome, and I hope to meet you soon."
+}

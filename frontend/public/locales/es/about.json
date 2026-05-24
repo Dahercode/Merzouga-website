@@ -1,0 +1,30 @@
+{
+  "seo": {
+    "title": "Sobre Moha | True Morocco Tours",
+    "description": "Conoce a Mohamed (Moha), guía Amazigh nacido en el desierto de Merzouga, que ofrece circuitos auténticos por todo Marruecos."
+  },
+  "hero": {
+    "eyebrow": "Guía Amazigh · Merzouga",
+    "title": "Conoce a tu guía",
+    "intro": "Me llamo Mohamed, pero todos me llaman Moha. Soy un guía Amazigh, nacido en el desierto de Merzouga, en el sureste de Marruecos. Crecí entre las dunas, en un entorno único donde la naturaleza, las tradiciones y la hospitalidad forman parte de la vida cotidiana."
+  },
+  "sections": {
+    "s1": {
+      "title": "El desierto en mi sangre",
+      "body": "El desierto no es solo el lugar donde nací — es parte de lo que soy. Me enseñó la paciencia, el respeto y la importancia de compartir. Estos son valores fundamentales en la cultura Amazigh, y me enorgullece transmitirlos a las personas que conozco."
+    },
+    "s2": {
+      "title": "De la curiosidad a la vocación",
+      "body": "Desde pequeño, estuve en contacto con viajeros que venían a descubrir esta región. Así nació mi pasión por ser guía. Con los años, he desarrollado un profundo conocimiento del desierto, así como de muchas otras regiones de Marruecos."
+    },
+    "s3": {
+      "title": "Todo Marruecos, a tus pies",
+      "body": "Hoy en día, organizo y guío recorridos por todo el país — desde las dunas de Merzouga hasta ciudades imperiales como Marrakech y Fez, así como las montañas del Atlas, Chefchaouen (mi ciudad favorita), oasis y pueblos tradicionales."
+    }
+  },
+  "quote": {
+    "text": "Me importa mucho la conexión humana. Para mí, cada viaje es más que un trayecto — es un encuentro, una experiencia compartida y un verdadero intercambio cultural.",
+    "highlight": "Conmigo, no solo visitas Marruecos. Lo vives."
+  },
+  "closing": "Bienvenido, y espero conocerte pronto."
+}

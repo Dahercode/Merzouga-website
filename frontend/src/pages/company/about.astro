@@ -1,77 +1,230 @@
 ---
-import { changeLanguage } from "i18next";
-import { TextSection } from "@components/odyssey-theme";
+import { changeLanguage, t } from "i18next";
 import { Image } from "astro:assets";
+import { Container } from "@components/odyssey-theme";
 import Layout from "../../layouts/Page.astro";
-import HeroSection from "../../components/sections/heros/HeroSection.astro";
 
 changeLanguage("en");
 
 const seo = {
-    title: "About | Astro Odyssey Theme",
-    description: "About Page",
+    title: t("about:seo.title"),
+    description: t("about:seo.description"),
 };
 ---
 
 <Layout {seo}>
-  <HeroSection>
-    <div slot="text-container">
-      <h1>About Odyssey</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, nisi
-        recusandae? Quidem dignissimos nobis, dicta unde, aperiam voluptate
-        autem iste reprehenderit, aliquam ducimus illo ea ipsum qui animi sequi.
-        Numquam.
-      </p>
+
+  <!-- ─── HERO ─────────────────────────────────────────────────────── -->
+  <section class="about-hero">
+    <div class="about-hero__text">
+      <span class="about-hero__eyebrow">{t("about:hero.eyebrow")}</span>
+      <h1 class="about-hero__title">{t("about:hero.title")}</h1>
+      <p class="about-hero__lead">{t("about:hero.intro")}</p>
     </div>
-    <div slot="image-container">
+    <div class="about-hero__image">
       <Image
-        src="/assets/images/home/classic-hero.jpg"
-        alt="Astro Odyssee"
-        id="home-hero-image"
+        src="/assets/images/about/about1.jpg"
+        alt="Moha - Amazigh Desert Guide"
         width={800}
-        height={600}
+        height={1000}
         loading="eager"
       />
     </div>
-  </HeroSection>
-  <TextSection narrow>
-    <p>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo
-      asperiores alias illo accusamus voluptatem ea cum nemo odit! Consequatur
-      quidem quo iusto quam ea neque nisi dolorum quod, recusandae id!
-      Repudiandae, fugit labore voluptatum beatae modi omnis adipisci corrupti
-      aut aliquid cumque inventore iure possimus doloremque iste incidunt nulla
-      architecto. Nobis iusto sunt voluptatem necessitatibus laborum, earum
-      doloremque fugit rerum!
-    </p>
-    <p>
-      Fugit asperiores harum consectetur sapiente deleniti. Optio enim tenetur
-      impedit reprehenderit labore, illo eius in, consequatur odio dolore iste
-      assumenda explicabo, nisi similique qui obcaecati possimus delectus
-      reiciendis quod modi.
-    </p>
+  </section>
 
-    <p>
-      Vel tempore rem omnis esse officiis optio, explicabo, quod deleniti
-      adipisci ullam cum necessitatibus eius minus vero saepe ad, dicta rerum
-      praesentium deserunt illo itaque odio corrupti voluptatum quibusdam.
-      Pariatur. Porro neque tempore, illum eligendi deleniti iure dolorem amet
-      magnam at dolores veniam nemo cumque aut alias repellat est dicta sit
-      repellendus facilis officia? Minima dolorum quo ducimus adipisci
-      perferendis.
-    </p>
-    <p>
-      Quis distinctio tempora sequi sit repudiandae cumque nostrum deserunt,
-      voluptatibus rem eum fuga modi beatae cum ullam delectus dicta atque eius
-      nam quos corporis. Animi praesentium quae nobis. Odit, mollitia.
-      Voluptatum, hic explicabo. Ex accusamus ipsa ea dolor commodi quas esse
-      ipsum alias et adipisci error necessitatibus atque facere rerum ratione
-      consequatur aspernatur repudiandae minima consectetur fuga, doloremque
-      dolorum pariatur. Ipsam error eaque velit possimus porro eum quod illo
-      iusto officia magnam magni, beatae nisi voluptate praesentium? Saepe
-      distinctio adipisci quas hic quae facilis? Sequi eum hic aperiam impedit
-      minus?
-    </p>
-  </TextSection>
+  <!-- ─── BODY SECTIONS ─────────────────────────────────────────────── -->
+  <Container>
+    <div class="about-body">
+
+      <div class="about-section">
+        <h2 class="about-section__title">{t("about:sections.s1.title")}</h2>
+        <p class="about-section__body">{t("about:sections.s1.body")}</p>
+      </div>
+
+      <div class="about-section">
+        <h2 class="about-section__title">{t("about:sections.s2.title")}</h2>
+        <p class="about-section__body">{t("about:sections.s2.body")}</p>
+      </div>
+
+      <div class="about-section">
+        <h2 class="about-section__title">{t("about:sections.s3.title")}</h2>
+        <p class="about-section__body">{t("about:sections.s3.body")}</p>
+      </div>
+
+      <!-- ─── QUOTE BLOCK ──────────────────────────────────────────── -->
+      <blockquote class="about-quote">
+        <p class="about-quote__text">{t("about:quote.text")}</p>
+        <p class="about-quote__highlight">{t("about:quote.highlight")}</p>
+      </blockquote>
+
+      <!-- ─── CLOSING ─────────────────────────────────────────────── -->
+      <p class="about-closing">{t("about:closing")}</p>
+
+    </div>
+  </Container>
+
 </Layout>
+
+<style>
+  /* ── HERO ────────────────────────────────────────────────────────── */
+  .about-hero {
+    max-width: var(--container-max-width);
+    margin: var(--section-margin) auto;
+    padding: var(--container-padding);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    min-height: clamp(60vh, 80vw, calc(100vh - var(--navbar-height)));
+  }
+
+  .about-hero__text {
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .about-hero__image {
+    order: 2;
+  }
+
+  .about-hero__eyebrow {
+    display: inline-block;
+    font-family: var(--theme-font-family-sans);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--theme-primary);
+    opacity: 0.6;
+  }
+
+  .about-hero__title {
+    font-family: var(--theme-font-family-serif);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .about-hero__lead {
+    font-family: var(--theme-font-family-sans);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    line-height: 1.75;
+    color: var(--theme-on-bg);
+    opacity: 0.85;
+    max-width: 42ch;
+    margin: 0;
+  }
+
+  .about-hero__image :global(img) {
+    width: 100%;
+    height: 100%;
+    max-height: 75vh;
+    object-fit: cover;
+    border-radius: var(--theme-shape-radius);
+    display: block;
+  }
+
+  /* ── BODY ─────────────────────────────────────────────────────────── */
+  .about-body {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 3rem 0 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  /* ── SECTIONS ─────────────────────────────────────────────────────── */
+  .about-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--theme-on-bg) 12%, transparent);
+  }
+
+  .about-section__title {
+    font-family: var(--theme-font-family-serif);
+    font-size: clamp(1.3rem, 2.5vw, 1.65rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .about-section__body {
+    font-family: var(--theme-font-family-sans);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin: 0;
+    color: var(--theme-on-bg);
+    opacity: 0.9;
+  }
+
+  /* ── QUOTE ────────────────────────────────────────────────────────── */
+  .about-quote {
+    background-color: var(--theme-surface-1);
+    border-left: 4px solid var(--theme-primary);
+    border-radius: 0 var(--theme-shape-radius) var(--theme-shape-radius) 0;
+    padding: 2rem 2.5rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .about-quote__text {
+    font-family: var(--theme-font-family-serif);
+    font-style: italic;
+    font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .about-quote__highlight {
+    font-family: var(--theme-font-family-sans);
+    font-size: clamp(1rem, 1.5vw, 1.1rem);
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── CLOSING ──────────────────────────────────────────────────────── */
+  .about-closing {
+    font-family: var(--theme-font-family-serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    text-align: center;
+    opacity: 0.75;
+    margin: 0;
+  }
+
+  /* ── RESPONSIVE ───────────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .about-hero {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      min-height: unset;
+    }
+
+    /* Image appears FIRST on mobile */
+    .about-hero__image {
+      order: -1;
+    }
+
+    .about-hero__image :global(img) {
+      max-height: 55vw;
+    }
+
+    .about-body {
+      padding: 2rem 0 3rem;
+      gap: 2.5rem;
+    }
+
+    .about-quote {
+      padding: 1.5rem;
+    }
+  }
+</style>

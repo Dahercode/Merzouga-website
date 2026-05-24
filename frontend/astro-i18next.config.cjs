@@ -2,7 +2,7 @@
 module.exports = {
   defaultLocale: 'en',
   locales: ['en', 'fr', 'es'],
-  namespaces: ['common', 'home', 'tours', 'footer', 'gallery', 'contact'],
+  namespaces: ['common', 'home', 'tours', 'footer', 'gallery', 'contact', 'about'],
   defaultNamespace: 'common',
   load: ['server', 'client'],
 };
