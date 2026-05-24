@@ -4,6 +4,7 @@ import BaseHead from '../components/head/BaseHead.astro';
 import type { Props as BaseHeadProps } from '../components/head/BaseHead.astro';
 import i18next from 'i18next';
 import { HeadHrefLangs } from 'astro-i18next/components';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
 
 export interface Props {
   seo?: BaseHeadProps;
@@ -25,5 +26,6 @@ const { seo } = Astro.props;
       <slot />
     </main>
     <slot name="footer" />
+    <WhatsAppButton />
   </body>
 </html>

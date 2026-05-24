@@ -5,6 +5,9 @@
     "about": "About",
     "contact": "Contact"
   },
+  "whatsapp": {
+    "tooltip": "Chat on WhatsApp"
+  },
   "language": {
     "label": "Language",
     "names": {
