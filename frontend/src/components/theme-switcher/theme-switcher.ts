@@ -123,7 +123,7 @@ export class ThemeSwitcher extends LitElement {
     ) as HTMLImageElement;
     if (_heroImage) {
       if (theme === 'classic') {
-        _heroImage.src = '/assets/images/home/classic-hero.jpg';
+        _heroImage.src = '/assets/images/home/profile1.jpg';
       }
       if (theme === 'dark') {
         _heroImage.src = '/assets/images/home/dark-hero.jpg';
@@ -135,7 +135,7 @@ export class ThemeSwitcher extends LitElement {
         _heroImage.src = '/assets/images/home/ocean-hero.jpg';
       }
       if (theme === 'sand') {
-        _heroImage.src = '/assets/images/home/sand-hero.jpg';
+        _heroImage.src = '/assets/images/home/profile1.jpg';
       }
     }
     localStorage.setItem('theme', theme);

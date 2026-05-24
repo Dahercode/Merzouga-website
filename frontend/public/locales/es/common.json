@@ -8,6 +8,9 @@
   "actions": {
     "getStarted": "Empezar"
   },
+  "whatsapp": {
+    "tooltip": "Chatear en WhatsApp"
+  },
   "language": {
     "label": "Idioma",
     "names": {

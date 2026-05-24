@@ -1,0 +1,30 @@
+{
+  "seo": {
+    "title": "À propos de Moha | True Morocco Tours",
+    "description": "Rencontrez Mohamed (Moha), guide Amazigh né dans le désert de Merzouga, proposant des circuits authentiques à travers le Maroc."
+  },
+  "hero": {
+    "eyebrow": "Guide Amazigh · Merzouga",
+    "title": "Rencontrez votre guide",
+    "intro": "Je m'appelle Mohamed, mais tout le monde m'appelle Moha. Je suis un guide Amazigh, né dans le désert de Merzouga, au sud-est du Maroc. J'ai grandi parmi les dunes, dans un environnement unique où la nature, les traditions et l'hospitalité font partie du quotidien."
+  },
+  "sections": {
+    "s1": {
+      "title": "Le désert dans le sang",
+      "body": "Le désert n'est pas seulement là où je suis né — c'est une partie de qui je suis. Il m'a appris la patience, le respect et l'importance du partage. Ce sont des valeurs fortes dans la culture Amazighe, et je suis fier de les transmettre aux personnes que je rencontre."
+    },
+    "s2": {
+      "title": "De la curiosité à la vocation",
+      "body": "Dès mon plus jeune âge, j'ai été en contact avec des voyageurs venus découvrir cette région. C'est ainsi qu'est née ma passion pour le guidage. Au fil des années, j'ai développé une connaissance approfondie du désert, ainsi que de nombreuses autres régions du Maroc."
+    },
+    "s3": {
+      "title": "Tout le Maroc, à vos pieds",
+      "body": "Aujourd'hui, j'organise et guide des circuits à travers tout le pays — des dunes de Merzouga aux villes impériales comme Marrakech et Fès, en passant par les montagnes de l'Atlas, Chefchaouen (ma ville préférée), les oasis et les villages traditionnels."
+    }
+  },
+  "quote": {
+    "text": "J'accorde beaucoup d'importance au lien humain. Pour moi, chaque voyage est plus qu'un simple déplacement — c'est une rencontre, une expérience partagée, et un véritable échange culturel.",
+    "highlight": "Avec moi, vous ne visitez pas seulement le Maroc. Vous le vivez."
+  },
+  "closing": "Bienvenue, et j'espère vous rencontrer bientôt."
+}
