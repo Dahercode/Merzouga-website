@@ -75,14 +75,18 @@
     /* Chrome 26+, Opera 23+, Firefox 39+ */
       url('/assets/fonts/lato-v23-latin-700italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
+/* Fluid type scale, interpolating between a 320px and a 1440px viewport.
+   `html` below takes its font-size from --font-size-base, so this variable also
+   defines the rem unit for the whole site: changing it rescales every
+   rem-based size and spacing value, not just text. */
 :root {
-  --font-size-sm: clamp(14.4px, 0.07vw + 14.13px, 15px);
-  --font-size-base: clamp(18px, 0.23vw + 17.09px, 20px);
-  --font-size-md: clamp(22.5px, 0.47vw + 20.61px, 26.66px);
-  --font-size-lg: clamp(28.13px, 0.84vw + 24.76px, 35.54px);
-  --font-size-xl: clamp(35.16px, 1.39vw + 29.6px, 47.37px);
-  --font-size-xxl: clamp(43.95px, 2.18vw + 35.22px, 63.15px);
-  --font-size-xxxl: clamp(54.93px, 3.32vw + 41.64px, 84.17px);
+  --font-size-sm: clamp(13px, 0.11vw + 12.64px, 14.25px);
+  --font-size-base: clamp(16px, 0.22vw + 15.29px, 18.5px);
+  --font-size-md: clamp(18.5px, 0.47vw + 16.99px, 23.8px);
+  --font-size-lg: clamp(21.5px, 0.83vw + 18.86px, 30.75px);
+  --font-size-xl: clamp(25px, 1.36vw + 20.66px, 40.2px);
+  --font-size-xxl: clamp(29px, 2.1vw + 22.29px, 52.5px);
+  --font-size-xxxl: clamp(34px, 3.08vw + 24.14px, 68.5px);
 }
 
 html,
