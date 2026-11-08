@@ -4,6 +4,7 @@ import Layout from './Page.astro';
 import { Image } from 'astro:assets';
 import { AstroI18next } from 'astro-i18next';
 import { Icon } from 'astro-icon/components';
+import settings from '../config/settings.js';
 import { t, changeLanguage } from 'i18next';
 
 const {
@@ -51,7 +52,7 @@ const seo = {
   image: featuredImage,
 };
 
-const siteUrl = 'https://truemoroccotours.com';
+const siteUrl = settings.url;
 const tourUrl = canonicalURL || `${siteUrl}${Astro.url.pathname}`;
 const tourJsonLd = {
   "@context": "https://schema.org",

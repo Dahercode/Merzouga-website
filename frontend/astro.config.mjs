@@ -10,7 +10,7 @@ import vercel from '@astrojs/vercel';
 // https://astro.build/config
 export default defineConfig({
   // Your public domain, e.g.: https://my-site.dev/. Used to generate sitemaps and canonical URLs.
-  site: 'https://truemoroccotours.com',
+  site: 'https://www.truemoroccotours.com',
 
   // Add renderers to the config
   integrations: [

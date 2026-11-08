@@ -149,7 +149,7 @@ The Docker environment includes MailDev for catching all outgoing emails:
 - **Output:** Static site in [frontend/dist/](frontend/dist/)
 - **Adapter:** Vercel (configured in [astro.config.mjs](frontend/astro.config.mjs))
 - **SSR:** Only `/api/book` and `/api/contact` require server mode; rest is static
-- **Site URL:** `https://truemoroccotours.com` (set in `astro.config.mjs`, used for sitemap with hreflang alternates)
+- **Site URL:** `https://www.truemoroccotours.com`, set in `astro.config.mjs` and `src/config/settings.js`; used for canonical tags, the sitemap (with hreflang alternates) and JSON-LD. Keep it on www: Vercel serves www and redirects the bare domain to it.
 - **Assets:** Hosted from [frontend/public/](frontend/public/)
 - `frontend/.github/workflows/deploy.yml` (Deno Deploy) and `netlify.toml` are leftovers from the Odyssey Theme, not the actual deploy target.
 - There is no test suite or linter; `npm run build` is the main correctness check.
