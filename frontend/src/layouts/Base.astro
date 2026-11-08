@@ -8,9 +8,11 @@ import WhatsAppButton from '../components/WhatsAppButton.astro';
 
 export interface Props {
   seo?: BaseHeadProps;
+  /** Floating WhatsApp button. Off on tour pages, where it would cover the booking bar. */
+  whatsapp?: boolean;
 }
 
-const { seo } = Astro.props;
+const { seo, whatsapp = true } = Astro.props;
 ---
 
 <html lang={i18next.language}>
@@ -26,6 +28,6 @@ const { seo } = Astro.props;
       <slot />
     </main>
     <slot name="footer" />
-    <WhatsAppButton />
+    {whatsapp && <WhatsAppButton />}
   </body>
 </html>
