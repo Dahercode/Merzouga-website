@@ -1,8 +1,6 @@
 ---
 import { Container } from '@components/odyssey-theme';
 import { Icon } from 'astro-icon/components';
-import { localizePath } from 'astro-i18next';
-import { getTripAdvisorData } from '../../../lib/tripadvisor';
 import { frontmatter as enFrontmatter } from '../../../content/reassurance/en.mdx';
 import { frontmatter as esFrontmatter } from '../../../content/reassurance/es.mdx';
 import { frontmatter as frFrontmatter } from '../../../content/reassurance/fr.mdx';
@@ -20,443 +18,337 @@ const frontmatterByLocale = {
 } satisfies Record<string, typeof enFrontmatter>;
 
 const frontmatter = frontmatterByLocale[locale] ?? enFrontmatter;
-const { title, rating, tripadvisor, reviews = [], cta } = frontmatter;
+const { title, rating, tripadvisor } = frontmatter;
 
-/* Null until TRIPADVISOR_API_KEY + TRIPADVISOR_LOCATION_ID are set, at which
-   point the live rating and latest reviews take over automatically. */
-const live = await getTripAdvisorData(locale);
-
-const displayedReviews = live?.reviews?.length ? live.reviews : reviews;
-const ratingValue = live?.rating || rating?.value || '';
-const reviewCount = live?.reviewCount || rating?.count || 0;
-const reviewsUrl = live?.webUrl || tripadvisor?.url;
-
-const hasReviews = displayedReviews.length > 0;
-const countLabel = (hasReviews
-  ? tripadvisor?.latestReviewsLabel
-  : tripadvisor?.totalReviewsLabel
-)?.replace('{count}', String(hasReviews ? displayedReviews.length : reviewCount));
-
-const watermark = ratingValue.split('.')[0];
+const ratingValue = rating?.value || '';
 const STARS = Array.from({ length: 5 });
 
-const initialsOf = (name: string) =>
-  name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((word) => word[0])
-    .join('')
-    .toUpperCase();
+/* TripAdvisor's free "ratings only" widget: logo, bubble rating and live
+   review count, linking to the listing. It replaces the contents of its
+   container on load, so the logo link inside is the fallback when the script
+   is blocked. Its ID must stay TA_<wtype><uniq>. */
+const WIDGET_TYPE = 'cdsratingsonlynarrow';
+const WIDGET_UNIQ = '704';
+const WIDGET_LANG = { en: 'en_US', fr: 'fr', es: 'es' }[locale];
+const TA_HOME = {
+  en: 'https://www.tripadvisor.com/',
+  fr: 'https://www.tripadvisor.fr/',
+  es: 'https://www.tripadvisor.es/',
+}[locale];
+const widgetSrc =
+  `https://www.jscache.com/wejs?wtype=${WIDGET_TYPE}&uniq=${WIDGET_UNIQ}` +
+  `&locationId=${tripadvisor?.locationId}&lang=${WIDGET_LANG}` +
+  `&border=false&shadow=false&backgroundColor=white&display_version=2`;
 ---
 
 <Container>
-  <section class:list={['reassurance', { 'reassurance--empty': !hasReviews }]}>
-    <div class="panel">
-      <span class="panel__watermark" aria-hidden="true">{watermark}</span>
+  <section class="reassurance" aria-label={title}>
+    <p class="score">
+      <span data-score>{ratingValue}</span><span class="score__max">/5</span>
+    </p>
 
-      <p class="panel__title">{title}</p>
-
-      <p class="panel__score">{ratingValue}</p>
-
-      <div class="panel__stars" role="img" aria-label={`${ratingValue} / 5`}>
-        {STARS.map(() => <Icon name="ic:round-star" />)}
+    <div class="summary">
+      <p class="summary__title">{title}</p>
+      <div class="summary__rating">
+        <span class="summary__stars" role="img" aria-label={`${ratingValue} / 5`}>
+          {STARS.map(() => <Icon name="ic:round-star" />)}
+        </span>
+        <span class="summary__label">{tripadvisor?.scoreLabel}</span>
       </div>
-
-      <p class="panel__meta">
-        <span>{countLabel}</span>
-        <span class="panel__separator" aria-hidden="true">·</span>
-        <span>{tripadvisor?.poweredBy}</span>
-      </p>
-
-      {
-        reviewsUrl && (
-          <a
-            class="panel__link"
-            href={reviewsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {tripadvisor?.seeMoreLabel}
-          </a>
-        )
-      }
+      <a
+        class="summary__link"
+        href={tripadvisor?.url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {tripadvisor?.seeMoreLabel}
+        <Icon name="ic:round-arrow-forward" aria-hidden="true" />
+      </a>
     </div>
 
-    {
-      hasReviews && (
-        <ol class="reviews">
-          {displayedReviews.map((review, index) => (
-            <li class="review">
-              <span class="review__number" aria-hidden="true">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <span class="review__avatar" aria-hidden="true">
-                {initialsOf(review.name)}
-              </span>
-              <div class="review__who">
-                <p class="review__name">{review.name}</p>
-                {review.location && (
-                  <p class="review__location">{review.location}</p>
-                )}
-              </div>
-              <div
-                class="review__stars"
-                role="img"
-                aria-label={`${review.rating ?? 5} / 5`}
-              >
-                {Array.from({ length: Math.round(review.rating ?? 5) }).map(
-                  () => (
-                    <Icon name="ic:round-star" />
-                  )
-                )}
-              </div>
-              <blockquote class="review__quote">{review.quote}</blockquote>
+    <div class="proof">
+      <div class="badge">
+        <div
+          id={`TA_${WIDGET_TYPE}${WIDGET_UNIQ}`}
+          class={`TA_${WIDGET_TYPE}`}
+          data-ta-widget
+        >
+          <ul class="TA_links">
+            <li>
+              <a target="_blank" rel="noopener" href={TA_HOME}>
+                <img
+                  src="https://www.tripadvisor.com/img/cdsi/img2/branding/v2/Tripadvisor_lockup_horizontal_secondary-11900-2.svg"
+                  alt="Tripadvisor"
+                  width="120"
+                  height="27"
+                />
+              </a>
             </li>
-          ))}
-        </ol>
-      )
-    }
-
-    <div class="cta">
-      <a class="cta__button" href={localizePath('/tours')}>
-        {cta?.buttonLabel}
-      </a>
+          </ul>
+        </div>
+      </div>
+      <script is:inline async src={widgetSrc}></script>
     </div>
   </section>
 </Container>
 
+<script>
+  /* Keep the big score (and the stars' label) in step with the widget, whose
+     bubble class encodes the live rating (bubble_45 = 4.5). The content file
+     value is the fallback. */
+  document.querySelectorAll<HTMLElement>('[data-ta-widget]').forEach((widget) => {
+    const section = widget.closest('.reassurance');
+    const score = section?.querySelector<HTMLElement>('[data-score]');
+    const stars = section?.querySelector<HTMLElement>('.summary__stars');
+    if (!score) return;
+
+    const sync = () => {
+      const bubble = widget.querySelector('.ui_bubble_rating');
+      const match = bubble?.className.match(/bubble_(\d)(\d)/);
+      if (!match) return false;
+      const value = `${match[1]}.${match[2]}`;
+      score.textContent = value;
+      stars?.setAttribute('aria-label', `${value} / 5`);
+      return true;
+    };
+
+    if (sync()) return;
+    const observer = new MutationObserver(() => {
+      if (sync()) observer.disconnect();
+    });
+    observer.observe(widget, { childList: true, subtree: true });
+  });
+</script>
+
 <style>
-  /* Colours resolve from the active Odyssey theme so `classic` and `sand` stay
-     in sync with theme.css. In `sand` these land on the mockup's palette:
-     panel = #aa6400, avatars = #6a4d34, text = #5e4536. */
+  /* Solid theme colour, the score as the focal point, then the TripAdvisor
+     badge as proof. Space does the separating; there are no rules. The booking
+     button lives in BookTourButton.astro, floating on the homepage. */
   .reassurance {
-    --r-panel: var(--theme-primary);
-    --r-on-panel: var(--theme-on-primary);
-    --r-list: var(--theme-bg);
-    --r-on-list: var(--theme-on-bg);
-    /* Derived from the panel rather than --theme-surface-2, whose value is an
-       unrelated mint green in themes that leave it at the :root default. */
-    --r-avatar: color-mix(in srgb, var(--r-panel) 80%, #000);
-    --r-on-avatar: var(--r-on-panel);
-    --r-muted: color-mix(in srgb, var(--r-on-list) 65%, transparent);
-    --r-rule: color-mix(in srgb, var(--r-on-list) 14%, transparent);
+    --r-bg: var(--theme-primary);
+    --r-ink: var(--theme-on-primary);
+    --r-soft: color-mix(in srgb, var(--r-ink) 80%, transparent);
+    /* TripAdvisor's ink colour, so the badge text matches its logo. */
+    --ta-ink: #002b11;
 
     margin: var(--section-margin) auto;
-    display: grid;
-    grid-template-columns: minmax(15rem, 30%) minmax(0, 1fr);
-    grid-template-rows: 1fr auto;
-    grid-template-areas:
-      'panel reviews'
-      'cta   reviews';
-    border-radius: var(--theme-shape-radius);
-    overflow: hidden;
-    background: var(--r-list);
-    box-shadow: 0 18px 45px color-mix(in srgb, var(--r-on-list) 12%, transparent);
     max-width: 1280px;
     width: 100%;
-  }
-
-  /* Without reviews the panel is the whole component. */
-  .reassurance--empty {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      'panel'
-      'cta';
-  }
-
-  /* ---------- Left panel ---------- */
-
-  .panel {
-    grid-area: panel;
-    position: relative;
-    overflow: hidden;
-    background: var(--r-panel);
-    color: var(--r-on-panel);
-    padding: clamp(1.75rem, 3.5vw, 2.75rem);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.6rem;
-  }
-
-  .panel__watermark {
-    position: absolute;
-    top: -0.35em;
-    right: 0.1em;
-    font-family: var(--theme-font-family-serif);
-    font-size: clamp(9rem, 16vw, 13rem);
-    font-weight: 700;
-    line-height: 1;
-    color: color-mix(in srgb, var(--r-on-panel) 13%, transparent);
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .panel__title {
-    margin: 0;
-    position: relative;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 0.8rem;
-    font-weight: 700;
-    line-height: 1.4;
-  }
-
-  .panel__score {
-    margin: 0;
-    position: relative;
-    font-family: var(--theme-font-family-serif);
-    font-size: clamp(2.5rem, 5.5vw, 3.25rem);
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  .panel__stars {
-    position: relative;
-    display: flex;
-    gap: 0.1rem;
-    color: var(--r-on-panel);
-  }
-
-  .panel__stars :global(svg) {
-    width: 1.3rem;
-    height: 1.3rem;
-  }
-
-  .panel__meta {
-    margin: 0.35rem 0 0;
-    position: relative;
-    font-size: 0.9rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    color: color-mix(in srgb, var(--r-on-panel) 88%, transparent);
-  }
-
-  /* Stacked in the narrow desktop column; inline whenever the panel is wide
-     (mobile, or desktop with no reviews beside it). */
-  .panel__separator {
-    display: none;
-  }
-
-  .reassurance--empty .panel__separator {
-    display: inline;
-  }
-
-  .panel__link {
-    position: relative;
-    margin-top: 0.5rem;
-    align-self: flex-start;
-    color: var(--r-on-panel);
-    font-size: 0.95rem;
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
-    transition: opacity var(--theme-transition);
-  }
-
-  .panel__link:hover,
-  .panel__link:focus-visible {
-    opacity: 0.78;
-  }
-
-  /* ---------- Reviews ---------- */
-
-  .reviews {
-    grid-area: reviews;
-    list-style: none;
-    margin: 0;
-    padding: clamp(1.25rem, 2.5vw, 2rem);
-    background: var(--r-list);
-    color: var(--r-on-list);
-    display: flex;
-    flex-direction: column;
-  }
-
-  .review {
     display: grid;
-    grid-template-columns: auto auto minmax(0, 1fr) auto;
-    grid-template-areas:
-      'num avatar who   stars'
-      'num avatar quote quote';
-    align-items: start;
-    column-gap: clamp(0.75rem, 1.5vw, 1.25rem);
-    row-gap: 0.5rem;
-    padding: clamp(1rem, 2vw, 1.5rem) 0;
-  }
-
-  .review + .review {
-    border-top: 1px solid var(--r-rule);
-  }
-
-  .review__number {
-    grid-area: num;
-    font-family: var(--theme-font-family-serif);
-    font-size: clamp(1.1rem, 1.7vw, 1.4rem);
-    font-weight: 700;
-    color: var(--r-panel);
-    line-height: 1.2;
-  }
-
-  .review__avatar {
-    grid-area: avatar;
-    width: clamp(2.4rem, 3.5vw, 2.9rem);
-    height: clamp(2.4rem, 3.5vw, 2.9rem);
-    border-radius: 50%;
-    background: var(--r-avatar);
-    color: var(--r-on-avatar);
-    display: inline-flex;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: 'score summary proof';
     align-items: center;
-    justify-content: center;
-    font-family: var(--theme-font-family-serif);
-    font-weight: 700;
-    font-size: 0.95rem;
+    column-gap: clamp(1.5rem, 3vw, 2.75rem);
+    row-gap: 1.5rem;
+    padding: clamp(1.75rem, 3.5vw, 2.5rem) clamp(1.75rem, 4vw, 3.5rem);
+    background: var(--r-bg);
+    color: var(--r-ink);
+    border-radius: var(--theme-shape-radius);
+    box-shadow: 0 18px 45px color-mix(in srgb, var(--r-bg) 22%, transparent);
   }
 
-  .review__who {
-    grid-area: who;
+  /* ---------- Score ---------- */
+
+  .score {
+    grid-area: score;
+    margin: 0;
+    font-family: var(--theme-font-family-serif);
+    font-size: clamp(3.5rem, 6.5vw, 4.75rem);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+
+  .score__max {
+    margin-left: 0.1em;
+    font-size: 0.32em;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--r-soft);
+  }
+
+  /* ---------- Summary ---------- */
+
+  .summary {
+    grid-area: summary;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
     min-width: 0;
   }
 
-  .review__name {
+  .summary__title {
     margin: 0;
     font-family: var(--theme-font-family-serif);
+    font-size: clamp(1.25rem, 2.1vw, 1.55rem);
     font-weight: 700;
-    font-size: clamp(1rem, 1.6vw, 1.15rem);
-    line-height: 1.3;
+    line-height: 1.25;
   }
 
-  .review__location {
-    margin: 0.1rem 0 0;
-    font-size: 0.85rem;
-    color: var(--r-muted);
-  }
-
-  .review__stars {
-    grid-area: stars;
+  .summary__rating {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 0.6rem;
+    font-size: 0.95rem;
+    color: var(--r-soft);
+  }
+
+  .summary__stars {
+    display: inline-flex;
     gap: 0.05rem;
-    color: var(--r-panel);
+    color: var(--r-ink);
   }
 
-  .review__stars :global(svg) {
-    width: 1.05rem;
-    height: 1.05rem;
+  .summary__stars :global(svg) {
+    width: 1.15rem;
+    height: 1.15rem;
   }
 
-  .review__quote {
-    grid-area: quote;
+  .summary__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.2rem;
+    color: var(--r-ink);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--r-ink) 45%, transparent);
+    text-underline-offset: 0.3em;
+    transition: text-decoration-color var(--theme-transition);
+  }
+
+  .summary__link :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    transition: transform var(--theme-transition);
+  }
+
+  .summary__link:hover,
+  .summary__link:focus-visible {
+    text-decoration-color: var(--r-ink);
+  }
+
+  .summary__link:hover :global(svg),
+  .summary__link:focus-visible :global(svg) {
+    transform: translateX(3px);
+  }
+
+  /* ---------- TripAdvisor badge ---------- */
+
+  .proof {
+    grid-area: proof;
+  }
+
+  .badge {
+    min-width: 11.5rem;
+    min-height: 5.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    background: #fff;
+    color: var(--ta-ink);
+    border-radius: min(var(--theme-shape-radius), 1.1rem);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+  }
+
+  /* The widget injects TripAdvisor's own markup and stylesheet. Reflow it
+     into a compact badge (logo, then bubbles and review count) and drop the
+     business name, which repeats what the page already says. */
+  .badge :global(.TA_links) {
+    list-style: none;
     margin: 0;
     padding: 0;
-    border: none;
-    font-family: var(--theme-font-family-serif);
-    font-style: italic;
-    font-size: clamp(0.925rem, 1.3vw, 1rem);
-    line-height: 1.55;
-    color: var(--r-on-list);
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
 
-  /* ---------- CTA ---------- */
-
-  .cta {
-    grid-area: cta;
-    background: var(--r-panel);
-    padding: 0 clamp(1.75rem, 3.5vw, 2.75rem)
-      clamp(1.75rem, 3.5vw, 2.75rem);
-  }
-
-  .cta__button {
+  .badge :global(.TA_links img) {
     display: block;
-    width: 100%;
-    text-align: center;
-    padding: 0.9rem 1.5rem;
-    border-radius: var(--theme-button-border-radius);
-    background: var(--r-on-panel);
-    color: var(--r-panel);
-    font-family: var(--theme-font-family-serif);
-    font-weight: 700;
+    width: 128px;
+    height: auto;
+  }
+
+  .badge :global(.cdsROW) {
+    width: auto !important;
+    margin: 0;
+    padding: 0 !important;
+    border: none;
+    box-shadow: none;
+    background: transparent !important;
+    font-family: var(--theme-font-family-sans);
+  }
+
+  .badge :global(.cdsROW a) {
     text-decoration: none;
-    transition: opacity var(--theme-transition);
   }
 
-  .cta__button:hover,
-  .cta__button:focus-visible {
-    opacity: 0.88;
+  .badge :global(.cdsROWContainer) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
   }
 
-  /* The panel spans the full width when there are no reviews, so keep the
-     button from stretching across it. */
-  .reassurance--empty .cta__button {
-    max-width: 20rem;
+  .badge :global(.cdsLocName) {
+    display: none;
+  }
+
+  .badge :global(.cdsROW .logo) {
+    order: -1;
+    padding: 0;
+    background: none;
+    border: none;
+  }
+
+  .badge :global(.cdsROW .logo img) {
+    display: block;
+    width: 128px;
+    max-width: none;
+    padding: 0;
+  }
+
+  .badge :global(.cdsROW .cdsRating) {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0;
+    font-size: 0.85rem;
+    line-height: 1;
+    color: var(--ta-ink);
+  }
+
+  .badge :global(.cdsROW .cdsRating br) {
+    display: none;
+  }
+
+  .badge :global(.cdsROW .ui_bubble_rating) {
+    font-size: 1rem;
   }
 
   /* ---------- Responsive ---------- */
 
-  @media (max-width: 900px) {
-    .reassurance,
-    .reassurance--empty {
+  /* Phone and small tablet: one centred column. */
+  @media (max-width: 720px) {
+    .reassurance {
       grid-template-columns: minmax(0, 1fr);
-      grid-template-rows: auto auto auto;
       grid-template-areas:
-        'panel'
-        'reviews'
-        'cta';
-    }
-
-    .panel {
-      align-items: center;
+        'score'
+        'summary'
+        'proof';
+      justify-items: center;
+      row-gap: 1.25rem;
       text-align: center;
-      gap: 0.5rem;
     }
 
-    .panel__meta {
+    .summary {
+      align-items: center;
+    }
+
+    .summary__rating {
       justify-content: center;
-    }
-
-    .panel__separator {
-      display: inline;
-    }
-
-    .panel__link {
-      align-self: center;
-    }
-
-    /* With reviews, the CTA drops below them onto the list background and
-       inverts. With no reviews there is nothing to separate it from the panel,
-       so it stays part of the panel (otherwise the button would be white on
-       a white background). */
-    .reassurance:not(.reassurance--empty) .cta {
-      background: var(--r-list);
-      padding: 0 clamp(1.25rem, 4vw, 2rem) clamp(1.5rem, 4vw, 2rem);
-    }
-
-    .reassurance:not(.reassurance--empty) .cta__button {
-      background: var(--r-panel);
-      color: var(--r-on-panel);
-    }
-
-    .reassurance--empty .cta__button {
-      max-width: none;
-    }
-
-    .reviews {
-      padding-bottom: clamp(0.5rem, 2vw, 1rem);
-    }
-  }
-
-  @media (max-width: 480px) {
-    .review {
-      column-gap: 0.6rem;
-    }
-
-    .review__stars :global(svg) {
-      width: 0.9rem;
-      height: 0.9rem;
     }
   }
 </style>
