@@ -1,7 +1,11 @@
 {
+  "seo": {
+    "title": "Circuits privés au Maroc & désert du Sahara | True Morocco Tours",
+    "description": "Circuits privés au Maroc, aventures dans le désert du Sahara et voyages sur mesure. Explorez Marrakech, Fès et Merzouga avec des guides locaux expérimentés."
+  },
   "hero": {
-    "title": "Circuits privés au Maroc & excursions dans le désert du Sahara",
-    "description": "Découvrez le Maroc avec des circuits privés au départ de Marrakech, Fès et Casablanca. Explorez le désert du Sahara, les villes impériales, les montagnes de l'Atlas et la culture marocaine authentique avec des guides locaux expérimentés.",
+    "title": "Découvrez le Maroc : circuits privés & excursions dans le désert du Sahara",
+    "description": "Explorez le Maroc avec des experts locaux. Découvrez le désert du Sahara, les villes impériales, les montagnes de l'Atlas et des circuits privés sur mesure, pensés pour des expériences inoubliables.",
     "primaryCta": "Découvrez nos circuits",
     "secondaryCta": "Style Guide",
     "imageAlt": "Voyageurs à dos de chameau au coucher du soleil dans le désert du Sahara"

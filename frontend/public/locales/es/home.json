@@ -1,7 +1,11 @@
 {
+  "seo": {
+    "title": "Tours privados en Marruecos y el Sahara | True Morocco Tours",
+    "description": "Tours privados por Marruecos, aventuras en el desierto del Sahara y viajes a medida. Explora Marrakech, Fez y Merzouga con guías locales experimentados."
+  },
   "hero": {
-    "title": "Tours privados por Marruecos y excursiones al desierto del Sahara",
-    "description": "Descubre Marruecos con tours privados desde Marrakech, Fez y Casablanca. Explora el desierto del Sahara, las ciudades imperiales, las montañas del Atlas y la auténtica cultura marroquí con guías locales experimentados.",
+    "title": "Descubre Marruecos: tours privados y excursiones al desierto del Sahara",
+    "description": "Explora Marruecos con expertos locales. Descubre el desierto del Sahara, las ciudades imperiales, las montañas del Atlas y tours privados a medida, pensados para vivir experiencias inolvidables.",
     "primaryCta": "Descubre nuestros circuitos",
     "secondaryCta": "Guía de estilo",
     "imageAlt": "Viajeros montando camellos al atardecer en el desierto del Sáhara"

@@ -5,16 +5,20 @@ import Layout from "../../layouts/Page.astro";
 import HomeHeroSection from "../../components/sections/heros/HomeHeroSection.astro";
 import ReassuranceSection from "../../components/sections/home/ReassuranceSection.astro";
 import BookTourButton from "../../components/BookTourButton.astro";
-import i18next, { changeLanguage } from "i18next";
+import i18next, { t, changeLanguage } from "i18next";
 import { getTours } from "../../utils/tours";
 
 changeLanguage("es");
 
 const locale = i18next.resolvedLanguage;
 const tours = getTours(locale);
+const seo = {
+  title: t("home:seo.title"),
+  description: t("home:seo.description"),
+};
 ---
 
-<Layout>
+<Layout {seo}>
   <script>
    import "../../components/theme-switcher/theme-switcher.ts";
   </script>

@@ -3,9 +3,10 @@ FROM node:lts
 WORKDIR /app/frontend
 
 # Copie les fichiers nécessaires
-COPY frontend/package.json frontend/package-lock.json ./
+COPY frontend/package.json frontend/yarn.lock ./
 
-RUN yarn install
+# Yarn n'est plus inclus dans les images node:lts récentes
+RUN npm install -g yarn && yarn install
 
 # Copie le reste du code
 COPY frontend .

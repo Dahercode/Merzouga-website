@@ -1,7 +1,11 @@
 {
+  "seo": {
+    "title": "Morocco Private Tours & Sahara Desert Trips | True Morocco Tours",
+    "description": "Discover private Morocco tours, Sahara desert adventures and tailor-made trips. Explore Marrakech, Fes and Merzouga with experienced local guides."
+  },
   "hero": {
-    "title": "Private Morocco Tours & Sahara Desert Trips",
-    "description": "Discover Morocco with private tours from Marrakech, Fes and Casablanca. Explore the Sahara Desert, imperial cities, Atlas Mountains and authentic Moroccan culture with experienced local guides.",
+    "title": "Discover Morocco: Private Tours & Sahara Desert Trips",
+    "description": "Explore Morocco with local experts. Discover the Sahara Desert, imperial cities, Atlas Mountains and tailor-made private tours designed for unforgettable experiences.",
     "primaryCta": "Discover our tours",
     "secondaryCta": "Style Guide",
     "imageAlt": "Travelers riding camels at sunset in the Sahara Desert"
