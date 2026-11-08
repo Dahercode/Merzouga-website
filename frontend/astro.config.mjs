@@ -35,4 +35,15 @@ export default defineConfig({
   output: 'static',
 
   adapter: vercel(),
+
+  vite: {
+    server: {
+      watch: {
+        // In Docker on Windows/macOS, file change events from the bind mount
+        // never reach the container, so poll instead (set in docker-compose).
+        usePolling: process.env.ASTRO_WATCH_POLLING === 'true',
+        interval: 300,
+      },
+    },
+  },
 });
