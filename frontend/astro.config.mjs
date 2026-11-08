@@ -31,6 +31,10 @@ export default defineConfig({
     astroI18next(),
   ],
 
+  // No trailing slash: matches the links localizePath() and the hreflang tags
+  // produce. Vercel then 308-redirects /page/ to /page, so Google sees one URL.
+  trailingSlash: 'never',
+
   // Output directory for the built site
   output: 'static',
 

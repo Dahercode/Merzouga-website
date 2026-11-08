@@ -53,7 +53,8 @@ const seo = {
 };
 
 const siteUrl = settings.url;
-const tourUrl = canonicalURL || `${siteUrl}${Astro.url.pathname}`;
+const tourUrl =
+  canonicalURL || `${siteUrl}${Astro.url.pathname.replace(/\/$/, '')}`;
 const tourJsonLd = {
   "@context": "https://schema.org",
   "@type": "Trip",
