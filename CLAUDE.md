@@ -153,6 +153,23 @@ The Docker environment includes MailDev for catching all outgoing emails:
 - **Assets:** Hosted from [frontend/public/](frontend/public/)
 - `frontend/.github/workflows/deploy.yml` (Deno Deploy) and `netlify.toml` are leftovers from the Odyssey Theme, not the actual deploy target.
 - There is no test suite or linter; `npm run build` is the main correctness check.
+- **URLs have no trailing slash** (`trailingSlash: 'never'`): canonicals, sitemap, hreflang and internal links all use `/fr/tours`, and Vercel 308-redirects `/fr/tours/` to it. Keep every URL in that form.
+- Pushing to `main` deploys to production on Vercel.
+
+## SEO & Google Search Console (after every push)
+
+The owner tracks indexing in Google Search Console (Domain property, owner access shared with the client). **After every `git push`, end the reply with a short "Search Console" note** saying what, if anything, to do there for what was just pushed. Write it in French, as concrete clicks with the exact URLs (www, no trailing slash, every affected locale).
+
+1. Wait for the deploy, then check the live pages that changed: title, meta description, canonical, and 200/308/404 status. This machine's network can't reach the default www IPs, so use `curl --resolve www.truemoroccotours.com:443:76.76.21.21 ...`.
+2. Pick the actions that match the change:
+   - **New tour or page:** URL inspection → "Demander l'indexation" for the en/fr/es URLs. Google allows about 10 requests a day, so list the most important ones first.
+   - **Changed title, description, H1 or main content:** request indexing of that page in each locale.
+   - **Deleted or renamed page:** a 404 is fine for a page that is gone. If it was renamed or has a clear replacement, suggest a redirect to it.
+   - **Site-wide URL or SEO plumbing** (site URL, trailing slash, canonical, hreflang, robots.txt, sitemap, redirects): resubmit `https://www.truemoroccotours.com/sitemap-index.xml` under Sitemaps. Then click "Valider la correction" on the affected reasons in the Pages report.
+   - **Nothing SEO-related** (styles, Docker, tooling): say that there is nothing to do in Search Console.
+3. Point out any SEO weakness spotted in the pushed pages: a missing or generic `seo` title or description, a title over ~60 characters, a description over ~155 characters, or a locale left untranslated.
+
+Every page passes its own `seo` (`title`, `description`) to `Page.astro`, from a `seo` key in its locale namespace (e.g. `home:seo.title`). `settings.js` only holds the fallback.
 
 ## Notes
 
