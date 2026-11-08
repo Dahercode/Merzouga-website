@@ -10,6 +10,9 @@ services:
     ports:
       - "3000:3000"
     container_name: astro_dev
+    environment:
+      # Pick up file edits from the Windows/macOS host (see astro.config.mjs).
+      - ASTRO_WATCH_POLLING=true
     command: npx astro dev --host --port 3000
   maildev:
     image: maildev/maildev:2.0.5

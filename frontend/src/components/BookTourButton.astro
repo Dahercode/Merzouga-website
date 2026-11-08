@@ -1,0 +1,149 @@
+---
+import { t } from 'i18next';
+import { localizePath } from 'astro-i18next';
+import { Icon } from 'astro-icon/components';
+---
+
+<!-- Floating "Book your tour" button for the homepage.
+     Desktop: a pill centred at the bottom, well away from the WhatsApp button
+     (WhatsAppButton.astro) and its hover tooltip.
+     Phones: a frosted bar docked to the bottom edge, with the WhatsApp button
+     lifted to float just above it, so the two never touch. -->
+<div class="book-dock">
+  <a class="book-fab" href={localizePath('/tours')}>
+    <Icon name="ic:round-event-available" aria-hidden="true" />
+    <span>{t('bookCta.label')}</span>
+    <Icon name="ic:round-chevron-right" aria-hidden="true" />
+  </a>
+</div>
+
+<style>
+  .book-dock {
+    /* Dark ink (the heading colour) rather than the theme orange, so the button
+       stands out over the orange reviews block as well as on white pages. */
+    --fab-bg: var(--theme-on-bg);
+    --fab-ink: var(--theme-bg);
+    /* Phone bar: button height + vertical padding. */
+    --dock-button: 3rem;
+    --dock-pad: 0.75rem;
+
+    position: fixed;
+    bottom: 1.75rem;
+    left: 50%;
+    z-index: 9998;
+    transform: translateX(-50%);
+    pointer-events: none;
+    animation: book-dock-in 0.4s 0.3s ease-out both;
+  }
+
+  .book-fab {
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 3.25rem;
+    padding: 0 1.1rem 0 1.35rem;
+
+    border-radius: var(--theme-button-border-radius);
+    background: var(--fab-bg);
+    color: var(--fab-ink);
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none;
+    box-shadow:
+      0 10px 28px color-mix(in srgb, var(--fab-bg) 35%, transparent),
+      0 2px 6px rgba(0, 0, 0, 0.15);
+    transition:
+      background-color var(--theme-transition),
+      box-shadow 0.2s ease;
+  }
+
+  .book-fab:hover,
+  .book-fab:focus-visible {
+    background: color-mix(in srgb, var(--fab-bg) 82%, #000);
+    box-shadow:
+      0 14px 32px color-mix(in srgb, var(--fab-bg) 45%, transparent),
+      0 3px 8px rgba(0, 0, 0, 0.18);
+  }
+
+  .book-fab :global(svg) {
+    width: 1.3rem;
+    height: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .book-fab :global(svg:last-child) {
+    width: 1.4rem;
+    height: 1.4rem;
+    transition: transform 0.2s ease;
+  }
+
+  .book-fab:hover :global(svg:last-child) {
+    transform: translateX(2px);
+  }
+
+  @keyframes book-dock-in {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 1rem);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  /* ---------- Phones: docked bar ---------- */
+
+  @media (max-width: 768px) {
+    .book-dock {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transform: none;
+      pointer-events: auto;
+      padding: var(--dock-pad) 1rem
+        calc(var(--dock-pad) + env(safe-area-inset-bottom, 0px));
+      background: color-mix(in srgb, var(--theme-bg) 88%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.08);
+      animation-name: book-dock-in-mobile;
+    }
+
+    .book-fab {
+      width: 100%;
+      height: var(--dock-button);
+      box-shadow: none;
+    }
+
+    /* The two rules below sit outside .book-dock, so its custom properties are
+       not in scope: 4.5rem is the bar height (3rem button + 2 × 0.75rem). */
+
+    /* Lift the WhatsApp button so it floats just above the bar. */
+    :global(body:has(.book-dock) .whatsapp-fab) {
+      bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px) + 0.85rem);
+    }
+
+    /* Keep the end of the page clear of the bar. */
+    :global(body:has(.book-dock)) {
+      padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+    }
+  }
+
+  @keyframes book-dock-in-mobile {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .book-dock {
+      animation: none;
+    }
+  }
+</style>

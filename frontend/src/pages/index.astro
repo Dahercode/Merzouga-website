@@ -4,6 +4,7 @@ import HomeTourSlider from "@components/tours/HomeTourSlider.astro";
 import Layout from "../layouts/Page.astro";
 import HomeHeroSection from "../components/sections/heros/HomeHeroSection.astro";
 import ReassuranceSection from "../components/sections/home/ReassuranceSection.astro";
+import BookTourButton from "../components/BookTourButton.astro";
 import i18next, { changeLanguage } from "i18next";
 import { getTours } from "../utils/tours";
 
@@ -19,6 +20,7 @@ const tours = getTours(locale);
   </script>
   <HomeHeroSection/>
   <ReassuranceSection locale={locale} />
+  <BookTourButton />
   <Container>
     <HomeTourSlider {tours} {locale} />
   </Container>
