@@ -126,13 +126,13 @@ export class ThemeSwitcher extends LitElement {
         _heroImage.src = '/assets/images/home/profile1.jpg';
       }
       if (theme === 'dark') {
-        _heroImage.src = '/assets/images/home/dark-hero.jpg';
+        _heroImage.src = '/assets/images/home/profile1.jpg';
       }
       if (theme === 'earth') {
-        _heroImage.src = '/assets/images/home/earth-hero.jpg';
+        _heroImage.src = '/assets/images/home/profile1.jpg';
       }
       if (theme === 'ocean') {
-        _heroImage.src = '/assets/images/home/ocean-hero.jpg';
+        _heroImage.src = '/assets/images/home/profile1.jpg';
       }
       if (theme === 'sand') {
         _heroImage.src = '/assets/images/home/profile1.jpg';

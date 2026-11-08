@@ -8,6 +8,9 @@
   "actions": {
     "getStarted": "Commencer"
   },
+  "bookCta": {
+    "label": "Réservez votre circuit"
+  },
   "whatsapp": {
     "tooltip": "Discuter sur WhatsApp"
   },
