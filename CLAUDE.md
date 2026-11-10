@@ -160,7 +160,7 @@ The Docker environment includes MailDev for catching all outgoing emails:
 
 The owner tracks indexing in Google Search Console (Domain property, owner access shared with the client). **After every `git push`, end the reply with a short "Search Console" note** saying what, if anything, to do there for what was just pushed. Write it in French, as concrete clicks with the exact URLs (www, no trailing slash, every affected locale).
 
-1. Wait for the deploy, then check the live pages that changed: title, meta description, canonical, and 200/308/404 status. This machine's network can't reach the default www IPs, so use `curl --resolve www.truemoroccotours.com:443:76.76.21.21 ...`.
+1. Wait for the deploy, then check the live pages that changed: title, meta description, canonical, and 200/308/404 status. The `www` CNAME (at Namecheap, which hosts the DNS) points to `cname.vercel-dns.com`, because the project-specific Vercel target's IPs time out on the owner's mobile network. If a check times out, retry with `curl --resolve www.truemoroccotours.com:443:76.76.21.21 ...`.
 2. Pick the actions that match the change:
    - **New tour or page:** URL inspection → "Demander l'indexation" for the en/fr/es URLs. Google allows about 10 requests a day, so list the most important ones first.
    - **Changed title, description, H1 or main content:** request indexing of that page in each locale.
